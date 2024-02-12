@@ -1,0 +1,313 @@
+---
+title: "FR+A Report Generator"
+output: 
+  word_document:
+    reference_docx: data/fra-template.docx
+date: "2023-12-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(magrittr)
+library(officer)
+source("grammar_functions.R")
+```
+
+```{r vars}
+ddd <- "01/01/2021"
+doc_type <- "causation"
+case <- "no" # yes/no
+case_no <- "CaseNoSample" # hidden if no case
+court_name <- "SampleCourtName"
+lawyer_first_name <- "LawyerFirst"
+lawyer_last_name <- "LawyerLast"
+lawyer_gender <- "m"
+lawyer_firm_name <- "SampleFirmName"
+lawyer_address <- "123 Address St"
+lawyer_city <- "CityLand"
+lawyer_state <- "StateVille"
+lawyer_zip <- "12345"
+lawyer_phone <- "012-345-6789"
+date_of_crash <- "01/01/2020"
+pl1_first_name <- "Pl1FirstName"
+pl1_last_name <- "Pl1LastName"
+pl1_gender <- "f"
+pl1_dob <- "01/01/1999"
+pl1_weight <- "100" # pounds
+pl_car_make <- "PlCarMake"
+pl_car_model <- "PlCarModel"
+pl_car_year <- "1995"
+crash_direction <- "frontal" # frontal, rear, near-side, far-side, rollover
+inj_location <- "disk" # disk, shoulder, spine (rollover)
+def_first_name <- "DefFirstName"
+def_last_name <- "DefLastName"
+def_gender <- "m"
+def_car_make <- "DefCarMake"
+def_car_model <- "DefCarModel"
+
+mdf_deltaV <- "10" # mph
+mdf_accel <- "8" # g
+
+def_biomech_exp_first_name <- ""
+def_biomech_exp_last_name <- ""
+def_biomech_exp_title <- "" # Dr., Mr., Ms.
+def_biomech_exp_gender <- ""
+def_biomech_exp_depo_reviewed <- "" # y n
+def_biomech_exp_depo_date <- ""
+def_biomech_exp_deltaV <- "" # mph
+def_biomech_exp_accel <- "" # g
+def_biomech_exp_report_citations <- "" # number
+def_biomech_exp_report_pages <- "" # number
+def_biomech_exp_report_date <- ""
+
+pl2_first_name <- ""
+pl2_last_name <- ""
+pl2_gender <- ""
+pl2_dob <- ""
+
+pl1_full_name <- paste(pl1_first_name, pl1_last_name)
+pl1_age <- ""
+pl2_age <- ""
+def_full_name <- paste(def_first_name, def_last_name)
+
+file_name <- ""
+
+if (case == "no") {
+  case_name <- pl1_full_name
+} else {
+  case_name <- "case name placeholder"
+}
+```
+
+```{r}
+Mr_Ms <- function(gender_var) {
+  if (gender_var == "m") {return("Mr.")}
+  else if (gender_var == "f") {return("Ms.")}
+  else {return("Mx.")}
+}
+
+He_She <- function(gender_var) {
+  if (gender_var == "m") {return("He")}
+ else if (gender_var == "f") {return("She")}
+  else {return("They")}
+}
+
+he_she <- function(gender_var) {tolower(He_She(gender_var))}
+
+His_Her <- function(gender_var) {
+  if (gender_var == "m") {return("His")}
+  else if (gender_var == "f") {return("Her")}
+  else {return("Their")}
+}
+
+his_her <- function(gender_var) {tolower(His_Her(gender_var))}
+
+Him_Her <- function(gender_var) {
+  if (gender_var == "m") {return("Him")}
+  else if (gender_var == "f") {return("Her")}
+  else {return("Them")}
+}
+
+him_her <- function(gender_var) {tolower(Him_Her(gender_var))}
+```
+
+```{r header}
+if (doc_type == "notes") {
+  header_line3 <- case_name
+} else {
+  header_line1 <- lawyer_first_name
+  header_line2 <- "Attorney at Law"
+  header_line3 <- case_name
+}
+```
+
+```{r EXPERIMENT}
+# making the text output contain line breaks
+
+
+add_line_and_page_breaks_fun(test_text)
+
+
+test_text <- 'This will contain a line break@linebreakAnd there it was!'
+
+# with fpar in front in string
+add_line_and_page_breaks_fun <- function(text) {
+  new_text <- paste0("fpar(ftext('", text, "'))")
+  sub("@linebreak", "'), run_linebreak(), ftext('", new_text) %>%
+  return()
+}
+
+
+test_fpar_text <- add_line_and_page_breaks_fun(test_text)
+fpar_test <- eval(parse(text = test_fpar_text))
+
+
+
+add_line_and_page_breaks_fun(test_text)
+
+eval_test <- "add_line_and_page_breaks_fun(test_text)"
+fpar_eval <- eval(parse(text = test_fpar_text))
+
+```
+
+```{r choose doc type text vars}
+# Header text
+header_text <- if(doc_type == "notes" & case == "no") {
+  header_notes_no_case
+  } else if (doc_type == "notes" & case == "yes") {
+    header_notes_case
+    }
+
+address_block_text_notes <- "address block notes temporary"
+
+# Address block text
+address_block_text <- if(doc_type == "notes") {
+  address_block_text_notes
+}
+
+```
+
+```{r footnote}
+# WORKING footnote structure
+# Use word_style = "Compact" for size 9
+fp_par_footnote <- fp_par(line_spacing = 1, word_style = "Compact")
+fp_refnote <- fp_text_lite(vertical.align = "superscript")
+
+bl <- block_list(
+  fpar(ftext(" hello"), fp_p = fp_par_footnote), 
+  fpar(ftext(" second ref"), fp_p = fp_par_footnote),
+  fpar(ftext(" second ref"), fp_p = fp_par_footnote)
+)
+
+a_par <- fpar(
+  "this paragraph contains a note",
+  run_footnote(x = bl[1], prop = fp_refnote),
+  run_footnote(x = bl[2], prop = fp_refnote),
+  run_footnote(x = bl[3], prop = fp_refnote),
+  "."
+)
+
+doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx")) %>%
+body_add_fpar(value = a_par) %>%
+
+print(target = "test.docx")
+```
+
+```{r frederik's linguistic genius}
+plural <- function(x) {
+  if(nchar(x)==1) {
+    return(paste0(x, "'s"))
+  } else {
+    #noun may already be plural:
+    #hard to distinguish from singular noun ending in -s
+    #but then it usually ends in a/i/o/u + s e.g. bus
+    if(substr(x, nchar(x), nchar(x)) == "s" &
+       !substr(x, nchar(x)-1, nchar(x)-1) %in% c("a","o","i","u")) {
+      return(x)
+    }
+    
+    #capitalization
+    caps <- grepl("[[:upper:]]", strsplit(x, "")[[1]])
+    
+    #all caps: assume abbreviation e.g. PCs
+    if(all(caps)) {
+      return(paste0(x, "s"))
+    }
+    
+    #e.g. genotypes -> genotypes
+    #
+    
+    #ignore case, to bring it back later
+    x <- tolower(x)
+    
+    #When the noun ends in S, SH, CH, X or Z, we add -ES to the noun
+    if(x != "fish" &
+       (substr(x, nchar(x), nchar(x)) %in% c("x", "s", "z") |
+        substr(x, nchar(x)-1, nchar(x)) %in% c("sh", "ch"))) {
+      x <- paste0(x, "es")
+    }
+    
+    #When the noun ends in a CONSONANT + Y, we remove Y and add -IES to the noun
+    x <- gsub("([b-df-hj-np-tv-xz])y$", "\\1ies", x)
+    
+    #If the noun ends in a CONSONANT + O, we normally add -ES to the noun.
+    if(!x %in% c("piano", "halo", "photo")) {
+      x <- gsub("([b-df-hj-np-tv-xz])o$", "\\1oes", x)
+    }
+    
+    #If the noun ends in F or FE, we remove the F/FE and add -VES to the noun.
+    if(!x %in% c("roof", "cliff", "chief", "belief", "chef")) {
+      x <- gsub("(f|fe)$", "ves", x)
+    }
+    
+    #if not already plural: just add s
+    if(x %in% c("man", "woman", "child", "foot", "tooth", "goose", "mouse",
+                "men", "women", "children", "feet", "teeth", "geese", "mice")) {
+      if(x == "man") x <- "men"
+      if(x == "woman") x <- "women"
+      if(x == "child") x <- "children"
+      if(x == "foot") x <- "feet"
+      if(x == "tooth") x <- "teeth"
+      if(x == "goose") x <- "geese"
+      if(x == "mouse") x <- "mice"
+    } else if (x %in% c("fish", "sheep", "deer", "moose", "aircraft", "dice")) {
+      #singular same as plural
+    } else if(substr(x, nchar(x), nchar(x)) != "s") {
+      x <- paste0(x, "s")
+    }
+    
+    #bring back caps (usually first letter)
+    #all added letters are lowercase
+    caps <- c(caps, rep(FALSE, nchar(x)-length(caps)))
+    x <- strsplit(x, "")[[1]]
+    x <- paste(ifelse(caps, toupper(x), x), collapse = "")
+  }
+  return(x)
+}
+```
+
+```{r final build}
+# functioning fpar add
+doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx")) %>%
+headers_replace_all_text("Line1", header_line1, warn = FALSE) %>%
+headers_replace_all_text("Line2", header_line2, warn = FALSE) %>%
+headers_replace_all_text("Line3", header_line3, warn = FALSE) %>%
+body_add_fpar(fpar_eval) %>%
+body_add_docx("test.docx") %>%
+
+print(target = "../FRA-report-output.docx")
+
+
+# Header
+
+# Lawyer address
+
+# Intro paragraph
+
+# The Purpose of this Report
+
+# Summary Opinions (rebuttal)
+
+# Qualifications
+
+# Background Facts
+
+# Medical History
+
+# General Comments on Expert (rebuttal)
+
+# Injury Biomechanics intro
+
+# Injury Biomechanics body
+
+# 3 steps alternative explanations (Causation)
+
+# Rebuttal points
+
+# Conclusions
+
+# Signature Block
+
+# Appendix
+
+```
