@@ -16,7 +16,7 @@ source("../data/report_text.R")
 ```{r vars}
 ddd <- "01/01/2021"
 doc_type <- "causation"
-case <- "no" # yes/no
+case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
 case_defendant_name <- "SampleCaseDefendantName"
