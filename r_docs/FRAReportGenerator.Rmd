@@ -10,7 +10,7 @@ date: "2023-12-30"
 knitr::opts_chunk$set(echo = FALSE)
 library(magrittr)
 library(officer)
-source("grammar_functions.R")
+source("../data/report_text.R")
 ```
 
 ```{r vars}
@@ -19,181 +19,108 @@ doc_type <- "causation"
 case <- "no" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
-lawyer_first_name <- "LawyerFirst"
-lawyer_last_name <- "LawyerLast"
-lawyer_gender <- "m"
-lawyer_firm_name <- "SampleFirmName"
-lawyer_address <- "123 Address St"
-lawyer_city <- "CityLand"
-lawyer_state <- "StateVille"
-lawyer_zip <- "12345"
-lawyer_phone <- "012-345-6789"
-date_of_crash <- "01/01/2020"
-pl1_first_name <- "Pl1FirstName"
-pl1_last_name <- "Pl1LastName"
-pl1_gender <- "f"
-pl1_dob <- "01/01/1999"
-pl1_weight <- "100" # pounds
-pl_car_make <- "PlCarMake"
-pl_car_model <- "PlCarModel"
-pl_car_year <- "1995"
-crash_direction <- "frontal" # frontal, rear, near-side, far-side, rollover
-inj_location <- "disk" # disk, shoulder, spine (rollover)
-def_first_name <- "DefFirstName"
-def_last_name <- "DefLastName"
-def_gender <- "m"
-def_car_make <- "DefCarMake"
-def_car_model <- "DefCarModel"
+case_defendant_name <- "SampleCaseDefendantName"
+
+lawyer <- data.frame(
+  first_name = "LawyerFirst",
+  last_name = "LawyerLast",
+  gender = "m",
+  firm_name = "SampleFirmName",
+  address = "123 Address St.",
+  city = "CityVille",
+  state = "StateLand",
+  zip = "12345",
+  phone = "0123456789"
+)
+
+crash <- data.frame(
+  date = "01/01/2020",
+  pdof = "rear" # frontal, rear, near-side, far-side, rollover
+)
+
+plaintiff <- list(
+  number = 2, # 1 or 2
+  first_name = c("Pl1FirstName", "Pl2FirstName"),
+  last_name = c("Pl1LastName", "Pl2LastName"),
+  gender = c("f", "m"),
+  dob = c("01/01/1999", "01/02/1990"),
+  weight = "100", # pounds
+  injury_location = "disk", # disk, shoulder, spine (rollover)
+  car_make = "PlCarMake",
+  car_model = "PlCarModel",
+  car_year = "1995"
+)
+
+defendant <- data.frame(
+  first_name = "DefFirstName",
+  last_name = "DefLastName",
+  gender = "m",
+  car_make = "DefCarMake",
+  car_model = "DefCarModel"
+)
+
 
 mdf_deltaV <- "10" # mph
 mdf_accel <- "8" # g
 
-def_biomech_exp_first_name <- ""
-def_biomech_exp_last_name <- ""
-def_biomech_exp_title <- "" # Dr., Mr., Ms.
-def_biomech_exp_gender <- ""
-def_biomech_exp_depo_reviewed <- "" # y n
-def_biomech_exp_depo_date <- ""
-def_biomech_exp_deltaV <- "" # mph
-def_biomech_exp_accel <- "" # g
-def_biomech_exp_report_citations <- "" # number
-def_biomech_exp_report_pages <- "" # number
-def_biomech_exp_report_date <- ""
+defense_biomech_expert <- data.frame(
+  first_name = "ExpertFirst",
+  last_name = "ExpertLast",
+  title = "Dr.", # Dr. Mr. Ms.
+  gender = "f",
+  depo_reviewed = "no",
+  depo_date = "01/01/2021",
+  deltaV = "8", # mph
+  acceleration = "6", # g
+  report_citations_number = "12",
+  report_pages_number = "15",
+  report_date = "01/01/2021"
+)
 
-pl2_first_name <- ""
-pl2_last_name <- ""
-pl2_gender <- ""
-pl2_dob <- ""
-
-pl1_full_name <- paste(pl1_first_name, pl1_last_name)
+pl1_full_name <- paste(plaintiff$first_name[1], plaintiff$last_name[1])
 pl1_age <- ""
+pl2_full_name <- paste(plaintiff$first_name[2], plaintiff$last_name[2])
 pl2_age <- ""
-def_full_name <- paste(def_first_name, def_last_name)
+def_full_name <- paste(defendant$first_name, defendant$last_name)
 
 file_name <- ""
 
-if (case == "no") {
-  case_name <- pl1_full_name
+# case name is only plaintiff name if case is "no"
+case_name <- if (case == "no") {
+  if (plaintiff$number == 1) {
+    result <- c(plaintiff$first_name[1], " ", plaintiff$last_name[1])
+  } else if (plaintiff$number == 2) {
+    result <- c(
+      plaintiff$first_name[1], " ", plaintiff$last_name[1],
+      "; ",
+      plaintiff$first_name[2], " ", plaintiff$last_name[2]
+    )
+    result <- paste0(result, collapse = "")
+  } else {
+    result <- "Unsupported number of plaintiffs"
+  }
+  print(result)
 } else {
-  case_name <- "case name placeholder"
+  if (plaintiff$number == 1) {
+    result <- c(
+      plaintiff$first_name[1], " ", plaintiff$last_name[1], " et al. v ",
+      case_defendant_name, " et al.,", " Case No: ", case_no, ", ", court_name
+    )
+  } else if (plaintiff$number == 2) {
+    result <- c(
+      plaintiff$first_name[1], " ", plaintiff$last_name[1], "; ",
+      plaintiff$first_name[2], " ", plaintiff$last_name[2],
+      " et al. v ", case_defendant_name, " et al.,", " Case No: ", case_no, ", ", court_name
+    )
+    result <- paste0(result, collapse = "")
+  } else {
+    result <- "Unsupported number of plaintiffs"
+  }
+  print(result)
 }
 ```
 
-```{r}
-Mr_Ms <- function(gender_var) {
-  if (gender_var == "m") {return("Mr.")}
-  else if (gender_var == "f") {return("Ms.")}
-  else {return("Mx.")}
-}
-
-He_She <- function(gender_var) {
-  if (gender_var == "m") {return("He")}
- else if (gender_var == "f") {return("She")}
-  else {return("They")}
-}
-
-he_she <- function(gender_var) {tolower(He_She(gender_var))}
-
-His_Her <- function(gender_var) {
-  if (gender_var == "m") {return("His")}
-  else if (gender_var == "f") {return("Her")}
-  else {return("Their")}
-}
-
-his_her <- function(gender_var) {tolower(His_Her(gender_var))}
-
-Him_Her <- function(gender_var) {
-  if (gender_var == "m") {return("Him")}
-  else if (gender_var == "f") {return("Her")}
-  else {return("Them")}
-}
-
-him_her <- function(gender_var) {tolower(Him_Her(gender_var))}
-```
-
-```{r header}
-if (doc_type == "notes") {
-  header_line3 <- case_name
-} else {
-  header_line1 <- lawyer_first_name
-  header_line2 <- "Attorney at Law"
-  header_line3 <- case_name
-}
-```
-
-```{r EXPERIMENT}
-# making the text output contain line breaks
-
-
-add_line_and_page_breaks_fun(test_text)
-
-
-test_text <- 'This will contain a line break@linebreakAnd there it was!'
-
-# with fpar in front in string
-add_line_and_page_breaks_fun <- function(text) {
-  new_text <- paste0("fpar(ftext('", text, "'))")
-  sub("@linebreak", "'), run_linebreak(), ftext('", new_text) %>%
-  return()
-}
-
-
-test_fpar_text <- add_line_and_page_breaks_fun(test_text)
-fpar_test <- eval(parse(text = test_fpar_text))
-
-
-
-add_line_and_page_breaks_fun(test_text)
-
-eval_test <- "add_line_and_page_breaks_fun(test_text)"
-fpar_eval <- eval(parse(text = test_fpar_text))
-
-```
-
-```{r choose doc type text vars}
-# Header text
-header_text <- if(doc_type == "notes" & case == "no") {
-  header_notes_no_case
-  } else if (doc_type == "notes" & case == "yes") {
-    header_notes_case
-    }
-
-address_block_text_notes <- "address block notes temporary"
-
-# Address block text
-address_block_text <- if(doc_type == "notes") {
-  address_block_text_notes
-}
-
-```
-
-```{r footnote}
-# WORKING footnote structure
-# Use word_style = "Compact" for size 9
-fp_par_footnote <- fp_par(line_spacing = 1, word_style = "Compact")
-fp_refnote <- fp_text_lite(vertical.align = "superscript")
-
-bl <- block_list(
-  fpar(ftext(" hello"), fp_p = fp_par_footnote), 
-  fpar(ftext(" second ref"), fp_p = fp_par_footnote),
-  fpar(ftext(" second ref"), fp_p = fp_par_footnote)
-)
-
-a_par <- fpar(
-  "this paragraph contains a note",
-  run_footnote(x = bl[1], prop = fp_refnote),
-  run_footnote(x = bl[2], prop = fp_refnote),
-  run_footnote(x = bl[3], prop = fp_refnote),
-  "."
-)
-
-doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx")) %>%
-body_add_fpar(value = a_par) %>%
-
-print(target = "test.docx")
-```
-
-```{r frederik's linguistic genius}
+```{r frederik's plural function}
 plural <- function(x) {
   if(nchar(x)==1) {
     return(paste0(x, "'s"))
@@ -266,15 +193,167 @@ plural <- function(x) {
 }
 ```
 
+```{r pronouns and names functions}
+Mr_Ms <- function(gender_var) {
+  if (gender_var == "m") {return("Mr.")}
+  else if (gender_var == "f") {return("Ms.")}
+  else {return("Mx.")}
+}
+
+He_She <- function(gender_var) {
+  if (gender_var == "m") {return("He")}
+ else if (gender_var == "f") {return("She")}
+  else {return("They")}
+}
+
+he_she <- function(gender_var) {tolower(He_She(gender_var))}
+
+His_Her <- function(gender_var) {
+  if (gender_var == "m") {return("His")}
+  else if (gender_var == "f") {return("Her")}
+  else {return("Their")}
+}
+
+his_her <- function(gender_var) {tolower(His_Her(gender_var))}
+
+Him_Her <- function(gender_var) {
+  if (gender_var == "m") {return("Him")}
+  else if (gender_var == "f") {return("Her")}
+  else {return("Them")}
+}
+
+him_her <- function(gender_var) {tolower(Him_Her(gender_var))}
+
+# if plaintiff$number is 1: Mr. Plaintiff; if plaintiff$number is 2: Mr. Plaintiff1 and/or Mr. Plaintiff2 (and/or depending on which word is put as an argument for the function)
+Mr_Pl_Lastname <- function(conjunction) {
+  if (plaintiff$number == 1) {
+    result <- paste(Mr_Ms(pl1_gender), pl1_last_name, sep = " ")
+  } else if (plaintiff$number == 2) {
+    result <- paste0(Mr_Ms(pl1_gender), " ", ifelse(pl1_last_name == pl2_last_name, "", paste0(pl1_last_name, " ")), conjunction, " ", Mr_Ms(pl2_gender), " ", pl2_last_name)
+  } else {
+    result <- "Unsupported number of plaintiffs"
+  }
+  return(result)
+}
+
+# if plaintiff$number is 1: Plaintiff full name; if plaintiff$number is 2: Plaintiff1 full name and/or Plaintiff2 full name (and/or depending on which word is put as an argument for the function)
+Pl_Firstname_Lastname <- function(conjunction = "and") {
+  if (plaintiff$number == 1) {
+    result <- paste(plaintiff$first_name[1], plaintiff$last_name[1])
+  } else if (plaintiff$number == 2) {
+    result <- c(plaintiff$first_name[1],
+                if(plaintiff$last_name[1] != plaintiff$last_name[2]) plaintiff$last_name[1],
+                conjunction, 
+                plaintiff$first_name[2], plaintiff$last_name[2])
+    result <- paste(result, collapse = " ")
+  } else {
+    result <- "Unsupported number of plaintiffs"
+  }
+  return(result)
+}
+```
+
+```{r header}
+if (doc_type == "notes") {
+  header_line3 <- case_name
+} else {
+  header_line1 <- lawyer$firm_name
+  header_line2 <- "Attorney at Law"
+  header_line3 <- case_name
+}
+
+```
+
+```{r create fpar}
+# making the text output contain line breaks
+
+# add fpar in front in string
+
+add_fpar_prefix_and_suffix <- function(text) {
+  paste0("fpar(ftext('", text, "'))") %>%
+  return()
+}
+
+# turn @@linebreak into linebreaks, @@pagebreak into pagebreaks, and variable references into working references in the final document
+replace_breaks_and_vars_fun <- function(text) {
+  new_text <- sub("@@linebreak", "'), run_linebreak(), ftext('", text)
+  new_text <- sub("@@pagebreak", "'), run_pagebreak(), ftext('", new_text)
+  new_text <- sub("@([[:alnum:]_\"\\)(]+)", "'), ftext(\\1), ftext('", new_text) %>%
+  return()
+}
+
+#execute fpar code to create fpar object so it can be pumped through officer
+execute_fpar <- function(text) {
+  eval(parse(text = text)) %>%
+  return()
+}
+
+transform_text_to_block <- function(text) {
+  replace_breaks_and_vars_fun(text) %>%
+  add_fpar_prefix_and_suffix() %>%
+  execute_fpar() %>%
+  return()
+}
+
+
+test_text <- 'This will contain a line break.@@linebreakAnd there it was!@@pagebreakAnd now it is time to test the @Pl_Firstname_Lastname("and") function'
+fpar_test_text <- transform_text_to_block(test_text)
+
+bl_from_fpar_test <- block_list(fpar_test_text)
+
+```
+
+```{r choose doc type text vars}
+# Header text
+header_text <- if(doc_type == "notes" & case == "no") {
+  header_notes_no_case
+  } else if (doc_type == "notes" & case == "yes") {
+    header_notes_case
+    }
+
+address_block_text_notes <- "address block notes temporary"
+
+# Address block text
+address_block_text <- if(doc_type == "notes") {
+  address_block_text_notes
+}
+
+```
+
+```{r footnote}
+# WORKING footnote structure
+# Use word_style = "Compact" for size 9
+fp_par_footnote <- fp_par(line_spacing = 1, word_style = "Compact")
+fp_refnote <- fp_text_lite(vertical.align = "superscript")
+
+bl <- block_list(
+  fpar(ftext(" hello"), fp_p = fp_par_footnote), 
+  fpar(ftext(" second ref"), fp_p = fp_par_footnote),
+  fpar(ftext(" second ref"), fp_p = fp_par_footnote)
+)
+
+a_par <- fpar(
+  "this paragraph contains a note",
+  run_footnote(x = bl[1], prop = fp_refnote),
+  run_footnote(x = bl[2], prop = fp_refnote),
+  run_footnote(x = bl[3], prop = fp_refnote),
+  "."
+)
+
+doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx")) %>%
+body_add_fpar(value = a_par) %>%
+
+print(target = "test.docx")
+```
+
 ```{r final build}
 # functioning fpar add
 doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx")) %>%
 headers_replace_all_text("Line1", header_line1, warn = FALSE) %>%
 headers_replace_all_text("Line2", header_line2, warn = FALSE) %>%
 headers_replace_all_text("Line3", header_line3, warn = FALSE) %>%
-body_add_fpar(fpar_eval) %>%
+body_add_blocks(bl_from_fpar_test) %>%
 body_add_docx("test.docx") %>%
-
 print(target = "../FRA-report-output.docx")
 
 
