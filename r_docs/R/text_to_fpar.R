@@ -35,3 +35,9 @@ transform_text_to_fpar <- function(text) {
     execute_fpar() %>%
     return()
 }
+
+#test_text <- 'This will contain a line break.@@linebreak@@linebreakAnd there it was!@@pagebreakAnd now it is time to test the @Pl_Firstname_Lastname("and") function'
+#fpar_test_text <- transform_text_to_fpar(qualifications$causation)
+#fpar_test_text <- replace_line_and_page_breaks_fun(qualifications$causation) %>%
+#  add_fpar_prefix_and_suffix() %>%
+#  execute_fpar()

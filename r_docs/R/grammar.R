@@ -8,8 +8,6 @@ phone_fun <- function(phone, invalid = NA)
   phone
 }
 
-phone_fun(lawyer$phone)
-
 convert_date_format <- function(date_str) {
   # Convert string to Date object
   date_obj <- as.Date(date_str, format = "%m/%d/%Y")

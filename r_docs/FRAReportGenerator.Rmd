@@ -11,7 +11,8 @@ knitr::opts_chunk$set(echo = FALSE)
 library(magrittr)
 library(officer)
 source("../data/report_text.R")
-source("functions.R")
+source("R/grammar.R")
+source("R/text_to_fpar.R")
 ```
 #Variables
 ```{r vars}
@@ -118,8 +119,6 @@ case_name <- if (case == "no") {
 }
 
 doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx"))
-
-doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx"))
 ```
 
 ```{r create fpar from text functions}
@@ -130,11 +129,7 @@ doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", 
 
 #bl_from_fpar_test <- block_list(fpar_test_text)
 
-#test_text <- 'This will contain a line break.@@linebreak@@linebreakAnd there it was!@@pagebreakAnd now it is time to test the @Pl_Firstname_Lastname("and") function'
-#fpar_test_text <- transform_text_to_fpar(qualifications$causation)
-#fpar_test_text <- replace_line_and_page_breaks_fun(qualifications$causation) %>%
-#  add_fpar_prefix_and_suffix() %>%
-#  execute_fpar()
+
 
 
 
@@ -143,15 +138,12 @@ doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", 
 ```
 
 ```{r header}
-header_line1 <- paste0(lawyer$first_name, " ", lawyer$last_name, ", Esquire")
-header_line2 <- "Attorney at Law"
-header_line3 <- case_name
-
 # create block list for header
 header_blocklist <- block_list(
-  headers_replace_all_text(x = doc, old_value = "Line1", new_value = header_line1, warn = FALSE),
-  headers_replace_all_text(x = doc, old_value = "Line2", new_value = header_line2, warn = FALSE),
-  headers_replace_all_text(x = doc, old_value = "Line3", new_value = header_line3, warn = FALSE)
+  headers_replace_all_text(x = doc, old_value = "Line1", new_value = paste0(lawyer$first_name, " ", lawyer$last_name, ", Esquire"), warn = FALSE),
+  headers_replace_all_text(x = doc, old_value = "Line2", new_value = "Attorney at Law", warn = FALSE),
+  headers_replace_all_text(x = doc, old_value = "Line3", new_value = case_name, warn = FALSE),
+  headers_replace_all_text(x = doc, old_value = "ddd_date", new_value = convert_date_format(ddd), warn = FALSE)
 )
 ```
 
@@ -170,10 +162,8 @@ fp_text_italic <- fp_text_lite(italic = TRUE)
 ```
 
 ```{r heading}
-plaintiff1_dob_plus_colon <- paste0(": ", plaintiff$dob[1])
-plaintiff2_dob_plus_colon <- paste0(": ", plaintiff$dob[2])
-
 heading_blocklist <- block_list(
+  body_replace_all_text(x = doc, old_value = "ddd_date", new_value = convert_date_format(ddd), warn = FALSE),
   body_replace_all_text(x = doc, old_value = "lawyername", new_value = paste0(lawyer$first_name, " ", lawyer$last_name, ", Esquire"), warn = FALSE),
   body_replace_all_text(x = doc, old_value = "lawyer_office_name", new_value = lawyer$firm_name, warn = FALSE),
   body_replace_all_text(x = doc, old_value = "lawyer_office_address1", new_value = lawyer$address, warn = FALSE),
@@ -198,11 +188,6 @@ qualifications_block <- block_list(
 #  shortcuts$fp_null(),
   qualifications_body_fpar)
 ```
-
-```{r put pieces together}
-
-```
-
 
 ```{r sample footnote}
 # working footnote structure
