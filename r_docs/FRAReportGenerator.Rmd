@@ -15,7 +15,7 @@ source("../data/report_text.R")
 
 ```{r vars}
 ddd <- "01/01/2021"
-doc_type <- "causation"
+doc_type <- "notes"
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
@@ -39,7 +39,7 @@ crash <- data.frame(
 )
 
 plaintiff <- list(
-  number = 2, # 1 or 2
+  number = 1, # 1 or 2
   first_name = c("Pl1FirstName", "Pl2FirstName"),
   last_name = c("Pl1LastName", "Pl2LastName"),
   gender = c("f", "m"),
@@ -77,11 +77,7 @@ defense_biomech_expert <- data.frame(
   report_date = "01/01/2021"
 )
 
-pl1_full_name <- paste(plaintiff$first_name[1], plaintiff$last_name[1])
-pl1_age <- ""
-pl2_full_name <- paste(plaintiff$first_name[2], plaintiff$last_name[2])
-pl2_age <- ""
-def_full_name <- paste(defendant$first_name, defendant$last_name)
+action_individual <- ifelse(case == "yes", "action", "individual")
 
 file_name <- ""
 
@@ -99,13 +95,14 @@ case_name <- if (case == "no") {
   } else {
     result <- "Unsupported number of plaintiffs"
   }
-  print(result)
+  result
 } else {
   if (plaintiff$number == 1) {
     result <- c(
       plaintiff$first_name[1], " ", plaintiff$last_name[1], " et al. v ",
       case_defendant_name, " et al.,", " Case No: ", case_no, ", ", court_name
     )
+    result <- paste0(result, collapse = "")
   } else if (plaintiff$number == 2) {
     result <- c(
       plaintiff$first_name[1], " ", plaintiff$last_name[1], "; ",
@@ -116,7 +113,35 @@ case_name <- if (case == "no") {
   } else {
     result <- "Unsupported number of plaintiffs"
   }
-  print(result)
+  result
+}
+
+doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx"))
+```
+
+```{r phone number function}
+phone_fun <- function(phone, invalid = NA)
+{
+  phone <- gsub("[^0-9]", "", phone)          # remove non-numeric characters
+  phone[!nchar(phone) %in% c(10)] <- invalid  # keep only 10 digit numbers
+  
+  phone <- gsub("(^\\d{3})(\\d{3})(\\d{4}$)", "(\\1) \\2-\\3", phone)
+  
+  phone
+}
+
+phone_fun(lawyer$phone)
+```
+
+```{r date conversion function}
+convert_date_format <- function(date_str) {
+  # Convert string to Date object
+  date_obj <- as.Date(date_str, format = "%m/%d/%Y")
+  
+  # Format the Date object to the desired output format
+  formatted_date <- format(date_obj, "%B %d, %Y")
+  
+  return(formatted_date)
 }
 ```
 
@@ -225,13 +250,25 @@ Him_Her <- function(gender_var) {
 him_her <- function(gender_var) {tolower(Him_Her(gender_var))}
 
 # if plaintiff$number is 1: Mr. Plaintiff; if plaintiff$number is 2: Mr. Plaintiff1 and/or Mr. Plaintiff2 (and/or depending on which word is put as an argument for the function)
-Mr_Pl_Lastname <- function(conjunction) {
+Mr_Pl_Lastname <- function(conjunction = "and") {
   if (plaintiff$number == 1) {
-    result <- paste(Mr_Ms(pl1_gender), pl1_last_name, sep = " ")
+    result <- paste(Mr_Ms(plaintiff$gender[1]), plaintiff$last_name[1], sep = " ")
   } else if (plaintiff$number == 2) {
-    result <- paste0(Mr_Ms(pl1_gender), " ", ifelse(pl1_last_name == pl2_last_name, "", paste0(pl1_last_name, " ")), conjunction, " ", Mr_Ms(pl2_gender), " ", pl2_last_name)
+    result <- paste0(Mr_Ms(plaintiff$gender[1]), " ", ifelse(plaintiff$last_name[1] == pl2_last_name, "", paste0(plaintiff$last_name[1], " ")), conjunction, " ", Mr_Ms(plaintiff$gender[2]), " ", pl2_last_name)
   } else {
-    result <- "Unsupported number of plaintiffs"
+    result <- "NAME ERROR"
+  }
+  return(result)
+}
+
+# if plaintiff$number is 1: Mr. Plaintiff; if plaintiff$number is 2: Mr. Plaintiff1 and/or Mr. Plaintiff2 (and/or depending on which word is put as an argument for the function)
+Mr_Pl_Lastname_s <- function(conjunction = "and") {
+  if (plaintiff$number == 1) {
+    result <- paste0(Mr_Ms(plaintiff$gender[1]), "", plaintiff$last_name[1], "'s")
+  } else if (plaintiff$number == 2) {
+    result <- paste0(Mr_Ms(plaintiff$gender[1]), " ", ifelse(plaintiff$last_name[1] == plaintiff$last_name[2], "", paste0(plaintiff$last_name[1], " ")), conjunction, " ", Mr_Ms(plaintiff$gender[2]), " ", plaintiff$last_name[2], "'s")
+  } else {
+    result <- "NAME ERROR"
   }
   return(result)
 }
@@ -247,38 +284,38 @@ Pl_Firstname_Lastname <- function(conjunction = "and") {
                 plaintiff$first_name[2], plaintiff$last_name[2])
     result <- paste(result, collapse = " ")
   } else {
-    result <- "Unsupported number of plaintiffs"
+    result <- "NAME ERROR"
   }
   return(result)
 }
+
+doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx"))
 ```
 
-```{r header}
-if (doc_type == "notes") {
-  header_line3 <- case_name
-} else {
-  header_line1 <- lawyer$firm_name
-  header_line2 <- "Attorney at Law"
-  header_line3 <- case_name
-}
-
-```
-
-```{r create fpar}
+```{r create fpar from text functions}
 # making the text output contain line breaks
 
-# add fpar in front in string
+# turn @@linebreak into linebreaks, @@pagebreak into pagebreaks, and variable references into working references in the final document
+replace_line_and_page_breaks_fun <- function(text) {
+  modified_text <- text %>%
+    gsub("@@linebreak", "'), run_linebreak(), ftext('", .) %>%
+    gsub("@@pagebreak", "'), run_pagebreak(), ftext('", .) %>%
+    return()
+}
 
+replace_vars_fun <- function(text) {
+  text <- gsub("@([[:alnum:]_\"\\)(]+)", "'), ftext(\\1), ftext('", text) %>%
+  return()
+}
+
+# add fpar in front in string
 add_fpar_prefix_and_suffix <- function(text) {
   paste0("fpar(ftext('", text, "'))") %>%
   return()
 }
 
-# turn @@linebreak into linebreaks, @@pagebreak into pagebreaks, and variable references into working references in the final document
-replace_breaks_and_vars_fun <- function(text) {
-  new_text <- sub("@@linebreak", "'), run_linebreak(), ftext('", text)
-  new_text <- sub("@@pagebreak", "'), run_pagebreak(), ftext('", new_text)
-  new_text <- sub("@([[:alnum:]_\"\\)(]+)", "'), ftext(\\1), ftext('", new_text) %>%
+add_fpar_prefix_and_suffix_italic <- function(text) {
+  paste0("fpar(ftext('", text, "'), fp_t =)") %>%
   return()
 }
 
@@ -288,72 +325,117 @@ execute_fpar <- function(text) {
   return()
 }
 
-transform_text_to_block <- function(text) {
-  replace_breaks_and_vars_fun(text) %>%
-  add_fpar_prefix_and_suffix() %>%
-  execute_fpar() %>%
-  return()
+transform_text_to_fpar <- function(text) {
+  text %>%
+    replace_line_and_page_breaks_fun() %>%
+    replace_vars_fun() %>%
+    add_fpar_prefix_and_suffix() %>%
+    execute_fpar() %>%
+    return()
 }
 
+#bl_from_fpar_test <- block_list(fpar_test_text)
 
-test_text <- 'This will contain a line break.@@linebreakAnd there it was!@@pagebreakAnd now it is time to test the @Pl_Firstname_Lastname("and") function'
-fpar_test_text <- transform_text_to_block(test_text)
+#test_text <- 'This will contain a line break.@@linebreak@@linebreakAnd there it was!@@pagebreakAnd now it is time to test the @Pl_Firstname_Lastname("and") function'
+#fpar_test_text <- transform_text_to_fpar(qualifications$causation)
+#fpar_test_text <- replace_line_and_page_breaks_fun(qualifications$causation) %>%
+#  add_fpar_prefix_and_suffix() %>%
+#  execute_fpar()
 
-bl_from_fpar_test <- block_list(fpar_test_text)
+
+
+
 
 ```
 
-```{r choose doc type text vars}
-# Header text
-header_text <- if(doc_type == "notes" & case == "no") {
-  header_notes_no_case
-  } else if (doc_type == "notes" & case == "yes") {
-    header_notes_case
-    }
+```{r header}
+header_line1 <- paste0(lawyer$first_name, " ", lawyer$last_name, ", Esquire")
+header_line2 <- "Attorney at Law"
+header_line3 <- case_name
 
-address_block_text_notes <- "address block notes temporary"
-
-# Address block text
-address_block_text <- if(doc_type == "notes") {
-  address_block_text_notes
-}
-
+# create block list for header
+header_blocklist <- block_list(
+  headers_replace_all_text(x = doc, old_value = "Line1", new_value = header_line1, warn = FALSE),
+  headers_replace_all_text(x = doc, old_value = "Line2", new_value = header_line2, warn = FALSE),
+  headers_replace_all_text(x = doc, old_value = "Line3", new_value = header_line3, warn = FALSE)
+)
 ```
 
-```{r footnote}
-# WORKING footnote structure
-# Use word_style = "Compact" for size 9
+```{r paragraph style definitions}
+# word_style "Compact" is footnote style (size 9, single space)
 fp_par_footnote <- fp_par(line_spacing = 1, word_style = "Compact")
-fp_refnote <- fp_text_lite(vertical.align = "superscript")
 
+```
+
+
+```{r text style definitions}
+# superscript footnote reference style
+fp_text_refnote <- fp_text_lite(vertical.align = "superscript")
+fp_text_italic <- fp_text_lite(italic = TRUE)
+
+```
+
+```{r heading}
+plaintiff1_dob_plus_colon <- paste0(": ", plaintiff$dob[1])
+plaintiff2_dob_plus_colon <- paste0(": ", plaintiff$dob[2])
+
+heading_blocklist <- block_list(
+  body_replace_all_text(x = doc, old_value = "lawyername", new_value = paste0(lawyer$first_name, " ", lawyer$last_name, ", Esquire"), warn = FALSE),
+  body_replace_all_text(x = doc, old_value = "lawyer_office_name", new_value = lawyer$firm_name, warn = FALSE),
+  body_replace_all_text(x = doc, old_value = "lawyer_office_address1", new_value = lawyer$address, warn = FALSE),
+  body_replace_all_text(x = doc, old_value = "lawyer_office_address2", new_value = paste0(lawyer$city, ", ", lawyer$state, " ", lawyer$zip), warn = FALSE),
+  body_replace_all_text(x = doc, old_value = "lawyer_phone", new_value = phone_fun(lawyer$phone), warn = FALSE),
+  body_replace_all_text(x = doc, old_value = "case_name", new_value = case_name, warn = FALSE),
+  body_replace_all_text(x = doc, old_value = "crash_date", new_value = convert_date_format(crash$date), warn = FALSE),
+  body_replace_all_text(x = doc, old_value = "plaintiff1_name", new_value = paste(plaintiff$first_name[1], plaintiff$last_name[1]), warn = FALSE),
+  body_replace_all_text(x = doc, old_value = "plaintiff2_name", new_value = ifelse(plaintiff$number == 1, "", paste(plaintiff$first_name[2], plaintiff$last_name[2], ":")), warn = FALSE),
+  # DOB STILL NOT WORKING
+  body_replace_all_text(x = doc, old_value = " plaintiff1_dob", new_value = convert_date_format(plaintiff$dob[1]), warn = FALSE),
+  body_replace_all_text(x = doc, old_value = " plaintiff2_dob", new_value = ifelse(plaintiff$number == 1, "", convert_date_format(plaintiff$dob[2])), warn = FALSE)
+)
+```
+
+```{r qualifications}
+qualifications_intro_fpar <- transform_text_to_fpar(qualifications$intro)
+qualifications_body_fpar <- transform_text_to_fpar(qualifications$causation)
+qualifications_block <- block_list(
+#  run_wordtext(style = "Normal"), 
+  qualifications_intro_fpar, 
+#  shortcuts$fp_null(),
+  qualifications_body_fpar)
+```
+
+```{r put pieces together}
+
+```
+
+
+```{r sample footnote}
+# working footnote structure
 bl <- block_list(
   fpar(ftext(" hello"), fp_p = fp_par_footnote), 
   fpar(ftext(" second ref"), fp_p = fp_par_footnote),
   fpar(ftext(" second ref"), fp_p = fp_par_footnote)
 )
 
-a_par <- fpar(
+footnote_fpar <- fpar(
   "this paragraph contains a note",
-  run_footnote(x = bl[1], prop = fp_refnote),
-  run_footnote(x = bl[2], prop = fp_refnote),
-  run_footnote(x = bl[3], prop = fp_refnote),
+  run_footnote(x = bl[1], prop = fp_text_refnote),
+  run_footnote(x = bl[2], prop = fp_text_refnote),
+  run_footnote(x = bl[3], prop = fp_text_refnote),
   "."
 )
-
-doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx")) %>%
-body_add_fpar(value = a_par) %>%
-
-print(target = "test.docx")
 ```
 
 ```{r final build}
 # functioning fpar add
-doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx")) %>%
-headers_replace_all_text("Line1", header_line1, warn = FALSE) %>%
-headers_replace_all_text("Line2", header_line2, warn = FALSE) %>%
-headers_replace_all_text("Line3", header_line3, warn = FALSE) %>%
-body_add_blocks(bl_from_fpar_test) %>%
-body_add_docx("test.docx") %>%
+# fonts: use Normal for 16pt spacing and Compact for single line spacing
+doc %>%
+body_add_blocks(header_blocklist) %>%
+body_add_blocks(heading_blocklist) %>%
+body_add_blocks(qualifications_block) %>%
+#body_add_fpar(value = qualifications_fpar) %>%
+#body_add_docx("test.docx") %>%
 print(target = "../FRA-report-output.docx")
 
 
