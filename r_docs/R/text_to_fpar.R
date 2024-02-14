@@ -16,8 +16,8 @@ add_fpar_prefix_and_suffix <- function(text) {
     return()
 }
 
-add_fpar_prefix_and_suffix_italic <- function(text) {
-  paste0("fpar(ftext('", text, "'), fp_t =)") %>%
+add_fpar_prefix_and_suffix_fpt_fpp <- function(text, fp_t = NULL, fp_p = "fp_par_normal_body") {
+  paste0("fpar(ftext('", text, "'), fp_t = ", fp_t, ", fp_p = ", fp_p, ")") %>%
     return()
 }
 
@@ -27,11 +27,16 @@ execute_fpar <- function(text) {
     return()
 }
 
-transform_text_to_fpar <- function(text) {
+test_text <- "test"
+#fpar_test_text <- add_fpar_prefix_and_suffix_fpt_fpp(test_text, fp_p = "fp_par_single_space")
+#executed_fpar_test_text <- execute_fpar(fpar_test_text)
+#executed_fpar_test_text_functioned <- transform_text_to_fpar(test_text, fp_t = "fp_text_italic", fp_p = "fp_par_normal_body")
+
+transform_text_to_fpar <- function(text, fp_t = NULL, fp_p = "fp_par_normal_body") {
   text %>%
     replace_line_and_page_breaks_fun() %>%
     replace_vars_fun() %>%
-    add_fpar_prefix_and_suffix() %>%
+    add_fpar_prefix_and_suffix_fpt_fpp(fp_t, fp_p) %>%
     execute_fpar() %>%
     return()
 }
