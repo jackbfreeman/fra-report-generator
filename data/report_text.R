@@ -1,4 +1,4 @@
-qualifications <- data.frame(
+qualifications <- list(
   intro <- "My qualifications to provide opinions concerning the matters herein, particularly on issues of the causal relationship between trauma and injury, are as follows:
 @@linebreak
 @@linebreak",
@@ -14,7 +14,7 @@ I have provided testimony in more than 400 civil and criminal trials in state an
 @@linebreak"
 )
 
-i_am_in_receipt <- data.frame(
+i_am_in_receipt <- list(
   causation = "
 Dear @Mr_Ms(lawyer$gender) @lawyer$last_name,@@linebreak
 @@linebreak
