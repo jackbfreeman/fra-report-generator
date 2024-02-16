@@ -23,7 +23,7 @@ crash <- list(
 )
 
 plaintiff <- list(
-  number = 1, # 1 or 2
+  number = 2, # 1 or 2
   first_name = c("Pl1FirstName", "Pl2FirstName"),
   last_name = c("Pl1LastName", "Pl2LastName"),
   gender = c("f", "m"),
