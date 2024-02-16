@@ -2,7 +2,7 @@ qualifications_blocklist_causation <- block_list(
   fpar(
     ftext(
       "My qualifications to provide opinions concerning the matters herein, particularly on issues of the causal relationship between trauma and injury, are as follows:",
-      prop = fp_text_italic)),
+      prop = fp_text_lite(italic = TRUE))),
   fpar(),
   fpar(
     ftext(

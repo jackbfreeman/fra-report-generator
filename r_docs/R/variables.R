@@ -63,6 +63,8 @@ defense_biomech_expert <- list(
 
 action_individual <- ifelse(case == "yes", "action", "individual")
 
+doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.dotx", "../data/fra-template-caus-rebut.dotx"))
+
 file_name <- ""
 
 # case name is only plaintiff name if case is "no"
