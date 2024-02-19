@@ -11,8 +11,8 @@ knitr::opts_chunk$set(echo = FALSE)
 library(magrittr)
 library(officer)
 library(dplyr)
-source("../r_docs/R/grammar.R")
 source("../r_docs/R/styles.R")
+source("../r_docs/R/grammar.R")
 source("../r_docs/R/variables.R")
 source("../r_docs/R/elements/heading.R")
 source("../r_docs/R/elements/qualifications.R")
@@ -80,7 +80,7 @@ footnote_fpar <- fpar(
 ```{r final build}
 # fonts: use Normal for 16pt spacing and Body Text 2 for single line spacing
 doc %>%
-body_add(heading_blocklist) %>%
+body_add(heading_blocklist, style = "Body Text 2") %>%
 body_add(qualifications_blocklist) %>%
 print(target = "../FRA-report-output.docx")
 
