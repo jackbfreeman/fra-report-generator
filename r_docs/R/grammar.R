@@ -18,6 +18,17 @@ convert_date_format <- function(date_str) {
   return(formatted_date)
 }
 
+calculate_age <- function(birthdate, reference_date) {
+  # Convert strings to Date objects
+  birthdate <- as.Date(birthdate, format = "%m/%d/%Y")
+  reference_date <- as.Date(reference_date, format = "%m/%d/%Y")
+  
+  # Calculate age in years
+  age <- as.numeric(difftime(reference_date, birthdate, units = "days") / 365.25)
+  
+  return(floor(age))
+}
+
 
 plural <- function(x) {
   if(nchar(x)==1) {

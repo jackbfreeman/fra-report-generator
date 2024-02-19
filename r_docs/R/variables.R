@@ -1,5 +1,5 @@
 ddd <- "01/01/2021"
-doc_type <- "causation"
+doc_type <- "notes"
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
@@ -28,6 +28,7 @@ plaintiff <- list(
   last_name = c("Pl1LastName", "Pl2LastName"),
   gender = c("f", "m"),
   dob = c("01/01/1999", "01/02/1990"),
+  age = c(calculate_age(plaintiff$dob[1], crash$date), calculate_age(plaintiff$dob[2], crash$date)), # need to write code for figuring this out
   weight = "100", # pounds
   injury_location = "disk", # disk, shoulder, spine (rollover)
   car_make = "PlCarMake",

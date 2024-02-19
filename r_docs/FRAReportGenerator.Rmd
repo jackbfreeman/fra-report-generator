@@ -10,131 +10,15 @@ date: "2023-12-30"
 knitr::opts_chunk$set(echo = FALSE)
 library(magrittr)
 library(officer)
-source("../data/report_text.R")
-source("R/grammar.R")
-source("R/text_to_fpar.R")
-```
-#Variables
-```{r vars}
-ddd <- "01/01/2021"
-doc_type <- "causation"
-case <- "yes" # yes/no
-case_no <- "CaseNoSample" # hidden if no case
-court_name <- "SampleCourtName"
-case_defendant_name <- "SampleCaseDefendantName"
-
-lawyer <- list(
-  first_name = "LawyerFirst",
-  last_name = "LawyerLast",
-  gender = "m",
-  firm_name = "SampleFirmName",
-  address = "123 Address St.",
-  city = "CityVille",
-  state = "StateLand",
-  zip = "12345",
-  phone = "0123456789"
-)
-
-crash <- list(
-  date = "01/01/2020",
-  pdof = "rear" # frontal, rear, near-side, far-side, rollover
-)
-
-plaintiff <- list(
-  number = 1, # 1 or 2
-  first_name = c("Pl1FirstName", "Pl2FirstName"),
-  last_name = c("Pl1LastName", "Pl2LastName"),
-  gender = c("f", "m"),
-  dob = c("01/01/1999", "01/02/1990"),
-  weight = "100", # pounds
-  injury_location = "disk", # disk, shoulder, spine (rollover)
-  car_make = "PlCarMake",
-  car_model = "PlCarModel",
-  car_year = "1995"
-)
-
-defendant <- list(
-  first_name = "DefFirstName",
-  last_name = "DefLastName",
-  gender = "m",
-  car_make = "DefCarMake",
-  car_model = "DefCarModel"
-)
-
-
-mdf_deltaV <- "10" # mph
-mdf_accel <- "8" # g
-
-defense_biomech_expert <- list(
-  first_name = "ExpertFirst",
-  last_name = "ExpertLast",
-  title = "Dr.", # Dr. Mr. Ms.
-  gender = "f",
-  depo_reviewed = "no",
-  depo_date = "01/01/2021",
-  deltaV = "8", # mph
-  acceleration = "6", # g
-  report_citations_number = "12",
-  report_pages_number = "15",
-  report_date = "01/01/2021"
-)
-
-action_individual <- ifelse(case == "yes", "action", "individual")
-
-file_name <- ""
-
-# case name is only plaintiff name if case is "no"
-case_name <- if (case == "no") {
-  if (plaintiff$number == 1) {
-    result <- c(plaintiff$first_name[1], " ", plaintiff$last_name[1])
-  } else if (plaintiff$number == 2) {
-    result <- c(
-      plaintiff$first_name[1], " ", plaintiff$last_name[1],
-      "; ",
-      plaintiff$first_name[2], " ", plaintiff$last_name[2]
-    )
-    result <- paste0(result, collapse = "")
-  } else {
-    result <- "Unsupported number of plaintiffs"
-  }
-  result
-} else {
-  if (plaintiff$number == 1) {
-    result <- c(
-      plaintiff$first_name[1], " ", plaintiff$last_name[1], " et al. v ",
-      case_defendant_name, " et al.,", " Case No: ", case_no, ", ", court_name
-    )
-    result <- paste0(result, collapse = "")
-  } else if (plaintiff$number == 2) {
-    result <- c(
-      plaintiff$first_name[1], " ", plaintiff$last_name[1], "; ",
-      plaintiff$first_name[2], " ", plaintiff$last_name[2],
-      " et al. v ", case_defendant_name, " et al.,", " Case No: ", case_no, ", ", court_name
-    )
-    result <- paste0(result, collapse = "")
-  } else {
-    result <- "Unsupported number of plaintiffs"
-  }
-  result
-}
-
-doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.docx", "../data/fra-template-caus-rebut.docx"))
-```
-
-```{r create fpar from text functions}
-# making the text output contain line breaks
-
-# turn @@linebreak into linebreaks, @@pagebreak into pagebreaks, and variable references into working references in the final document
-
-
-#bl_from_fpar_test <- block_list(fpar_test_text)
-
-
-
-
-
-
-
+library(dplyr)
+source("../r_docs/R/grammar.R")
+source("../r_docs/R/styles.R")
+source("../r_docs/R/variables.R")
+source("../r_docs/R/elements/heading.R")
+source("../r_docs/R/elements/qualifications.R")
+source("../r_docs/R/elements/receipt.R")
+# table for reading styles
+styles_tab <- styles_info(doc)
 ```
 
 ```{r header}
@@ -161,32 +45,19 @@ fp_text_italic <- fp_text_lite(italic = TRUE)
 
 ```
 
-```{r heading}
-heading_blocklist <- block_list(
-  body_replace_all_text(x = doc, old_value = "ddd_date", new_value = convert_date_format(ddd), warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "lawyername", new_value = paste0(lawyer$first_name, " ", lawyer$last_name, ", Esquire"), warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "lawyer_office_name", new_value = lawyer$firm_name, warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "lawyer_office_address1", new_value = lawyer$address, warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "lawyer_office_address2", new_value = paste0(lawyer$city, ", ", lawyer$state, " ", lawyer$zip), warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "lawyer_phone", new_value = phone_fun(lawyer$phone), warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "case_name", new_value = case_name, warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "crash_date", new_value = convert_date_format(crash$date), warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "plaintiff1_name", new_value = paste(plaintiff$first_name[1], plaintiff$last_name[1]), warn = FALSE),
-  body_replace_all_text(x = doc, old_value = "plaintiff2_name", new_value = ifelse(plaintiff$number == 1, "", paste(plaintiff$first_name[2], plaintiff$last_name[2], ":")), warn = FALSE),
-  # DOB STILL NOT WORKING
-  body_replace_all_text(x = doc, old_value = " plaintiff1_dob", new_value = convert_date_format(plaintiff$dob[1]), warn = FALSE),
-  body_replace_all_text(x = doc, old_value = " plaintiff2_dob", new_value = ifelse(plaintiff$number == 1, "", convert_date_format(plaintiff$dob[2])), warn = FALSE)
-)
-```
-
 ```{r qualifications}
-qualifications_intro_fpar <- transform_text_to_fpar(qualifications$intro)
-qualifications_body_fpar <- transform_text_to_fpar(qualifications$causation)
-qualifications_block <- block_list(
-#  run_wordtext(style = "Normal"), 
-  qualifications_intro_fpar, 
-#  shortcuts$fp_null(),
-  qualifications_body_fpar)
+# choose appropriate blocklists for case type
+heading_blocklist <- if(doc_type == "notes") {
+  heading_blocklist_notes
+} else {
+  heading_blocklist_caus_etc
+}
+
+qualifications_blocklist <- if(doc_type == "notes") {
+  block_list()
+  } else {
+  qualifications_blocklist_causation
+}
 ```
 
 ```{r sample footnote}
@@ -207,16 +78,11 @@ footnote_fpar <- fpar(
 ```
 
 ```{r final build}
-# functioning fpar add
-# fonts: use Normal for 16pt spacing and Compact for single line spacing
+# fonts: use Normal for 16pt spacing and Body Text 2 for single line spacing
 doc %>%
-body_add_blocks(header_blocklist) %>%
-body_add_blocks(heading_blocklist) %>%
-body_add_blocks(qualifications_block) %>%
-#body_add_fpar(value = qualifications_fpar) %>%
-#body_add_docx("test.docx") %>%
+body_add(heading_blocklist) %>%
+body_add(qualifications_blocklist) %>%
 print(target = "../FRA-report-output.docx")
-
 
 # Header
 

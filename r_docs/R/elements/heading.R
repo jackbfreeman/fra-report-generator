@@ -19,17 +19,50 @@ heading_blocklist_notes <- block_list(
   fpar(
     ftext(
       paste0(
-        "RE:\t",
-        case_name
-      ))), 
-  fpar(), 
+        "RE:\t")),
+        ftext(case_name, fp_text_lite(italic = TRUE))
+      ), 
+  fpar(),
+  fpar(),
   fpar(
     ftext(
       paste0(
         "Date of Crash:\t", 
         convert_date_format(
           crash$date
-        )))))
+        )))),
+  fpar(
+    ftext(
+      "Date of Birth:\t"
+    ),
+    ftext(paste0(
+      plaintiff$first_name[1],
+      plaintiff$last_name[1],
+      ": "),
+      prop = fp_text_lite(italic = TRUE)),
+    ftext(
+      convert_date_format(
+        plaintiff$dob[1]
+      )), 
+    ftext(" ["), ftext(plaintiff$age[1]), ftext(" years old at time of crash]")),
+  if (plaintiff$number == 2) {
+    fpar(
+      ftext(
+        "\t"
+      ),
+      ftext(paste0(
+        plaintiff$first_name[2],
+        plaintiff$last_name[2],
+        ": "),
+        prop = fp_text_lite(italic = TRUE)),
+      ftext(
+        convert_date_format(
+          plaintiff$dob[2]
+        )), 
+      ftext(" ["), ftext(plaintiff$age[2]), ftext(" years old at time of crash]"))
+  },
+  fpar(),
+  fpar())
 
 heading_blocklist_caus_etc <- block_list(
   fpar(
@@ -75,9 +108,9 @@ heading_blocklist_caus_etc <- block_list(
   fpar(
     ftext(
       paste0(
-        "RE:\t", 
-        case_name
-      ))),
+        "RE:\t")),
+    ftext(case_name, fp_text_lite(italic = TRUE))
+  ),
   fpar(),
   fpar(
     ftext(
@@ -98,7 +131,8 @@ heading_blocklist_caus_etc <- block_list(
     ftext(
       convert_date_format(
         plaintiff$dob[1]
-      ))),
+      )), 
+    ftext(" ["), ftext(plaintiff$age[1]), ftext(" years old at time of crash]")),
   if (plaintiff$number == 2) {
     fpar(
       ftext(
@@ -108,11 +142,12 @@ heading_blocklist_caus_etc <- block_list(
         plaintiff$first_name[2],
         plaintiff$last_name[2],
         ": "),
-        prop = fp_text_italic),
+        prop = fp_text_lite(italic = TRUE)),
       ftext(
         convert_date_format(
           plaintiff$dob[2]
-        )))
+        )), 
+      ftext(" ["), ftext(plaintiff$age[2]), ftext(" years old at time of crash]"))
   },
   fpar(),
   fpar())
