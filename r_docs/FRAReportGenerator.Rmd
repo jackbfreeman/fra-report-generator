@@ -10,55 +10,130 @@ date: "2023-12-30"
 knitr::opts_chunk$set(echo = FALSE)
 library(magrittr)
 library(officer)
+library(officedown)
 library(dplyr)
 source("../r_docs/R/styles.R")
 source("../r_docs/R/grammar.R")
 source("../r_docs/R/variables.R")
-source("../r_docs/R/elements/heading.R")
+source("../r_docs/R/elements/header.R")
+#source("../r_docs/R/elements/heading.R")
 source("../r_docs/R/elements/qualifications.R")
 source("../r_docs/R/elements/receipt.R")
 # table for reading styles
 styles_tab <- styles_info(doc)
 ```
 
-```{r header}
-# create block list for header
-header_blocklist <- block_list(
-  headers_replace_all_text(x = doc, old_value = "Line1", new_value = paste0(lawyer$first_name, " ", lawyer$last_name, ", Esquire"), warn = FALSE),
-  headers_replace_all_text(x = doc, old_value = "Line2", new_value = "Attorney at Law", warn = FALSE),
-  headers_replace_all_text(x = doc, old_value = "Line3", new_value = case_name, warn = FALSE),
-  headers_replace_all_text(x = doc, old_value = "ddd_date", new_value = convert_date_format(ddd), warn = FALSE)
+```{r header replacement code}
+# replace header texts
+doc <- read_docx(ifelse(doc_type == "notes", "../data/fra-template-notes.dotx", "../data/fra-template-caus-rebut.dotx"))
+headers_replace_all_text(x = doc, old_value = "Line1", new_value = paste0(lawyer$first_name, " ", lawyer$last_name, ", Esquire"), warn = FALSE)
+headers_replace_all_text(x = doc, old_value = "Line2", new_value = "Attorney at Law", warn = FALSE)
+headers_replace_all_text(x = doc, old_value = "Line3", new_value = case_name, warn = FALSE)
+headers_replace_all_text(x = doc, old_value = "ddd_date", new_value = convert_date_format(ddd), warn = FALSE)
+```
+
+
+```{r loop fpar add function}
+block_add_fun <- function(x, blocklist, style = "Normal") {
+  for (i in length(blocklist):1) {
+    body_add(x, blocklist[[i]], style = style)
+  }
+  return(x)
+}
+```
+
+```{r heading}
+heading <- list()
+
+if (doc_type %in% c("causation", "rebuttal", "affidavit")) {
+  heading <- list(
+  fpar(
+    ftext(
+      convert_date_format(
+        ddd
+      ))),
+  fpar(),
+  fpar(
+    ftext(
+      paste(
+        lawyer$first_name, 
+        lawyer$last_name, 
+        "Esquire"
+      ))),
+  fpar(
+    ftext(
+      lawyer$firm_name
+    )),
+  fpar(
+    ftext(
+      lawyer$address
+    )),
+  fpar(
+    ftext(
+      paste0(
+        lawyer$city,
+        ", ",
+        lawyer$state,
+        " ",
+        lawyer$zip
+      ))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0(
+        "Tel: ",
+        phone_fun(
+          lawyer$phone
+        )))),
+  fpar(),
+  fpar()
 )
-```
-
-```{r paragraph style definitions}
-# word_style "Compact" is footnote style (size 9, single space)
-fp_par_footnote <- fp_par(line_spacing = 1, word_style = "Compact")
-
-```
-
-
-```{r text style definitions}
-# superscript footnote reference style
-fp_text_refnote <- fp_text_lite(vertical.align = "superscript")
-fp_text_italic <- fp_text_lite(italic = TRUE)
-
-```
-
-```{r qualifications}
-# choose appropriate blocklists for case type
-heading_blocklist <- if(doc_type == "notes") {
-  heading_blocklist_notes
-} else {
-  heading_blocklist_caus_etc
 }
 
-qualifications_blocklist <- if(doc_type == "notes") {
-  block_list()
-  } else {
-  qualifications_blocklist_causation
+heading <- c(heading, list(
+  fpar(
+    ftext(
+      paste0(
+        "RE:\t")),
+    ftext(case_name, fp_text_lite(italic = TRUE))
+  ),
+  fpar(),
+  fpar(),
+  fpar(
+    ftext(
+      paste0(
+        "Date of Crash:\t", 
+        convert_date_format(
+          crash$date
+        ))))))
+
+for (i in 1:length(plaintiff$first_name)) {
+  heading <- c(heading,
+                   list(fpar(
+                     ftext(
+                       ifelse(i == 1, "Date of Birth:\t", "\t")),
+                     ftext(paste0(
+                       plaintiff$first_name[i],
+                       " ",
+                       plaintiff$last_name[i],
+                       ": "),
+                       prop = fp_text_lite(italic = TRUE)),
+                     ftext(
+                       convert_date_format(
+                         plaintiff$dob[i]
+                       )), 
+                     ftext(" ["), ftext(plaintiff$age[i]), ftext(" years old at time of crash]")))
+  )
 }
 ```
+
+```{r heading loop function call}
+doc %>%
+  block_add_fun((heading), style = "Body Text 2") %>%
+  print(target = "../FRA-report-output.docx")
+```
+
+
 
 ```{r sample footnote}
 # working footnote structure
@@ -75,16 +150,12 @@ footnote_fpar <- fpar(
   run_footnote(x = bl[3], prop = fp_text_refnote),
   "."
 )
+
+styles_info(doc, type = "paragraph", is_default = TRUE)
 ```
 
 ```{r final build}
-# fonts: use Normal for 16pt spacing and Body Text 2 for single line spacing
-doc %>%
-body_add(heading_blocklist, style = "Body Text 2") %>%
-body_add(qualifications_blocklist) %>%
-print(target = "../FRA-report-output.docx")
-
-# Header
+# Heading
 
 # Lawyer address
 

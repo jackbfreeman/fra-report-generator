@@ -14,9 +14,21 @@ convert_date_format <- function(date_str) {
   
   # Format the Date object to the desired output format
   formatted_date <- format(date_obj, "%B %d, %Y")
+  formatted_date <- gsub(" 0", " ", formatted_date)
   
   return(formatted_date)
 }
+
+#' calculate_age
+#'
+#' @param birthdate 
+#' @param reference_date 
+#'
+#' @return
+#' @export
+#'
+#' @examples 
+#' calculate_age(birthdate = "01/01/1990", reference_date = "01/02/2020")
 
 calculate_age <- function(birthdate, reference_date) {
   # Convert strings to Date objects
@@ -38,7 +50,7 @@ plural <- function(x) {
     #hard to distinguish from singular noun ending in -s
     #but then it usually ends in a/i/o/u + s e.g. bus
     if(substr(x, nchar(x), nchar(x)) == "s" &
-       !substr(x, nchar(x)-1, nchar(x)-1) %in% c("a","o","i","u")) {
+       !substr(x, nchar(x)-1, nchar(x)-1) %in% c("a","o","i","u","s")) {
       return(x)
     }
     
@@ -55,6 +67,7 @@ plural <- function(x) {
     
     #ignore case, to bring it back later
     x <- tolower(x)
+    
     
     #When the noun ends in S, SH, CH, X or Z, we add -ES to the noun
     if(x != "fish" &
