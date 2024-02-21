@@ -51,47 +51,47 @@ heading <- list()
 
 if (doc_type != "notes") {
   heading <- list(
-  fpar(
-    ftext(
-      convert_date_format(
-        ddd
-      ))),
-  fpar(),
-  fpar(
-    ftext(
-      paste(
-        lawyer$first_name, 
-        lawyer$last_name, 
-        "Esquire"
-      ))),
-  fpar(
-    ftext(
-      lawyer$firm_name
-    )),
-  fpar(
-    ftext(
-      lawyer$address
-    )),
-  fpar(
-    ftext(
-      paste0(
-        lawyer$city,
-        ", ",
-        lawyer$state,
-        " ",
-        lawyer$zip
-      ))),
-  fpar(),
-  fpar(
-    ftext(
-      paste0(
-        "Tel: ",
-        phone_fun(
-          lawyer$phone
-        )))),
-  fpar(),
-  fpar()
-)
+    fpar(
+      ftext(
+        convert_date_format(
+          ddd
+        ))),
+    fpar(),
+    fpar(
+      ftext(
+        paste(
+          lawyer$first_name, 
+          lawyer$last_name, 
+          "Esquire"
+        ))),
+    fpar(
+      ftext(
+        lawyer$firm_name
+      )),
+    fpar(
+      ftext(
+        lawyer$address
+      )),
+    fpar(
+      ftext(
+        paste0(
+          lawyer$city,
+          ", ",
+          lawyer$state,
+          " ",
+          lawyer$zip
+        ))),
+    fpar(),
+    fpar(
+      ftext(
+        paste0(
+          "Tel: ",
+          phone_fun(
+            lawyer$phone
+          )))),
+    fpar(),
+    fpar()
+  )
 }
 
 heading <- c(heading, list(
@@ -113,20 +113,21 @@ heading <- c(heading, list(
 
 for (i in 1:length(plaintiff$first_name)) {
   heading <- c(heading,
-                   list(fpar(
-                     ftext(
-                       ifelse(i == 1, "Date of Birth:\t", "\t")),
-                     ftext(paste0(
-                       plaintiff$first_name[i],
-                       " ",
-                       plaintiff$last_name[i],
-                       ": "),
-                       prop = fp_text_lite(italic = TRUE)),
-                     ftext(
-                       convert_date_format(
-                         plaintiff$dob[i]
-                       )), 
-                     ftext(" ["), ftext(plaintiff$age[i]), ftext(" years old at time of crash]")))
+               list(fpar(
+                 ftext(
+                   ifelse(i == 1, "Date of Birth:\t", "\t")),
+                 ftext(paste0(
+                   plaintiff$first_name[i],
+                   " ",
+                   plaintiff$last_name[i],
+                   ": "),
+                   prop = fp_text_lite(italic = TRUE)),
+                 ftext(
+                   convert_date_format(
+                     plaintiff$dob[i]
+                   )), 
+                 ftext(" ["), ftext(plaintiff$age[i]), 
+                 ftext(" years old at time of crash]")))
   )
 }
 
@@ -135,8 +136,8 @@ heading <- c(heading, list(fpar(), fpar()))
 
 ```{r receipt}
 receipt <- list()
-receipt$causation <- list()
-receipt$causation$rollover <- list(
+receipt <- list()
+receipt <- list(
   fpar(
     ftext(
       paste("Dear", Mr_Ms(lawyer$gender), lawyer$last_name)
@@ -150,26 +151,34 @@ receipt$causation$rollover <- list(
     ftext(
       if (case == "yes") {
         "action"
-      } else if (length(plaintiff$first_name > 1)) {
+      } else if (length(plaintiff$first_name) > 1) {
         "individuals"
       } else {
         "individual"
       }),
-    ftext(". I have reviewed the documentation accompanying your correspondence including medical records, information regarding the subject crash, litigation documents, and other materials, including the "),
     ftext(
-      if (defense_biomech_expert$depo_reviewed == "yes")
-        paste0(convert_date_format(defense_biomech_expert$depo_date), " deposition transcript and the ")),
-    ftext(paste0(convert_date_format(defense_biomech_expert$report_date), 
-                 " report from the defendant's crash reconstruction and biomechanical expert, ",
-    defense_biomech_expert$title,
-    " ",
-    defense_biomech_expert$first_name,
-    " ",
-    defense_biomech_expert$last_name,
-    "."))
-  )
-)
-
+      ". I have reviewed the documentation accompanying your correspondence including medical records, information regarding the subject crash, litigation documents, and other materials"
+    ),
+    if (doc_type == "causation")
+      ftext(
+        "."
+      ) else {
+        ftext(
+          paste0(
+            ", including the ",
+            if(defense_biomech_expert$depo_reviewed == "yes")
+              paste0(
+                convert_date_format(defense_biomech_expert$depo_date), 
+                ", deposition transcript and the "),
+            convert_date_format(defense_biomech_expert$report_date), 
+            ", report from the defendant's crash reconstruction and biomechanical expert, ",
+            defense_biomech_expert$title,
+            " ",
+            defense_biomech_expert$first_name,
+            " ",
+            defense_biomech_expert$last_name,
+            "."
+          ))}))
 ```
 
 
@@ -179,7 +188,8 @@ doc %>%
   cursor_begin() %>% 
   body_remove() %>%
   # report section order has to be backwards because of how body_add() function works
-  block_add_fun((receipt$causation$rollover)) %>%
+  block_add_fun((purpose$publications), style = "Publications") %>%
+  block_add_fun((receipt)) %>%
   block_add_fun((heading), style = "Body Text 2") %>%
   print(target = "../FRA-report-output.docx")
 ```
