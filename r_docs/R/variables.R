@@ -24,7 +24,7 @@ crash <- list(
 
 plaintiff <- list(
   first_name = c("Pl1FirstName", "Pl2FirstName", "The Ugly One"),
-  last_name = c("Pl1LastName", "Pl2LastName", "Ugly Last Name"),
+  last_name = c("Pl1LastName", "Pl1LastName", "Ugly Last Name"),
   gender = c("f", "m", "nb"),
   dob = c("01/01/1999", "01/02/1990", "01/04/1994"),
   weight = "100", # pounds
