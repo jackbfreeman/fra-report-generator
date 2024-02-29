@@ -1,4 +1,5 @@
-qualifications_blocklist_causation <- block_list(
+qualifications <- list()
+qualifications$causation <- list(
   fpar(
     ftext(
       "My qualifications to provide opinions concerning the matters herein, particularly on issues of the causal relationship between trauma and injury, are as follows:",
@@ -27,4 +28,7 @@ qualifications_blocklist_causation <- block_list(
   fpar(
     ftext(
       "I have provided testimony in more than 400 civil and criminal trials in state and Federal courts throughout the United States, Canada, and Australia. Please see my CV for further details."
-    )))
+    ),
+    run_pagebreak()
+  )
+)
