@@ -43,7 +43,15 @@ calculate_age <- function(birthdate, reference_date) {
 
 
 plural <- function(x) {
-  if(nchar(x)==1) {
+  #Conjugate simple verbs
+  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't")) {
+    if(x == "has") x <- "have"
+    if(x == "is") x <- "are"
+    if(x == "was") x <- "were"
+    if(x == "hasn't") x <- "haven't"
+    if(x == "isn't") x <- "aren't"
+    if(x == "wasn't") x <- "weren't"
+  } else if (nchar(x)==1) {
     return(paste0(x, "'s"))
   } else {
     #noun may already be plural:
@@ -67,6 +75,7 @@ plural <- function(x) {
     
     #ignore case, to bring it back later
     x <- tolower(x)
+    
     
     
     #When the noun ends in S, SH, CH, X or Z, we add -ES to the noun
@@ -114,39 +123,45 @@ plural <- function(x) {
   return(x)
 }
 
+single_plural <- function(x) {
+  if (length(plaintiff$first_name) >1)
+    return(plural(x))
+  else return(x)
+}
+
 # Gender
-Mr_Ms <- function(gender_var) {
+Mr_Ms <- function(gender_var = plaintiff$gender[1]) {
   if (gender_var == "m") return("Mr.")
   else if (gender_var == "f") return("Ms.")
   else return("Mx.")
 }
 
-He_She <- function(person = plaintiff$gender[1]) {
-  if (length(person) > 1) return("They")
-  else if (person == "f") return("She")
-  else if (person == "m") return("He")
+He_She <- function(person = plaintiff) {
+  if (length(person$gender) > 1) return("They")
+  else if (person$gender == "f") return("She")
+  else if (person$gender == "m") return("He")
   else {return("They")}
 }
 
-he_she <- function(person = plaintiff$gender[1]) tolower(He_She(person))
+he_she <- function(person = plaintiff) tolower(He_She(person))
 
-His_Her <- function(person = plaintiff$gender[1]) {
-  if (length(person) > 1) return("Their")
-  else if (person == "f") return("Her")
-  else if (person == "m") return("His")
+His_Her <- function(person = plaintiff) {
+  if (length(person$gender) > 1) return("Their")
+  else if (person$gender == "f") return("Her")
+  else if (person$gender == "m") return("His")
   else {return("Their")}
 }
 
-his_her <- function(person = plaintiff$gender[1]) tolower(His_Her(person))
+his_her <- function(person = plaintiff) tolower(His_Her(person))
 
-Him_Her <- function(person = plaintiff$gender[1]) {
-  if (length(person) > 1) return("Them")
-  else if (person == "f") return("Her")
-  else if (person == "m") return("Him")
+Him_Her <- function(person = plaintiff) {
+  if (length(person$gender) > 1) return("Them")
+  else if (person$gender == "f") return("Her")
+  else if (person$gender == "m") return("Him")
   else {return("Them")}
 }
 
-him_her <- function(person = plaintiff$gender[1]) tolower(Him_Her(person))
+him_her <- function(person = plaintiff) tolower(Him_Her(person))
 
 # if plaintiff$number is 1: "Mr. Plaintiff"; if plaintiff$number is 2: "Mr. Plaintiff1 and/or Mr. Plaintiff2" (and/or depending on which word is put as an argument for the function); if same last name, "Mr. and Ms. X"
 Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and") {
