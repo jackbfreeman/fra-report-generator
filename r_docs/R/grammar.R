@@ -116,71 +116,86 @@ plural <- function(x) {
 
 # Gender
 Mr_Ms <- function(gender_var) {
-  if (gender_var == "m") {return("Mr.")}
-  else if (gender_var == "f") {return("Ms.")}
-  else {return("Mx.")}
+  if (gender_var == "m") return("Mr.")
+  else if (gender_var == "f") return("Ms.")
+  else return("Mx.")
 }
 
-He_She <- function(gender_var) {
-  if (gender_var == "m") {return("He")}
-  else if (gender_var == "f") {return("She")}
+He_She <- function(person = plaintiff$gender[1]) {
+  if (length(person) > 1) return("They")
+  else if (person == "f") return("She")
+  else if (person == "m") return("He")
   else {return("They")}
 }
 
-he_she <- function(gender_var) {tolower(He_She(gender_var))}
+he_she <- function(person = plaintiff$gender[1]) tolower(He_She(person))
 
-His_Her <- function(gender_var) {
-  if (gender_var == "m") {return("His")}
-  else if (gender_var == "f") {return("Her")}
+His_Her <- function(person = plaintiff$gender[1]) {
+  if (length(person) > 1) return("Their")
+  else if (person == "f") return("Her")
+  else if (person == "m") return("His")
   else {return("Their")}
 }
 
-his_her <- function(gender_var) {tolower(His_Her(gender_var))}
+his_her <- function(person = plaintiff$gender[1]) tolower(His_Her(person))
 
-Him_Her <- function(gender_var) {
-  if (gender_var == "m") {return("Him")}
-  else if (gender_var == "f") {return("Her")}
+Him_Her <- function(person = plaintiff$gender[1]) {
+  if (length(person) > 1) return("Them")
+  else if (person == "f") return("Her")
+  else if (person == "m") return("Him")
   else {return("Them")}
 }
 
-him_her <- function(gender_var) {tolower(Him_Her(gender_var))}
+him_her <- function(person = plaintiff$gender[1]) tolower(Him_Her(person))
 
-# if plaintiff$number is 1: Mr. Plaintiff; if plaintiff$number is 2: Mr. Plaintiff1 and/or Mr. Plaintiff2 (and/or depending on which word is put as an argument for the function)
-Mr_Pl_Lastname <- function(conjunction = "and") {
-  if (plaintiff$number == 1) {
-    result <- paste(Mr_Ms(plaintiff$gender[1]), plaintiff$last_name[1], sep = " ")
-  } else if (plaintiff$number == 2) {
-    result <- paste0(Mr_Ms(plaintiff$gender[1]), " ", ifelse(plaintiff$last_name[1] == pl2_last_name, "", paste0(plaintiff$last_name[1], " ")), conjunction, " ", Mr_Ms(plaintiff$gender[2]), " ", pl2_last_name)
-  } else {
-    result <- "NAME ERROR"
+# if plaintiff$number is 1: "Mr. Plaintiff"; if plaintiff$number is 2: "Mr. Plaintiff1 and/or Mr. Plaintiff2" (and/or depending on which word is put as an argument for the function); if same last name, "Mr. and Ms. X"
+Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and") {
+  x <- ""
+  for (i in 1:length(person$last_name)) {
+    x <- paste0(x, 
+                Mr_Ms(person$gender[i]), 
+                " ", 
+                ifelse(length(person$last_name) > 1 & 
+                         (i == length(person$last_name) | 
+                            person$last_name[i] != person$last_name[i + 1]) |
+                         length(person$last_name) == 1, 
+                       paste0(person$last_name[i], 
+                              ifelse(i != length(person$last_name), " ", "")
+                       ), 
+                       ""),  # Closing parenthesis added here
+                ifelse(
+                  i == length(person$last_name), 
+                  "", 
+                  paste0( 
+                    conjunction, 
+                    " ")))
   }
-  return(result)
-}
-
-# if plaintiff$number is 1: Mr. Plaintiff; if plaintiff$number is 2: Mr. Plaintiff1 and/or Mr. Plaintiff2 (and/or depending on which word is put as an argument for the function)
-Mr_Pl_Lastname_s <- function(conjunction = "and") {
-  if (plaintiff$number == 1) {
-    result <- paste0(Mr_Ms(plaintiff$gender[1]), "", plaintiff$last_name[1], "'s")
-  } else if (plaintiff$number == 2) {
-    result <- paste0(Mr_Ms(plaintiff$gender[1]), " ", ifelse(plaintiff$last_name[1] == plaintiff$last_name[2], "", paste0(plaintiff$last_name[1], " ")), conjunction, " ", Mr_Ms(plaintiff$gender[2]), " ", plaintiff$last_name[2], "'s")
-  } else {
-    result <- "NAME ERROR"
-  }
-  return(result)
+  return(x)
 }
 
 # if plaintiff$number is 1: Plaintiff full name; if plaintiff$number is 2: Plaintiff1 full name and/or Plaintiff2 full name (and/or depending on which word is put as an argument for the function)
-Pl_Firstname_Lastname <- function(conjunction = "and") {
-  if (plaintiff$number == 1) {
-    result <- paste(plaintiff$first_name[1], plaintiff$last_name[1])
-  } else if (plaintiff$number == 2) {
-    result <- c(plaintiff$first_name[1],
-                if(plaintiff$last_name[1] != plaintiff$last_name[2]) plaintiff$last_name[1],
-                conjunction, 
-                plaintiff$first_name[2], plaintiff$last_name[2])
-    result <- paste(result, collapse = " ")
-  } else {
-    result <- "NAME ERROR"
+Firstname_Lastname <- function(person = plaintiff, conjunction = "and") {
+  x <- ""
+  for (i in 1:length(person$last_name)) {
+    x <- paste0(x, 
+                person$first_name[i], 
+                " ", 
+                ifelse(length(person$last_name) > 1 & 
+                         (i == length(person$last_name) | 
+                            person$last_name[i] != person$last_name[i + 1])|
+                         length(person$last_name) == 1, 
+                       paste0(person$last_name[i], 
+                              ifelse(i != length(person$last_name), " ", "")
+                       ), 
+                       ""),  # Closing parenthesis added here
+                ifelse(
+                  i == length(person$last_name), 
+                  "", 
+                  paste0( 
+                    conjunction, 
+                    " ")))
   }
-  return(result)
+  return(x)
 }
+
+Dr_Mr_Ms_Expert_Lastname <- function() {paste(defense_biomech_expert$title, defense_biomech_expert$last_name)}
