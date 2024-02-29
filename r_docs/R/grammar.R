@@ -121,29 +121,32 @@ Mr_Ms <- function(gender_var) {
   else return("Mx.")
 }
 
-He_She <- function(person) {
-  if (person == "m") return("He")
+He_She <- function(person = plaintiff$gender[1]) {
+  if (length(person) > 1) return("They")
   else if (person == "f") return("She")
+  else if (person == "m") return("He")
   else {return("They")}
 }
 
-he_she <- function(person) tolower(He_She(person))
+he_she <- function(person = plaintiff$gender[1]) tolower(He_She(person))
 
-His_Her <- function(person) {
-  if (person == "m") return("His")
+His_Her <- function(person = plaintiff$gender[1]) {
+  if (length(person) > 1) return("Their")
   else if (person == "f") return("Her")
-  else return("Their")
+  else if (person == "m") return("His")
+  else {return("Their")}
 }
 
-his_her <- function(person) {tolower(His_Her(person))}
+his_her <- function(person = plaintiff$gender[1]) tolower(His_Her(person))
 
-Him_Her <- function(person) {
-  if (person == "m") return("Him")
+Him_Her <- function(person = plaintiff$gender[1]) {
+  if (length(person) > 1) return("Them")
   else if (person == "f") return("Her")
-  else return("Them")
+  else if (person == "m") return("Him")
+  else {return("Them")}
 }
 
-him_her <- function(person) tolower(Him_Her(person))
+him_her <- function(person = plaintiff$gender[1]) tolower(Him_Her(person))
 
 # if plaintiff$number is 1: "Mr. Plaintiff"; if plaintiff$number is 2: "Mr. Plaintiff1 and/or Mr. Plaintiff2" (and/or depending on which word is put as an argument for the function); if same last name, "Mr. and Ms. X"
 Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and") {
