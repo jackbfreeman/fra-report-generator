@@ -89,7 +89,7 @@ plural <- function(x) {
     x <- gsub("([b-df-hj-np-tv-xz])y$", "\\1ies", x)
     
     #If the noun ends in a CONSONANT + O, we normally add -ES to the noun.
-    if(!x %in% c("piano", "halo", "photo")) {
+    if(!x %in% c("piano", "halo", "photo", "torso")) {
       x <- gsub("([b-df-hj-np-tv-xz])o$", "\\1oes", x)
     }
     

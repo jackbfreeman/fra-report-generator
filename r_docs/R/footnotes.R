@@ -4,7 +4,6 @@ footnotes_blocklist <- block_list(fpar(ftext("Melia P et al. Development of the 
   fpar(ftext("Etherton v. Owner Insurance Company. U.S. District Court of Appeals, 10th Circuit. Case No. 14-1164."), fp_p = fp_par_footnote),
   fpar(ftext("Freeman MD, Zeegers M. Principles and applications of forensic epidemiology in the medicolegal setting. Law, Probability, & Risk 2015; doi:10.1093/lpr/mgv010."), fp_p = fp_par_footnote),
   fpar(ftext("Koehler S, Freeman MD. Forensic epidemiology; a methodology for investigating and quantifying specific causation. Forens Sci Med Path 2014 Jun;10(2):217-22"), fp_p = fp_par_footnote),
-  fpar(ftext("Freeman MD, Kohles SS. An Evaluation of Applied Biomechanics as an adjunct to systematic specific causation in forensic medicine. Wien Med Wochenschr 2011;161:1-11."), fp_p = fp_par_footnote),
   fpar(ftext("Hashish R, Badday H. Frequency of acute cervical and lumbar pathology in common types of motor vehicle collisions: a retrospective record review. BMC Musculoskeletal Disorders 2017;18:437"), fp_p = fp_par_footnote),
   fpar(ftext("Bunketorp O (2017) WAD – Criteria for Evaluation of Causality. Open J Trauma 1(3):054-063."), fp_p = fp_par_footnote),
   fpar(ftext("35 F.Supp.3d 1360 United States District Court, D. Colorado. Donald L. Etherton, Plaintiff, v. Owners Insurance Company, a Michigan Insurance Company, Defendant. Civil Action No. 10–cv–00892– PAB–KLM"), fp_p = fp_par_footnote),

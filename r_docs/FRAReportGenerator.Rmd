@@ -26,6 +26,7 @@ source("../r_docs/R/purpose.R")
 source("../r_docs/R/summary_opinions.R")
 source("../r_docs/R/background_notes_med_hx.R")
 source("../r_docs/R/general_comments.R")
+source("../r_docs/R/inj_biomech_intro.R")
 # table for reading styles
 styles_tab <- styles_info(doc)
 ```
@@ -45,8 +46,7 @@ block_add_fun <- function(x, blocklist, style = "Normal") {
 
 ## reference for replacing grammar in report language:
 
-Mr_Ms_Lastname()/Firstname_Lastname() - defaults to plaintiff; otherwise
-argument will be "defendant" or "lawyer" - includes all plaintiffs,
+Mr_Ms_Lastname()/Firstname_Lastname() - defaults to plaintiff; otherwise argument will be "defendant" or "lawyer" - includes all plaintiffs,
 genders for single and naturalizes language for multiple
 
 he_she()/He_She() him_her()/Him_Her() his_her()/His_Her() - defaults to
@@ -56,7 +56,14 @@ single_plural() - argument ("in quotes") will be single if
 length(plaintiff\$first_name) == 1, otherwise pluralize - pluralizes
 verbs too (is, isn't, was, wasn't, has, hasn't)
 
-```{r injury biomechanics intro}
+
+```{r report structure build}
+notes_structure <- as.list(
+  c(heading,
+    background_facts$notes))
+```
+
+```{r injury biomechanics}
 inj_biomech <- list()
 
 inj_biomech$intro$causation <- list(
@@ -78,9 +85,9 @@ inj_biomech$intro$causation <- list(
       "The three fundamental elements or steps of an injury causation analysis are as follows: 
 Whether the injury mechanism had the potential to cause the injury in question (aka general causation);")),
 fpar(
-ftext("The degree of temporal proximity between the injury mechanism and the onset of the symptoms reasonably indicating the presence of the injury; and")),
+  ftext("The degree of temporal proximity between the injury mechanism and the onset of the symptoms reasonably indicating the presence of the injury; and")),
 fpar(
-ftext("Whether there is a more likely alternative explanation for the occurrence of the symptoms at the same point in time (aka differential etiology).")),
+  ftext("Whether there is a more likely alternative explanation for the occurrence of the symptoms at the same point in time (aka differential etiology).")),
 fpar(),
 fpar(
   ftext("As applied to the facts in the subject case, these 3 steps are as follows:")),
@@ -90,12 +97,103 @@ fpar(
 fpar((ftext("CRASH RECONSTRUCTION", prop = fp_text_lite(italic = TRUE, bold = TRUE)))),
 fpar(),
 fpar(ftext("Injury biomechanics", prop = fp_text_lite(italic = TRUE))))
-```
 
-```{r report structure build}
-notes_structure <- as.list(
-  c(heading,
-    background_facts$notes))
+inj_biomech$intro$rebuttal <- list(
+  fpar(
+    ftext(
+      "The generally accepted and peer-reviewed method of crash-related injury causation analysis for a specific individual is performed by assessing the risk of injury from the collision and comparing it to the probability that the injuries or conditions would have been present at the same point in time if the collision had not occurred. The process is referred to as a \"3-step\" injury causation method in which improbable alternative causes are ruled out and the single most likely cause is identified. The analysis is accomplished via the application of crash reconstruction, biomechanical, medical, and epidemiologic (risk assessment) principles."),
+    run_footnote(x = footnotes_blocklist[1], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[5], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[6], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[7], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[2], prop = fp_text_refnote),
+    ftext(" This 3-step methodology has been extensively described in the peer-reviewed literature, been deemed generally accepted by Courts in the United States, and has been adopted as part of case law in the U.S."),
+    run_footnote(x = footnotes_blocklist[3], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[7], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[8], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[9], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[4], prop = fp_text_refnote)),
+  # must be rendered with style "Body Text 3" for inverted indentation
+  fpar(
+    ftext(
+      "The three fundamental elements or steps of an injury causation analysis are as follows: Whether the injury mechanism had the potential to cause the injury in question (aka general causation);"
+    )),
+  fpar(
+    ftext(
+      "The degree of temporal proximity between the injury mechanism and the onset of the symptoms reasonably indicating the presence of the injury;"
+    )),
+  fpar(
+    ftext(
+      "Whether there is a more likely alternative explanation for the occurrence of the symptoms at the same point in time (aka differential etiology)."
+    )),
+  fpar())
+
+inj_biomech$meat$caus$frontal$disk <- list(
+  fpar(
+    ftext(
+      paste0(
+        "The subject high speed frontal collision would have produced high loads in ", Mr_Ms_Lastname(), "’s entire ", single_plural("body"), ", as they continued to travel forward inside the vehicle and into the deploying airbags, seatbelts, steering wheel, and dashboard at ", mdf_deltaV, " mph. The loads on ", Mr_Ms_Lastname(), "’s ", single_plural("spine"), " and spinal ", single_plural("disk")," would have included high levels of compression, rotation, and shear, and would have had the potential to cause any level of injury severity to ", Mr_Ms_Lastname(), ", including all of the injuries that ", he_she(), " ", single_plural("was"), " ultimately diagnosed with. The US National Highway Traffic Safety Administration reports that at an approximately ", mdf_deltaV, " mph crash, nearly AMOUNT% of occupants will sustain some degree of injury that is immediately apparent and requires medical evaluation, around AMOUNT% will sustain a fracture or more significant injury, and around AMOUNT% will sustain a life-threatening injury (i.e., spinal cord injury, skull fracture, etc.)."
+             )),
+    run_footnote(x = footnotes_blocklist[10], prop = fp_text_refnote)),
+  fpar(
+    ftext(
+      paste0(
+        "Thus, all of the injuries diagnosed in ", Mr_Ms_Lastname(), " after the subject collision, and the associated treatments that ", he_she(), " sought for ", his_her(), " symptoms of significant and persisting spinal injury, are entirely explained by the exceedingly dangerous high speed frontal crash that ", he_she(), " ", single_plural("was"), " exposed to."
+        ))),
+  fpar())
+
+inj_biomech$meat$caus$rear$disk <- list(
+  fpar(
+    ftext(
+      paste0(
+        "The rear impact would have resulted in ", Mr_Ms_Lastname(), "’s ", single_plural("torso"), " and ", single_plural("head"), " initially being thrown rearwards into the seatback at around ", mdf_deltaV, " mph, and then rebounding forward into the restraining seat belt and toward the steering wheel (the first part of the crash kinematics that ", he_she(), " recall", ifelse(length(plaintiff$first_name) > 1, "", "s"), "). ", He_She(), " would have sustained substantial complex loads on ", his_her(), " ", single_plural("spine"), " in the collision, loads that include compression, rotation, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs)."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0("The most reliable and largest set of published data on occupant forces in rear impacts indicate that, for a ", plaintiff$age[1], "-year-old ", if(plaintiff$gender[1] == "m") paste0("male") else if (plaintiff$gender[1] == "f") paste0("female") else (paste0("person")), " the average peak head acceleration of a ", mdf_deltaV, " mph rear impact delta V would be around ", mdf_accel, " g, which would translate to a peak cervical spinal disk load of around ")), 
+    # change, see where this number comes from
+    ftext("100", prop = fp_text_lite(bold = TRUE)), 
+    ftext(
+      paste0(" lbs. on ", his_her(), single_plural("neck"), ".  The same data indicate a load of around ", mdf_accel, " g on ", his_her(), " low ", single_plural("back"), ", which would translate to a peak load of around ")), 
+    # change, see where this number comes from
+    ftext("360", prop = fp_text_lite(bold = TRUE)), 
+    ftext(
+      paste0(" lbs. on ", his_her(), " lumbar spinal ", single_plural("disk"), ". These loads are more than sufficient to cause a wide range of musculoligamentous and skeletal injuries, including injuries to the intervertebral disks of the low back and neck. In the general population, the risk of a symptomatic cervical disk in a rear impact crash like the subject collision is represented in the chart below:"))),
+  fpar(
+    ftext(
+      "Discussion")),
+  fpar(
+    ftext(
+      paste0(
+        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus.", if(plaintiff$gender[1] == "m") paste0("Men") else if (plaintiff$gender[1] == "f") paste0("Women") else (paste0("People")), "in their late 
+      
+      2th
+      
+      decade, like ", Mr_Ms_Lastname(), " (who was 12 at the time of the crash) typically have ", if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate"), " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0(
+        "The symptoms of spinal disk injury may, in some cases, be instantly recognizable after a traffic crash because of the sudden onset of radiculopathy, but recent research has demonstrated that only about 1 in 17 cervical disk injuries are recognized as such in the ED after a crash.")),
+    run_footnote(x = footnotes_blocklist[13], prop = fp_text_refnote),
+    ftext(
+      " By far, the majority (94%) of what are later determined to be spinal disk injuries are initially diagnosed as in the ED as spinal strains.")),
+  fpar(
+    ftext(
+      "Although the subject crash was no \"bumper tap\" it is well established in science and medicine that an excessive level of force is not required to cause symptomatic injury to a degenerated disk, and that in most cases, the diagnostic imaging of the disk will not reveal whether related symptoms are of a traumatic origin or not, in the absence of fracture.  Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing."),
+  run_footnote(x = footnotes_blocklist[15], prop = fp_text_refnote),
+  run_footnote(x = footnotes_blocklist[16], prop = fp_text_refnote),
+  run_footnote(x = footnotes_blocklist[17], prop = fp_text_refnote),
+  run_footnote(x = footnotes_blocklist[18], prop = fp_text_refnote),
+  run_footnote(x = footnotes_blocklist[19], prop = fp_text_refnote),
+  run_footnote(x = footnotes_blocklist[20], prop = fp_text_refnote),
+  run_footnote(x = footnotes_blocklist[21], prop = fp_text_refnote),
+  ftext(
+    paste0(" It is accurate to state that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur.
+
+Based on the preceding discussion there was ample and biomechanically appropriate force exerted on Mr. SAMPLE-P1-LN’s body in the subject collision to have caused his  medically documented injuries, and associated need for evaluation and treatment, including his  spinal pain management procedures, etc.
+"
+    ))))
 ```
 
 ```{r heading loop function call}
@@ -109,7 +207,8 @@ doc %>%
   cursor_begin() %>% 
   body_remove() %>%
   # report section order has to be backwards because of how body_add() function works
-  block_add_fun(inj_biomech$intro$causation) %>%
+  block_add_fun(inj_biomech$meat$caus$rear$disk[1]) %>%
+  block_add_fun(inj_biomech$meat$caus$rear$disk, style = "Body Text 3") %>%
   block_add_fun(general_comments) %>%
   # block_add_fun(background_facts$notes) %>%
   # block_add_fun(qualifications$causation, style = "Normal") %>%
