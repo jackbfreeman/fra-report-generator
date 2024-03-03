@@ -177,7 +177,7 @@ Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and") {
                        paste0(person$last_name[i], 
                               ifelse(i != length(person$last_name), " ", "")
                        ), 
-                       ""),  # Closing parenthesis added here
+                       ""),
                 ifelse(
                   i == length(person$last_name), 
                   "", 
