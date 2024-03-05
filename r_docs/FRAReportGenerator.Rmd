@@ -168,8 +168,8 @@ inj_biomech$meat$caus$rear$disk <- list(
     ftext(
       paste0(" lbs. on ", his_her(), " lumbar spinal ", single_plural("disk"), ". These loads are more than sufficient to cause a wide range of musculoligamentous and skeletal injuries, including injuries to the intervertebral disks of the low back and neck. In the general population, the risk of a symptomatic cervical disk in a rear impact crash like the subject collision is represented in the chart below:"))),
   fpar(),
-  # fpar(
-  #   external_img(src = file.path("images", "biomech", "delta_V_binomial.jpg"))),
+   # fpar(
+   #   external_img(src = file.path("images", "biomech", "delta_V_binomial.jpg"))),
   #fpar(block_caption("Chart showing the relationship between a ~5 to 6 mph delta V (red band) rear impact and cervical disk injury risk observed in 113 people exposed to real-world crashes. As demonstrated in the chart, the risk of a cervical disk injury ranges from 2.5 to 3.3%, or around 1 in 40 to 1 in 30 in such a crash. The risk to the low back is approximately 60% that of the risk to the neck. Note: 5 to 6 mph is approximately equal to 8 to 10 km/h on the chart.", style = fp_par_footnote)),
   fpar(),
   fpar(
