@@ -44,13 +44,14 @@ calculate_age <- function(birthdate, reference_date) {
 
 plural <- function(x) {
   #Conjugate simple verbs
-  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't")) {
+  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't", "it")) {
     if(x == "has") x <- "have"
     if(x == "is") x <- "are"
     if(x == "was") x <- "were"
     if(x == "hasn't") x <- "haven't"
     if(x == "isn't") x <- "aren't"
     if(x == "wasn't") x <- "weren't"
+    if(x == "it") x <- "they"
   } else if (nchar(x)==1) {
     return(paste0(x, "'s"))
   } else {

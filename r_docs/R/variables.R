@@ -20,7 +20,8 @@ lawyer <- list(
 
 crash <- list(
   date = "01/01/2020",
-  pdof = "rear" # frontal, rear, near-side, far-side, rollover
+  pdof = "rear", # frontal, rear, near-side, far-side, rollover
+  fatality = "no"
 )
 
 plaintiff <- list(
@@ -61,7 +62,8 @@ defense_biomech_expert <- list(
   acceleration = "6", # g
   report_citations_number = "12",
   report_pages_number = "15",
-  report_date = "01/01/2021"
+  report_date = "01/01/2021",
+  mdf_agree = "no"
 )
 
 action_individual <- ifelse(case == "yes", "action", "individual")
