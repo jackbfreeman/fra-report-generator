@@ -34,7 +34,8 @@ plaintiff <- list(
   car_make = "PlCarMake",
   car_model = "PlCarModel",
   car_year = "1995",
-  seat_position = c("driver", "front passenger", "rear right passenger") # driver, front passenger, rear left/right passenger
+  seat_position = c("driver", "front passenger", "rear right passenger"), # driver, front passenger, rear left/right passenger
+  dx_dr = c("Dr. Doctor")
 )
 
 plaintiff$age <- sapply(plaintiff$dob, calculate_age, crash$date)

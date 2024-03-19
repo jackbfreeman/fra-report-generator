@@ -2,7 +2,10 @@ background_facts <- list()
 
 background_facts$notes <- list(
   block_pour_docx(background_facts_recon_file_name),
-  block_pour_docx(med_hx_file_name)
+  fpar(),
+  fpar(),
+  block_pour_docx(med_hx_file_name),
+  fpar()
 )
 
 background_facts$causation <- list(
@@ -11,7 +14,10 @@ background_facts$causation <- list(
     ftext(
       "At the time of the crash, "
     )),
-  block_pour_docx(med_hx_file_name)
+  fpar(),
+  fpar(),
+  block_pour_docx(med_hx_file_name),
+  fpar()
 )
 
 background_facts$rebuttal <- list(
@@ -20,5 +26,8 @@ background_facts$rebuttal <- list(
     ftext(
       "At the time of the crash, "
     )),
-  block_pour_docx(med_hx_file_name)
+  fpar(),
+  fpar(),
+  block_pour_docx(med_hx_file_name),
+  fpar()
 )

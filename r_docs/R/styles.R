@@ -1,6 +1,5 @@
 # paragraph styles
 fp_par_normal_body <- fp_par(word_style = "Normal")
-fp_par_heading <- fp_par(word_style = "Body Text 2")
 fp_par_footnote <- fp_par(line_spacing = 1, word_style = "Compact")
 fp_par_bodytext2 <- fp_par(word_style = "Body Text 2")
 
