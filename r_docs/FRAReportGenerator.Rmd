@@ -17,8 +17,9 @@ library(officedown)
 library(dplyr)
 library(toOrdinal)
 source("../r_docs/R/styles.R")
-source("../r_docs/R/grammar.R")
 source("../r_docs/R/variables.R")
+source("../r_docs/R/grammar.R")
+
 source("../r_docs/R/footnotes.R")
 source("../r_docs/R/header_replacement.R")
 source("../r_docs/R/heading.R")
@@ -102,13 +103,15 @@ caus_doc_rear_disk_build <- list(
     background_facts$causation,
     inj_biomech$meat$caus$rear$disk[1:4],
     inj_biomech$meat$caus$rear$disk[5],
-    inj_biomech$meat$caus$rear$disk[6:length(inj_biomech$meat$caus$rear$disk)]
+    inj_biomech$meat$caus$rear$disk[6],
+    inj_biomech$meat$caus$rear$disk[7:length(inj_biomech$meat$caus$rear$disk)]
     ),
   style = list(
     "Body Text 2", 
     "Normal",
     "Normal",
     "Subtitle",
+    "caption",
     "Normal")
 )
 
@@ -118,19 +121,44 @@ caus_doc_rear_shoulder_build <- list(
     heading, 
     background_facts$causation,
     inj_biomech$meat$caus$rear$shoulder[1:4],
-    inj_biomech$meat$caus$rear$shoulder[5:16],
-    inj_biomech$meat$caus$rear$shoulder[17:19],
-    inj_biomech$meat$caus$rear$shoulder[20:27],
-    inj_biomech$meat$caus$rear$shoulder[28:length(inj_biomech$meat$caus$rear$shoulder)]
+    inj_biomech$meat$caus$rear$shoulder[5],
+    inj_biomech$meat$caus$rear$shoulder[6:7],
+    inj_biomech$meat$caus$rear$shoulder[8],
+    inj_biomech$meat$caus$rear$shoulder[9:10],
+    inj_biomech$meat$caus$rear$shoulder[11],
+    inj_biomech$meat$caus$rear$shoulder[12:13],
+    inj_biomech$meat$caus$rear$shoulder[14],
+    inj_biomech$meat$caus$rear$shoulder[15],
+    inj_biomech$meat$caus$rear$shoulder[16:20],
+    inj_biomech$meat$caus$rear$shoulder[21],
+    inj_biomech$meat$caus$rear$shoulder[22:23],
+    inj_biomech$meat$caus$rear$shoulder[24],
+    inj_biomech$meat$caus$rear$shoulder[25:26],
+    inj_biomech$meat$caus$rear$shoulder[27],
+    inj_biomech$meat$caus$rear$shoulder[28:29],
+    inj_biomech$meat$caus$rear$shoulder[30:length(inj_biomech$meat$caus$rear$shoulder)]
     ),
   style = list(
-    "Body Text 2", 
-    "Normal",
-    "Normal",
-    "Subtitle",
-    "Normal",
-    "Subtitle",
-    "Normal")
+    "Body Text 2", # heading,
+    "Normal", # background_facts$causation,
+    "Normal", # inj_biomech$meat$caus$rear$shoulder[1:4],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[5],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[6:7],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[8],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[9:10],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[11],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[12:13],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[14],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[15],
+    "Normal", # inj_biomech$meat$caus$rear$shoulder[16:20],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[21],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[22:23],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[24],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[25:26],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[27],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[28:29],
+    "Normal" # inj_biomech$meat$caus$rear$shoulder[30:length(inj_biomech$meat$caus$rear$shoulder)]
+    )
 )
 
 ```

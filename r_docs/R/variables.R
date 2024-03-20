@@ -38,7 +38,7 @@ plaintiff <- list(
   dx_dr = c("Dr. Doctor")
 )
 
-plaintiff$age <- sapply(plaintiff$dob, calculate_age, crash$date)
+
 
 
 defendant <- list(
@@ -78,3 +78,4 @@ med_hx_file_name <- "../data/sample_med_hx.docx"
 case_name <- paste(plaintiff$first_name, plaintiff$last_name) %>% paste(collapse = "; ")
 if(case == "yes") case_name <- paste(case_name,
                                      paste0("et al. v ", case_defendant_name, " et al.,", " Case No: ", case_no, ", ", court_name))
+

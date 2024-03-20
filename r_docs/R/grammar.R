@@ -41,6 +41,8 @@ calculate_age <- function(birthdate, reference_date) {
   return(floor(age))
 }
 
+plaintiff$age <- sapply(plaintiff$dob, calculate_age, crash$date)
+
 
 plural <- function(x) {
   #Conjugate simple verbs
@@ -164,23 +166,26 @@ Him_Her <- function(person = plaintiff) {
 
 him_her <- function(person = plaintiff) tolower(Him_Her(person))
 
+Men_Women <- if (plaintiff$gender[1] == "m") "Men" else if (plaintiff$gender[1] == "f") "Women" else "People"
+men_women <- tolower(Men_Women)
+
 # if plaintiff$number is 1: "Mr. Plaintiff"; if plaintiff$number is 2: "Mr. Plaintiff1 and/or Mr. Plaintiff2" (and/or depending on which word is put as an argument for the function); if same last name, "Mr. and Ms. X"
-Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and") {
+Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and", number = length(person$last_name)) {
   x <- ""
-  for (i in 1:length(person$last_name)) {
+  for (i in 1:number) {
     x <- paste0(x, 
                 Mr_Ms(person$gender[i]), 
                 " ", 
-                ifelse(length(person$last_name) > 1 & 
-                         (i == length(person$last_name) | 
+                ifelse(number > 1 & 
+                         (i == number | 
                             person$last_name[i] != person$last_name[i + 1]) |
-                         length(person$last_name) == 1, 
+                         number == 1, 
                        paste0(person$last_name[i], 
-                              ifelse(i != length(person$last_name), " ", "")
+                              ifelse(i != number, " ", "")
                        ), 
                        ""),
                 ifelse(
-                  i == length(person$last_name), 
+                  i == number, 
                   "", 
                   paste0( 
                     conjunction, 
@@ -215,3 +220,7 @@ Firstname_Lastname <- function(person = plaintiff, conjunction = "and") {
 }
 
 Dr_Mr_Ms_Expert_Lastname <- function() {paste(defense_biomech_expert$title, defense_biomech_expert$last_name)}
+
+nth_decade <- paste0(ifelse(plaintiff$age[1]%%10 >5, "late ", "early "), toOrdinal(floor((plaintiff$age[1]/10)+1)), " decade")
+
+asymptomatic_moderate <- if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate")

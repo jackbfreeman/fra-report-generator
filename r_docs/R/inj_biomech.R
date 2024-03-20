@@ -102,7 +102,7 @@ inj_biomech$meat$caus$rear$disk <- list(
   fpar(),
   fpar(
     external_img(src = file.path("..", "images", "biomech", "delta_V_binomial.png"), width = 4.2, height = 3.4), fp_p = fp_par(text.align = "center")),
-  block_caption("Chart showing the relationship between a ~5 to 6 mph delta V (red band) rear impact and cervical disk injury risk observed in 113 people exposed to real-world crashes. As demonstrated in the chart, the risk of a cervical disk injury ranges from 2.5 to 3.3%, or around 1 in 40 to 1 in 30 in such a crash. The risk to the low back is approximately 60% that of the risk to the neck. Note: 5 to 6 mph is approximately equal to 8 to 10 km/h on the chart.", style = "caption"),
+  fpar(ftext("Chart showing the relationship between a ~5 to 6 mph delta V (red band) rear impact and cervical disk injury risk observed in 113 people exposed to real-world crashes. As demonstrated in the chart, the risk of a cervical disk injury ranges from 2.5 to 3.3%, or around 1 in 40 to 1 in 30 in such a crash. The risk to the low back is approximately 60% that of the risk to the neck. "), ftext("Note:", prop = fp_text_italic), ftext(" 5 to 6 mph is approximately equal to 8 to 10 km/h on the chart.")),
   fpar(),
   fpar(
     ftext(
@@ -110,7 +110,7 @@ inj_biomech$meat$caus$rear$disk <- list(
   fpar(
     ftext(
       paste0(
-        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", if (plaintiff$gender[1] == "m") "Men" else if (plaintiff$gender[1] == "f") "Women" else "People", " in their ", ifelse(plaintiff$age[1]%%10 >5, "late ", "early "), toOrdinal(floor((plaintiff$age[1]/10)+1)), " decade, like ", Mr_Ms_Lastname(), " (who was 12 at the time of the crash) typically have ", if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate"), " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
+        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", men_women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(plaintiff, number = 1), " (who was ", plaintiff$age[1], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
   fpar(),
   fpar(
     ftext(
@@ -155,19 +155,19 @@ inj_biomech$meat$caus$rear$shoulder <- list(
   fpar(),
   fpar(
     external_img(src = file.path("..", "images", "biomech", "rear_shoulder1.png"), width = 4.2, height = 3.0)),
-  block_caption("Time = 0 msec: Occupant in neutral position at time of impact. Note the distance between the knee and the front of the seat.", style = "caption"),
+  fpar(ftext("Time = 0 msec: Occupant in neutral position at time of impact. Note the distance between the knee and the front of the seat.")),
   fpar(),
   fpar(
     external_img(src = file.path("..", "images", "biomech", "rear_shoulder2.png"), width = 4.2, height = 3.0)),
-  block_caption("Time = 175 msec: The occupant’s torso completely compresses the seatback and the head and neck are at maximum extension. The hand comes off the steering wheel and the distance between the knee and the front of the seat now increases, as the hips begin to rebound forward ahead of the torso and head, indicating shear forces in the low back.", style = "caption"),
+  fpar(ftext("Time = 175 msec: The occupant’s torso completely compresses the seatback and the head and neck are at maximum extension. The hand comes off the steering wheel and the distance between the knee and the front of the seat now increases, as the hips begin to rebound forward ahead of the torso and head, indicating shear forces in the low back.")),
   fpar(),
   fpar(
     external_img(src = file.path("..", "images", "biomech", "rear_shoulder3.png"), width = 4.2, height = 3.0)),
-  block_caption("Time = 200 msec: The occupant’s torso and head begin to rebound off of the compressed seatback. His right hand strikes the steering wheel and his knees move toward the dashboard.", style = "caption"),
+  fpar(ftext("Time = 200 msec: The occupant’s torso and head begin to rebound off of the compressed seatback. His right hand strikes the steering wheel and his knees move toward the dashboard.")),
   fpar(),
   fpar(
     external_img(src = file.path("..", "images", "biomech", "rear_shoulder4.png"), width = 4.2, height = 3.0)),
-  block_caption("Time = 250 msec: The occupant is projected forward past his pre-crash position in the vehicle and loads the now locked shoulder belt with his left shoulder.", style = "caption"),
+  fpar(ftext("Time = 250 msec: The occupant is projected forward past his pre-crash position in the vehicle and loads the now locked shoulder belt with his left shoulder.")),
   fpar(),
   fpar(
     ftext(
@@ -185,26 +185,26 @@ inj_biomech$meat$caus$rear$shoulder <- list(
   fpar(),
   fpar(
     external_img(src = file.path("..", "images", "biomech", "rear_shoulder5.png"), width = 4.2, height = 3.4)),
-  block_caption(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and peak head acceleration measured in 126 volunteers. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, peak head accelerations can exceed 17g (17 times the forces of gravity). Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart."), style = "caption"),
+  fpar(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and peak head acceleration measured in 126 volunteers. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, peak head accelerations can exceed 17g (17 times the forces of gravity). Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart."))),
   fpar(),
   fpar(
     external_img(src = file.path("..", "images", "biomech", "rear_shoulder6.png"), width = 4.2, height = 3.4)),
-  block_caption(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and peak low back acceleration measured in 39 volunteers. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, peak low back accelerations can exceed 7g (7 times the forces of gravity). Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart."), style = "caption"),
+  fpar(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and peak low back acceleration measured in 39 volunteers. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, peak low back accelerations can exceed 7g (7 times the forces of gravity). Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart."))),
   fpar(),
   fpar(
     external_img(src = file.path("..", "images", "biomech", "rear_shoulder7.png"), width = 4.2, height = 3.4)),
-  block_caption(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and cervical disk injury risk observed in 113 people exposed to real-world crashes. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, the risk of a cervical disk injury ranges from 2.5 to 3.2% or around 1 in 31 to 1 in 40. Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart."), style = "caption"),
+  fpar(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and cervical disk injury risk observed in 113 people exposed to real-world crashes. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, the risk of a cervical disk injury ranges from 2.5 to 3.2% or around 1 in 31 to 1 in 40. Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart."))),
   fpar(),
   fpar(
     ftext(
       paste0(
-        "The types of shoulder and spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (a SLAP lesion and cervical and thoracic disk derangements) are consistent with the injury mechanism of the crash. The sheer forces exerted on ", Mr_Ms_Lastname(), "’s left shoulder by the shoulder belt (or possibly transmitted by transferred forces through ", Mr_Ms_Lastname(), "’s grip on the steering wheel), would have had the potential to cause the SLAP lesion diagnosed by ", plaintiff$dx_dr, ". This is one of the reasons that the American Academy of Orthopedic Surgeons lists traffic crashes prominently as one of the causes of SLAP lesions, along with falls, sports involving overhead movement, and dislocations.  The risk of SLAP lesions is closely associated with age, and men in ", Mr_Ms_Lastname(), "’s age group are at nearly 3 times the risk of the injury as men in their 20’s, regardless of activity.  This is due to the normal wear and tear-related degenerative changes that occur in the shoulder over time, which has the tendency to make the shoulder more susceptible to injury in the event of a sudden traumatic load. There is no lower threshold of crash force for causing a SLAP lesion; any force that could cause a strain could also potentially cause a SLAP lesion, as the same structures are loaded regardless of the diagnosis. A study of rear impact crashes with an average delta V of 4 mph reported that around 1 in 10 subjects had persisting symptoms and diagnosis of shoulder injury at 5 or more weeks post-crash."
+        "The types of shoulder and spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (a SLAP lesion and cervical and thoracic disk derangements) are consistent with the injury mechanism of the crash. The sheer forces exerted on ", Mr_Ms_Lastname(), "’s left shoulder by the shoulder belt (or possibly transmitted by transferred forces through ", Mr_Ms_Lastname(), "’s grip on the steering wheel), would have had the potential to cause the SLAP lesion diagnosed by ", plaintiff$dx_dr, ". This is one of the reasons that the American Academy of Orthopedic Surgeons lists traffic crashes prominently as one of the causes of SLAP lesions, along with falls, sports involving overhead movement, and dislocations.  The risk of SLAP lesions is closely associated with age, and ", men_women, " in ", Mr_Ms_Lastname(), "’s age group are at nearly ")), ftext("3", prop = fp_text_bold), ftext(paste0(" times the risk of the injury as ", men_women, " in their ", 10 * floor(plaintiff$age[1]/10) , "s, regardless of activity.  This is due to the normal wear and tear-related degenerative changes that occur in the shoulder over time, which has the tendency to make the shoulder more susceptible to injury in the event of a sudden traumatic load. There is no lower threshold of crash force for causing a SLAP lesion; any force that could cause a strain could also potentially cause a SLAP lesion, as the same structures are loaded regardless of the diagnosis. A study of rear impact crashes with an average delta V of 4 mph reported that around 1 in 10 subjects had persisting symptoms and diagnosis of shoulder injury at 5 or more weeks post-crash."
       ))),
   fpar(),
   fpar(
     ftext(
       paste0(
-        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily symptomatic disk derangements in the neck and middle back) are highly consistent with the injury mechanism of the crash as well. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", if (plaintiff$gender[1] == "m") "Men" else if (plaintiff$gender[1] == "f") "Women" else "People", " in their ", ifelse(plaintiff$age[1]%%10 >5, "late ", "early "), toOrdinal(floor((plaintiff$age[1]/10)+1)), " decade like ", Mr_Ms_Lastname(), " typically have ", if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate"), " age-related degenerative changes of the disks of the spine, a factor that increases the risk of injury in the event of the crash like the subject rear impact. "
+        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily symptomatic disk derangements in the neck and middle back) are highly consistent with the injury mechanism of the crash as well. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", men_women, " in their ", nth_decade, " like ", Mr_Ms_Lastname(plaintiff, number = 1), " typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a factor that increases the risk of injury in the event of the crash like the subject rear impact. "
       ))),
   fpar(),
   fpar(
@@ -226,3 +226,4 @@ inj_biomech$meat$caus$rear$shoulder <- list(
       paste0(
         "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s body in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " left shoulder SLAP repair surgery, etc."
       ))))
+
