@@ -273,15 +273,15 @@ inj_biomech$meat$caus$near_side$disk <- list(
         "The symptoms of spinal disk injury may, in some cases, be instantly recognizable after a traffic crash because of the sudden onset of radiculopathy, but recent research has demonstrated that only about 1 in 17 cervical disk injuries are recognized as such in the ED after a crash.")),
     run_footnote(x = footnotes_blocklist[13], prop = fp_text_refnote),
     ftext(
-      "  By far, the majority (94%) of what are later determined to be spinal disk injuries are initially diagnosed as in the ED as spinal strains.")),
+      " By far, the majority (94%) of what are later determined to be spinal disk injuries are initially diagnosed as in the ED as spinal strains.")),
   fpar(),
   fpar(
     ftext(
       paste0(
         "Although the subject crash was no \"bumper tap\" it is well established in biomechanics, medicine, and epidemiology that an excessive level of force is not required to cause symptomatic injury to a spinal disk with any degree of degeneration, and that in most cases, the diagnostic imaging of the disk will not reveal whether related symptoms are of a traumatic origin or not, in the absence of fracture.")),
-      run_footnote(x = footnotes_blocklist[14], prop = fp_text_refnote),
-      ftext(
-        "  Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing."),
+    run_footnote(x = footnotes_blocklist[14], prop = fp_text_refnote),
+    ftext(
+      " Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing."),
     run_footnote(x = footnotes_blocklist[15], prop = fp_text_refnote),
     ftext("-", prop = fp_text_refnote),
     run_footnote(x = footnotes_blocklist[16], prop = fp_text_refnote),
@@ -298,6 +298,122 @@ inj_biomech$meat$caus$near_side$disk <- list(
     ftext(
       paste0(
         "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s body in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " spinal pain management procedures and cervical spine surgery."
+      )
+    )
+  ),
+  fpar()
+)
+
+
+inj_biomech$meat$caus$near_side$shoulder <- list(
+  fpar(
+    ftext(
+      paste0("The initial impact would have resulted in Mr. «plaintiff_last_name»’s body initially being thrown forward and to the left at around a 10:30 vector at around «MDF_deltaV_mph» mph and into his restraining shoulder belt and toward the driver’s side door, as well as the steering wheel. He would have sustained substantial complex loads on his spine in the collision, loads that include compression, rotation, forward and lateral flexion, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs). Mr. «plaintiff_last_name»’s left shoulder would have sustained a sudden transient load potentially exceeding 500 lbs. as it interacted with the shoulder belt, or possibly the driver’s side door."))),
+  fpar(),
+  fpar(
+    ftext(
+      "Discussion", prop = fp_text_italic)),
+  fpar(
+    ftext(
+      paste0(
+        "The types of spine and extremity injuries that Mr. «plaintiff_last_name» was diagnosed with are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. Men in their «decade»th decade, like Mr. Walker (who was «plaintiff_age_at_time_of_crash» at the time of the crash) typically have d age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in Mr. «plaintiff_last_name»’s imaging more likely due to a combination of the trauma of the crash, and some degree of pre-existing degeneration. The same principles apply to Mr. «plaintiff_last_name»’s left shoulder injury; «plaintiff_age_at_time_of_crash» year old men typically have some degenerative changes in the joints and rotator cuff of the shoulder, but the frank tear and other injuries observed in Mr. «plaintiff_last_name»’s MRI and during the arthroscopic procedure performed on his left shoulder are likely a result of the acute trauma of the subject collision, rather than purely a pre-existing asymptomatic condition that was converted to symptomatic by the crash."))),
+  fpar(
+    ftext(
+      paste0("It is well established in science and medicine that an excessive level of force is not required to cause symptomatic injury to a degenerated disk, and that in most cases, the diagnostic imaging of the disk will not reveal whether related symptoms are of a traumatic origin or not, in the absence of fracture.  Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing.")),
+    run_footnote(x = footnotes_blocklist[15], prop = fp_text_refnote),
+    ftext("-", prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[16], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[17], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[18], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[19], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[20], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[21], prop = fp_text_refnote),
+    ftext(
+      paste0(
+        " It is accurate to state that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur. The same principle applies to traumatic derangement of the joints and rotator cuff of the shoulder."))),
+  fpar(
+    ftext(
+      paste0("Based on the preceding discussion there was ample and biomechanically appropriate force exerted on Mr. «plaintiff_last_name»’s body in the subject collision to have caused his medically documented injuries, and associated need for evaluation and treatment, including his spinal pain management procedures, etc."
+      )
+    )
+  ),
+  fpar()
+)
+
+
+inj_biomech$meat$caus$near_side$shoulder <- list(
+  fpar(
+    ftext(
+      paste0("The right front impact would have resulted in Mr. SAMPLE-P1-LN’s torso and head to initially be thrown forward and to the right, toward the rearview mirror/ center console at around SAMPLE-MDF-DV mph, until he  was restrained by their seatbelt and likely muscular contraction from holding the steering wheel. The force of the motion would have created high bending loads on the joints and disks of his  neck and spine, likely combined with sudden muscular protective forces which would have produced high levels of compression on the spinal disks in Mr. SAMPLE-P1-LN’s neck and back.  This all would have taken less time than it takes to blink an eye (around 200 msecs)."))),
+  fpar(),
+  fpar(
+    ftext(
+      "Discussion", prop = fp_text_italic)),
+  fpar(
+    ftext(
+      paste0(
+        "The types of spinal injuries that Mr. SAMPLE-P1-LN was diagnosed with (primarily symptomatic disk derangements overlaying pre-existing degenerative changes) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. Men in their 2th decade, like Mr. SAMPLE-P1-LN (who was 12 at the time of the crash) typically have d age-related degenerative changes of the disks and joints of the spine. Mr. SAMPLE-P1-LN had an extensive pre-crash history of spinal injury and symptoms, including persisting symptoms after an unsuccessful low back spine surgery, as well as right shoulder symptoms, indicating that his cervical spine was likely far more fragile than the average driver, or even the average 12-year-old male driver. These considerations make the subject collision far more likely to have \"converted\" asymptomatic or minimally symptomatic cervical spine degenerative changes to a symptomatic state, rather than being the sole cause of all or even most of the pathology identified in the post-crash imaging."))),
+  fpar(
+    ftext(
+      paste0("The symptoms of spinal disk injury may, in some cases, be instantly recognizable after a traffic crash because of the sudden onset of radiculopathy, but recent research has demonstrated that only about 1 in 17 cervical disk injuries are recognized as such in the ED after a crash.  By far, the majority (94%) of what are later determined to be spinal disk injuries are initially diagnosed as in the ED as spinal strains."))),
+  fpar(
+    ftext(
+      paste0("Although the subject crash was no \"bumper tap\" it is well established in biomechanics, medicine, and epidemiology that an excessive level of force is not required to cause symptomatic injury to a spinal disk with any degree of degeneration, and that in most cases, the diagnostic imaging of the disk will not reveal whether related symptoms are of a traumatic origin or not, in the absence of fracture.  Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing.")),
+    run_footnote(x = footnotes_blocklist[15], prop = fp_text_refnote),
+    ftext("-", prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[16], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[17], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[18], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[19], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[20], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[21], prop = fp_text_refnote),
+    ftext(
+      paste0(
+        " It is accurate to state, both from a biomechanical and epidemiological perspective, that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur, and that the load threshold at which individual’s disk may injured is only known after the injury has occurred, and the external load has been estimated. It is impossible to estimate the additional compression due to internal forces, however, and the precise load associated with a temporally proximate spinal disk injury is often impossible to accurately determine after the fact."))),
+  fpar(
+    ftext(
+      paste0("Based on the preceding discussion there was ample and biomechanically appropriate force exerted on Mr. SAMPLE-P1-LN’s body in the subject collision to have caused his  medically documented injuries, and associated need for evaluation and treatment, including his  spinal pain management procedures and cervical spine surgery."
+      )
+    )
+  ),
+  fpar()
+)
+
+
+inj_biomech$meat$rebuttal <- list(
+  fpar(
+    ftext(
+      paste0(
+        "SAMPLE-BIOMECH-LN’s frankly absurd comparisons to everyday activities and volunteer crash tests in no way addressed whether the subject collision could have caused the injuries and sequelae observed in Mr. SAMPLE-P1-LN, the first element of the causal analysis.  SAMPLE-BIOMECH-LN’s blanket denial that a mechanism existed in the subject collision for any of Mr. SAMPLE-P1-LN’s diagnosed and persisting injuries is an uninformed assertion with no basis in science, medicine, or the facts in this case and does not constitute an assessment of the plausibility of his injuries resulting from the collision."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0("SAMPLE-BIOMECH-LN has no information on the pre-crash condition of Mr. SAMPLE-P1-LN’s spine, or any other part of his body. He couldn’t pick him out of a lineup and hasn’t the faintest idea of his tolerance to any type of trauma, including the subject crash. ")), ftext("The tolerance of an individual to forceful external loads is only defined once it has been exceeded,", prop = fp_text_bold), ftext(paste0(" not based on comparisons to studies of dissimilar forces applied to bits and pieces of dead bodies (part of the basis for  SAMPLE-BIOMECH-LN’s opinion). A review of all of the evidence in the subject case clearly established the fact that Mr. SAMPLE-P1-LN’s tolerance was exceeded by the forces of the subject crash."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0("As  SAMPLE-BIOMECH-LN does not (and cannot) dispute any of Mr. SAMPLE-P1-LN’s diagnoses, and he does not provide an alternative explanation for how his diagnosed injuries would have occurred at the same time as the collision, his analysis is incomplete, and fails to account for the undeniable evidence of injury following the crash."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0("The generally accepted 3-step approach to causation described above dictates that if there are no other contemporaneous competing causes for the injury that are more likely than an investigated plausible cause of the injury, then it is the investigated cause that is the most likely cause.  SAMPLE-BIOMECH-LN simply ignored Mr. SAMPLE-P1-LN’s medical history like it never happened; his approach to \"assessing\" the cause of his injuries was to reject any evidence that he was injured in the first place.  SAMPLE-BIOMECH-LN doesn’t consider, much less mention the fact, that there are no plausible competing causes of Mr. SAMPLE-P1-LN’s injuries occurring at the same time as the crash."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0("The concept of injury thresholds as a bright line below which no injury can occur is one that has been evaluated and rejected by the biomechanical community that is involved with the evaluation of occupant forces in motor vehicle crashes. Injury thresholds have nothing to do with the evaluation of real-world collisions and can never be used to deny the presence of a real-world injury following a collision. This is made clear in an SAE publication (J885) that summarizes human threshold data for use in government crash testing:")),
+    run_footnote(x = footnotes_blocklist[13], prop = fp_text_refnote)
+    ),
+  fpar(),
+  fpar(
+    ftext(
+      paste0("\"Such [tolerance] specifications are beyond the state-of-the-art in biomechanics except perhaps for a few academic situations. There are several difficulties which prevent a ready establishment of human tolerance levels. First, there are differences in judgment as to the specific degree of injury severity that should serve as the tolerance level. Second, large differences exist in the tolerances of different individuals. It is not unusual for bone fracture tests on a sample of adult cadavers to show a three-to-one load variation. Presumably, variations of at least this magnitude exist in the living population. Finally, most tolerance levels are sensitive to modest changes in the direction, shape, and stiffness of the loading source. The above considerations indicate that complete and precise definitions of human tolerance levels will require large amounts of data based on controlled statistical samples. Only in this way can the influence of age, size, sex, and weight be comprehensively assessed and only in this way can mean loads and statistical measures of scatter be linked to specific tolerance levels.\""))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0("Crash severity analysis"))),
+  fpar(
+    ftext(
+      paste0("RECON CRASH RELATED ACCELERATION DELTA V ANALYSIS PLACEHOLDER"
       )
     )
   )

@@ -19,13 +19,13 @@ library(toOrdinal)
 source("../r_docs/R/styles.R")
 source("../r_docs/R/variables.R")
 source("../r_docs/R/grammar.R")
-
 source("../r_docs/R/footnotes.R")
 source("../r_docs/R/header_replacement.R")
 source("../r_docs/R/heading.R")
 source("../r_docs/R/receipt.R")
 source("../r_docs/R/purpose.R")
 source("../r_docs/R/summary_opinions.R")
+source("../r_docs/R/qualifications.R")
 source("../r_docs/R/background_facts_med_hx.R")
 source("../r_docs/R/general_comments.R")
 source("../r_docs/R/inj_biomech.R")
@@ -43,7 +43,7 @@ block_add_fun <- function(x, blocklist, style = "Normal") {
 
 block_add_style_fun <- function(x, list) {
   for (i in length(list$content):1) {
-      block_add_fun(x, blocklist = list$content[[i]], style = list$style[[i]])
+    block_add_fun(x, blocklist = list$content[[i]], style = list$style[[i]])
   }
   return(x)
 }
@@ -68,46 +68,54 @@ added "it" -> "they" which is not ideal because could be they or them
 # the idea here is to have an entry after each report element that appends to a list that updates and doesn't duplicate. then the block_add_style_fun() function will take each element, apply the associated $style value, and put it through the block_add_fun() function.
 
 # Style guide for block_add_style_fun() function
-  # "Normal": at least 16 pt line spacing; majority doc style
-  # "Body Text 2": Single line spacing and 3.75 tab distance
-  # "Author": block quote style indentation on both sides
-  # "Definition": bullet point in summary
-  # "Body Text 3": inverted indent in injury biomech section
-  # "caption": size 9, bold, justified, margins 2.25 in from both sides, for biomech image description subtitles
-  # "Subtitle": (for images and crash summary image descriptions) size 10, bold, centered, margins 2.25 in from both sides
-  # "footnote text": invisible for footnotes (when more than 2 in one text)
+# "Normal": at least 16 pt line spacing; majority doc style
+# "Body Text 2": Single line spacing and 3.75 tab distance
+# "Author": block quote style indentation on both sides
+# "Definition": bullet point in summary
+# "Body Text 3": inverted indent in injury biomech section
+# "caption": size 9, bold, justified, margins 2.25 in from both sides, for biomech image description subtitles
+# "Subtitle": (for images and crash summary image descriptions) size 10, bold, centered, margins 2.25 in from both sides
+# "footnote text": invisible for footnotes (when more than 2 in one text)
 
 
 notes_doc_build <- list(
- content = list(
-   heading, 
-   background_facts$notes),
- style = list(
-   "Body Text 2", 
-   "Normal")
+  content = list(
+    heading, 
+    background_facts$notes),
+  style = list(
+    "Body Text 2", 
+    "Normal")
 )
 
 caus_doc_build <- list(
   content = list(
-    heading, 
+    heading,
+    receipt,
+    purpose$causation$general,
+    qualifications$causation,
     background_facts$causation),
   style = list(
-    "Body Text 2", 
+    "Body Text 2",
+    "Normal",
+    "Normal",
+    "Normal",
     "Normal")
 )
 
 
 caus_doc_rear_disk_build <- list(
   content = list(
-    heading, 
+    heading,
+    qualifications$causation,
     background_facts$causation,
     inj_biomech$meat$caus$rear$disk[1:4],
     inj_biomech$meat$caus$rear$disk[5],
     inj_biomech$meat$caus$rear$disk[6],
     inj_biomech$meat$caus$rear$disk[7:length(inj_biomech$meat$caus$rear$disk)]
-    ),
+  ),
   style = list(
-    "Body Text 2", 
+    "Body Text 2",
+    "Normal",
     "Normal",
     "Normal",
     "Subtitle",
@@ -137,7 +145,7 @@ caus_doc_rear_shoulder_build <- list(
     inj_biomech$meat$caus$rear$shoulder[27],
     inj_biomech$meat$caus$rear$shoulder[28:29],
     inj_biomech$meat$caus$rear$shoulder[30:length(inj_biomech$meat$caus$rear$shoulder)]
-    ),
+  ),
   style = list(
     "Body Text 2", # heading,
     "Normal", # background_facts$causation,
@@ -158,7 +166,7 @@ caus_doc_rear_shoulder_build <- list(
     "Subtitle", # inj_biomech$meat$caus$rear$shoulder[27],
     "caption", # inj_biomech$meat$caus$rear$shoulder[28:29],
     "Normal" # inj_biomech$meat$caus$rear$shoulder[30:length(inj_biomech$meat$caus$rear$shoulder)]
-    )
+  )
 )
 
 caus_doc_near_side_disk_build <- list(
@@ -175,7 +183,7 @@ caus_doc_near_side_disk_build <- list(
     inj_biomech$meat$caus$near_side$disk[14],
     inj_biomech$meat$caus$near_side$disk[15:16],
     inj_biomech$meat$caus$near_side$disk[17:length(inj_biomech$meat$caus$near_side$disk)]
-    ),
+  ),
   style = list(
     "Body Text 2", # heading,
     "Normal", # background_facts$causation,
@@ -189,7 +197,33 @@ caus_doc_near_side_disk_build <- list(
     "Subtitle", # inj_biomech$meat$caus$near_side$disk[12:13],
     "caption", # inj_biomech$meat$caus$near_side$disk[14],
     "Normal" # inj_biomech$meat$caus$near_side$disk[1:length(inj_biomech$meat$caus$near_side$disk)]
-    )
+  )
+)
+
+caus_doc_near_side_shoulder_build <- list(
+  content = list(
+    heading, 
+    background_facts$causation,
+    inj_biomech$meat$caus$near_side$shoulder[1:length(inj_biomech$meat$caus$near_side$shoulder)]
+  ),
+  style = list(
+    "Body Text 2", # heading,
+    "Normal", # background_facts$causation,
+    "Normal" # inj_biomech$meat$caus$near_side$shoulder[1:length(inj_biomech$meat$caus$near_side$shoulder)]
+  )
+)
+
+rebut_doc_build <- list(
+  content = list(
+    heading, 
+    background_facts$rebuttal,
+    inj_biomech$meat$rebuttal[1:length(inj_biomech$meat$rebuttal)]
+  ),
+  style = list(
+    "Body Text 2", # heading,
+    "Normal", # background_facts$causation,
+    "Normal" #  inj_biomech$meat$rebuttal[1:length(inj_biomech$meat$rebuttal)]
+  )
 )
 ```
 
@@ -204,7 +238,7 @@ doc_build_final <-
 doc %>%
   cursor_begin() %>% 
   body_remove() %>%
-  block_add_style_fun(caus_doc_near_side_disk_build) %>%
+  block_add_style_fun(caus_doc_build) %>%
   #body_add(fpar(ftext("The test \t this should be far over"), fp_p = fp_par(word_style = "Body Text 2"))) %>%
   
   # eventual final code, when everything else has been defined
