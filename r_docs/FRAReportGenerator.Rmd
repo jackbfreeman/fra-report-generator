@@ -161,6 +161,36 @@ caus_doc_rear_shoulder_build <- list(
     )
 )
 
+caus_doc_near_side_disk_build <- list(
+  content = list(
+    heading, 
+    background_facts$causation,
+    inj_biomech$meat$caus$near_side$disk[1:4],
+    inj_biomech$meat$caus$near_side$disk[5],
+    inj_biomech$meat$caus$near_side$disk[6:7],
+    inj_biomech$meat$caus$near_side$disk[8],
+    inj_biomech$meat$caus$near_side$disk[9:10],
+    inj_biomech$meat$caus$near_side$disk[11],
+    inj_biomech$meat$caus$near_side$disk[12:13],
+    inj_biomech$meat$caus$near_side$disk[14],
+    inj_biomech$meat$caus$near_side$disk[15:16],
+    inj_biomech$meat$caus$near_side$disk[17:length(inj_biomech$meat$caus$near_side$disk)]
+    ),
+  style = list(
+    "Body Text 2", # heading,
+    "Normal", # background_facts$causation,
+    "Normal", # inj_biomech$meat$caus$near_side$disk[1:4],
+    "Subtitle", # inj_biomech$meat$caus$near_side$disk[1:4],
+    "caption", # inj_biomech$meat$caus$near_side$disk[5],
+    "Subtitle", # inj_biomech$meat$caus$near_side$disk[6:7],
+    "caption", # inj_biomech$meat$caus$near_side$disk[8],
+    "Subtitle", # inj_biomech$meat$caus$near_side$disk[9:10],
+    "caption", # inj_biomech$meat$caus$near_side$disk[11],
+    "Subtitle", # inj_biomech$meat$caus$near_side$disk[12:13],
+    "caption", # inj_biomech$meat$caus$near_side$disk[14],
+    "Normal" # inj_biomech$meat$caus$near_side$disk[1:length(inj_biomech$meat$caus$near_side$disk)]
+    )
+)
 ```
 
 ```{r heading loop function call}
@@ -174,7 +204,7 @@ doc_build_final <-
 doc %>%
   cursor_begin() %>% 
   body_remove() %>%
-  block_add_style_fun(caus_doc_rear_shoulder_build) %>%
+  block_add_style_fun(caus_doc_near_side_disk_build) %>%
   #body_add(fpar(ftext("The test \t this should be far over"), fp_p = fp_par(word_style = "Body Text 2"))) %>%
   
   # eventual final code, when everything else has been defined

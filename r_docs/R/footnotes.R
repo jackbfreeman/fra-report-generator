@@ -26,7 +26,7 @@ footnotes_blocklist <- block_list(fpar(ftext("Melia P et al. Development of the 
   fpar(ftext("Waterman et al. Trends in the diagnosis of SLAP lesions in the US military. Knee Surg Sports Traumatol Arthrosc 2015;23:1453–9)."), fp_p = fp_par_footnote),
   fpar(ftext("Bartsch et al. Minor crashes and 'whiplash' in the United States. Ann Adv Automot Med 2008;52:117-28."), fp_p = fp_par_footnote),
   fpar(ftext("Adams M et al. Biomechanics of back pain. London, UK, Churchill Livingstone, 2012."), fp_p = fp_par_footnote),
-  fpar(ftext("I was involved with the experimental protocols associated with the crash testing depicted in the proceding stills, and can authenticate the results."), fp_p = fp_par_footnote),
+  fpar(ftext("I was involved with the experimental protocols associated with the crash testing depicted in the proceding stills and can authenticate the results."), fp_p = fp_par_footnote),
   fpar(ftext("Wang, J.-S. (2022, May). MAIS(05/08) injury probability curves as functions of delta V (Report No. DOT HS 813 219). National Highway Traffic Safety Administration."), fp_p = fp_par_footnote),
   fpar(ftext("Human tolerance to impact conditions as related to motor vehicle design. SAE J885 2011"), fp_p = fp_par_footnote),
   fpar(ftext("Nationwide Inpatient Sample, Healthcare Utilization Project, Agency for Health Research and Quality, US Department of Health and Human Resources"), fp_p = fp_par_footnote),

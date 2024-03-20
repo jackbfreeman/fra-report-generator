@@ -139,32 +139,32 @@ Mr_Ms <- function(gender_var = plaintiff$gender[1]) {
   else return("Mx.")
 }
 
-He_She <- function(person = plaintiff) {
-  if (length(person$gender) > 1) return("They")
-  else if (person$gender == "f") return("She")
-  else if (person$gender == "m") return("He")
+He_She <- function(number = length(person$gender), person = plaintiff) {
+  if (number > 1) return("They")
+  else if (person$gender[number] == "f") return("She")
+  else if (person$gender[number] == "m") return("He")
   else {return("They")}
 }
 
-he_she <- function(person = plaintiff) tolower(He_She(person))
+he_she <- function(number = length(person$gender), person = plaintiff) tolower(He_She(number, person))
 
-His_Her <- function(person = plaintiff) {
-  if (length(person$gender) > 1) return("Their")
-  else if (person$gender == "f") return("Her")
-  else if (person$gender == "m") return("His")
+His_Her <- function(number = length(person$gender), person = plaintiff) {
+  if (number > 1) return("Their")
+  else if (person$gender[number] == "f") return("Her")
+  else if (person$gender[number] == "m") return("His")
   else {return("Their")}
 }
 
-his_her <- function(person = plaintiff) tolower(His_Her(person))
+his_her <- function(number = length(person$gender), person = plaintiff) tolower(His_Her(number, person))
 
-Him_Her <- function(person = plaintiff) {
-  if (length(person$gender) > 1) return("Them")
-  else if (person$gender == "f") return("Her")
-  else if (person$gender == "m") return("Him")
+Him_Her <- function(number = length(person$gender), person = plaintiff) {
+  if (number > 1) return("Them")
+  else if (person$gender[number] == "f") return("Her")
+  else if (person$gender[number] == "m") return("Him")
   else {return("Them")}
 }
 
-him_her <- function(person = plaintiff) tolower(Him_Her(person))
+him_her <- function(number = length(person$gender), person = plaintiff) tolower(Him_Her(number, person))
 
 Men_Women <- if (plaintiff$gender[1] == "m") "Men" else if (plaintiff$gender[1] == "f") "Women" else "People"
 men_women <- tolower(Men_Women)

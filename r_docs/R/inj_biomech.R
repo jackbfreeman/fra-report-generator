@@ -101,7 +101,7 @@ inj_biomech$meat$caus$rear$disk <- list(
       paste0(" lbs. on ", his_her(), " lumbar spinal ", single_plural("disk"), ". These loads are more than sufficient to cause a wide range of musculoligamentous and skeletal injuries, including injuries to the intervertebral disks of the low back and neck. In the general population, the risk of a symptomatic cervical disk in a rear impact crash like the subject collision is represented in the chart below:"))),
   fpar(),
   fpar(
-    external_img(src = file.path("..", "images", "biomech", "delta_V_binomial.png"), width = 4.2, height = 3.4), fp_p = fp_par(text.align = "center")),
+    external_img(src = file.path("..", "images", "biomech", "delta_V_binomial.png"), width = 4.2, height = 3.4)),
   fpar(ftext("Chart showing the relationship between a ~5 to 6 mph delta V (red band) rear impact and cervical disk injury risk observed in 113 people exposed to real-world crashes. As demonstrated in the chart, the risk of a cervical disk injury ranges from 2.5 to 3.3%, or around 1 in 40 to 1 in 30 in such a crash. The risk to the low back is approximately 60% that of the risk to the neck. "), ftext("Note:", prop = fp_text_italic), ftext(" 5 to 6 mph is approximately equal to 8 to 10 km/h on the chart.")),
   fpar(),
   fpar(
@@ -110,7 +110,7 @@ inj_biomech$meat$caus$rear$disk <- list(
   fpar(
     ftext(
       paste0(
-        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", men_women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(plaintiff, number = 1), " (who was ", plaintiff$age[1], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
+        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(plaintiff, number = 1), " (who was ", plaintiff$age[1], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
   fpar(),
   fpar(
     ftext(
@@ -199,12 +199,12 @@ inj_biomech$meat$caus$rear$shoulder <- list(
     ftext(
       paste0(
         "The types of shoulder and spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (a SLAP lesion and cervical and thoracic disk derangements) are consistent with the injury mechanism of the crash. The sheer forces exerted on ", Mr_Ms_Lastname(), "’s left shoulder by the shoulder belt (or possibly transmitted by transferred forces through ", Mr_Ms_Lastname(), "’s grip on the steering wheel), would have had the potential to cause the SLAP lesion diagnosed by ", plaintiff$dx_dr, ". This is one of the reasons that the American Academy of Orthopedic Surgeons lists traffic crashes prominently as one of the causes of SLAP lesions, along with falls, sports involving overhead movement, and dislocations.  The risk of SLAP lesions is closely associated with age, and ", men_women, " in ", Mr_Ms_Lastname(), "’s age group are at nearly ")), ftext("3", prop = fp_text_bold), ftext(paste0(" times the risk of the injury as ", men_women, " in their ", 10 * floor(plaintiff$age[1]/10) , "s, regardless of activity.  This is due to the normal wear and tear-related degenerative changes that occur in the shoulder over time, which has the tendency to make the shoulder more susceptible to injury in the event of a sudden traumatic load. There is no lower threshold of crash force for causing a SLAP lesion; any force that could cause a strain could also potentially cause a SLAP lesion, as the same structures are loaded regardless of the diagnosis. A study of rear impact crashes with an average delta V of 4 mph reported that around 1 in 10 subjects had persisting symptoms and diagnosis of shoulder injury at 5 or more weeks post-crash."
-      ))),
+        ))),
   fpar(),
   fpar(
     ftext(
       paste0(
-        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily symptomatic disk derangements in the neck and middle back) are highly consistent with the injury mechanism of the crash as well. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", men_women, " in their ", nth_decade, " like ", Mr_Ms_Lastname(plaintiff, number = 1), " typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a factor that increases the risk of injury in the event of the crash like the subject rear impact. "
+        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily symptomatic disk derangements in the neck and middle back) are highly consistent with the injury mechanism of the crash as well. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, " like ", Mr_Ms_Lastname(plaintiff, number = 1), " typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a factor that increases the risk of injury in the event of the crash like the subject rear impact. "
       ))),
   fpar(),
   fpar(
@@ -224,6 +224,81 @@ inj_biomech$meat$caus$rear$shoulder <- list(
   fpar(
     ftext(
       paste0(
-        "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s body in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " left shoulder SLAP repair surgery, etc."
+        "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s", single_plural("body"), " in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " left shoulder SLAP repair surgery, etc."
       ))))
 
+
+inj_biomech$meat$caus$near_side$disk <- list(
+  fpar(
+    ftext(
+      paste0(
+        "The driver’s-side impact would have resulted in the ", plaintiff$car_make, "’s ", single_plural("occupant"), " to initially move to the left and somewhat forward at ", mdf_deltaV, " mph, until ", Mr_Ms_Lastname(), " struck the center console ", ifelse(length(plaintiff$first_name > 1), "and passenger door")," with ", his_her(), " lower extremities and ", single_plural("was"), " restrained by ", his_her(), " ",  single_plural("seatbelt"), " which would have caused ", his_her(), " ", single_plural("head"), " to continue to accelerate left and forward and create high bending loads on the joints and disks of ", his_her(), " ", single_plural("neck"), ", combined with sudden muscular protective forces which would have produced high levels of compression on the spinal disks in the neck and back.")),
+    run_footnote(x = footnotes_blocklist[28], prop = fp_text_refnote), 
+    ftext(
+      paste0(" Per ", his_her(), " description, ", Mr_Ms_Lastname(), " then rebounded back to ", his_her(), " right and struck the passenger side door and window. This all would have taken less time than it takes to blink an eye (around 250 msecs)."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0(
+        "Although a ", mdf_deltaV, " mph side impact collision does not sound like a particularly severe crash, such collisions have the potential to produce relatively violent occupant movements. This fact is illustrated in the photographic stills on the following pages, which show the sequential occupant kinematics of a healthy crash test volunteer undergoing a 3.1 mph far-side impact delta V, with forces that are around 40% of the subject crash.")),
+    run_footnote(x = footnotes_blocklist[29], prop = fp_text_refnote)),
+  fpar(),
+  fpar(
+    external_img(src = file.path("..", "images", "biomech", "neardisk1.png"), width = 4.2, height = 3.4)),
+  fpar(ftext(paste("Figure 1: The bullet vehicle is approaching at 7.5 mph."))),
+  fpar(),
+  fpar(
+    external_img(src = file.path("..", "images", "biomech", "neardisk2.png"), width = 4.2, height = 3.4)),
+  fpar(ftext(paste("Figure 3: The target vehicle is starting to rotate, and the center of mass of the vehicle is accelerated to 3.1 mph (this is the delta V). The occupant begins to move to the right, relative to the vehicle interior."))),
+  fpar(),
+  fpar(
+    external_img(src = file.path("..", "images", "biomech", "neardisk3.png"), width = 4.2, height = 3.4)),
+  fpar(ftext(paste("Figure 4: The occupant’s head and torso flexes violently to the right as the vehicle continues to rotate from under her."))),
+  fpar(),
+  fpar(
+    external_img(src = file.path("..", "images", "biomech", "neardisk4.png"), width = 4.2, height = 3.4)),
+  fpar(ftext(paste("Figure 5: Inertial forces on the occupant’s head and torso continue to cause flexion to the right as the vehicle continues to rotate, with the impact to final frame above occurring over approximately 1/5th of a second. The subject experiences compression, rotation, and shear in the low back and neck."))),
+  fpar(),
+  fpar(
+    ftext(
+      "Discussion", prop = fp_text_italic)),
+  fpar(
+    ftext(
+      paste0(
+        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily symptomatic disk derangements and associated sequelae) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(), " (who was 12 at the time of the crash) typically have d age-related degenerative changes of the disks of the spine, a fact that makes the collision more likely to have \"converted\" at least some asymptomatic disk degeneration to a symptomatic state, rather than being the sole cause of all of the pathology identified in the post-crash imaging."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0(
+        "The symptoms of spinal disk injury may, in some cases, be instantly recognizable after a traffic crash because of the sudden onset of radiculopathy, but recent research has demonstrated that only about 1 in 17 cervical disk injuries are recognized as such in the ED after a crash.")),
+    run_footnote(x = footnotes_blocklist[13], prop = fp_text_refnote),
+    ftext(
+      "  By far, the majority (94%) of what are later determined to be spinal disk injuries are initially diagnosed as in the ED as spinal strains.")),
+  fpar(),
+  fpar(
+    ftext(
+      paste0(
+        "Although the subject crash was no \"bumper tap\" it is well established in biomechanics, medicine, and epidemiology that an excessive level of force is not required to cause symptomatic injury to a spinal disk with any degree of degeneration, and that in most cases, the diagnostic imaging of the disk will not reveal whether related symptoms are of a traumatic origin or not, in the absence of fracture.")),
+      run_footnote(x = footnotes_blocklist[14], prop = fp_text_refnote),
+      ftext(
+        "  Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing."),
+    run_footnote(x = footnotes_blocklist[15], prop = fp_text_refnote),
+    ftext("-", prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[16], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[17], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[18], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[19], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[20], prop = fp_text_refnote),
+    run_footnote(x = footnotes_blocklist[21], prop = fp_text_refnote),
+    ftext(
+      paste0(
+        " It is accurate to state, both from a biomechanical and epidemiological perspective, that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur, and that the load threshold at which individual’s disk may injured is only known after the injury has occurred, and the external load has been estimated. it is impossible to estimate the additional compression due to internal forces, however, and the precise load associated with a temporally proximate spinal disk injury is often impossible to accurately determine after the fact."))),
+  fpar(),
+  fpar(
+    ftext(
+      paste0(
+        "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s body in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " spinal pain management procedures and cervical spine surgery."
+      )
+    )
+  )
+)
