@@ -15,33 +15,39 @@ library(magrittr)
 library(officer)
 library(officedown)
 library(dplyr)
+library(toOrdinal)
 source("../r_docs/R/styles.R")
-source("../r_docs/R/grammar.R")
 source("../r_docs/R/variables.R")
+source("../r_docs/R/grammar.R")
 source("../r_docs/R/footnotes.R")
 source("../r_docs/R/header_replacement.R")
 source("../r_docs/R/heading.R")
 source("../r_docs/R/receipt.R")
 source("../r_docs/R/purpose.R")
 source("../r_docs/R/summary_opinions.R")
-source("../r_docs/R/background_notes_med_hx.R")
+source("../r_docs/R/qualifications.R")
+source("../r_docs/R/background_facts_med_hx.R")
 source("../r_docs/R/general_comments.R")
-source("../r_docs/R/inj_biomech_intro.R")
+source("../r_docs/R/inj_biomech.R")
 # table for reading styles
 styles_tab <- styles_info(doc)
 ```
 
 ```{r loop fpar add function}
 block_add_fun <- function(x, blocklist, style = "Normal") {
-  if (length(blocklist) == 0) {
-    # If blocklist is empty, return x without further action
-    return(x)
-  }
   for (i in length(blocklist):1) {
     body_add(x, blocklist[[i]], style = style)
   }
   return(x)
 }
+
+block_add_style_fun <- function(x, list) {
+  for (i in length(list$content):1) {
+    block_add_fun(x, blocklist = list$content[[i]], style = list$style[[i]])
+  }
+  return(x)
+}
+
 ```
 
 ## reference for replacing grammar in report language:
@@ -55,174 +61,190 @@ plaintiff; otherwise argument will be "defendant" or "lawyer"
 single_plural() - argument ("in quotes") will be single if
 length(plaintiff\$first_name) == 1, otherwise pluralize - pluralizes
 verbs too (is, isn't, was, wasn't, has, hasn't)
+added "it" -> "they" which is not ideal because could be they or them
 
 
-```{r report structure build}
-notes_structure <- as.list(
-  c(heading,
-    background_facts$notes))
-```
+```{r test full doc build code}
+# the idea here is to have an entry after each report element that appends to a list that updates and doesn't duplicate. then the block_add_style_fun() function will take each element, apply the associated $style value, and put it through the block_add_fun() function.
 
-```{r injury biomechanics}
-inj_biomech <- list()
+# Style guide for block_add_style_fun() function
+# "Normal": at least 16 pt line spacing; majority doc style
+# "Body Text 2": Single line spacing and 3.75 tab distance
+# "Author": block quote style indentation on both sides
+# "Definition": bullet point in summary
+# "Body Text 3": inverted indent in injury biomech section
+# "caption": size 9, bold, justified, margins 2.25 in from both sides, for biomech image description subtitles
+# "Subtitle": (for images and crash summary image descriptions) size 10, bold, centered, margins 2.25 in from both sides
+# "footnote text": invisible for footnotes (when more than 2 in one text)
 
-inj_biomech$intro$causation <- list(
-  fpar(
-    ftext(
-      "Injury Causation Analysis", 
-      prop = fp_text_lite(italic = TRUE, bold = TRUE))), 
-  fpar(
-    ftext(
-      "A crash-related injury causation analysis for a specific individual is performed by assessing the risk of injury from the collision and comparing it to the probability that the injuries or conditions would have been present at the same point in time if the collision had not occurred. The process is referred to as a \"3-step\" injury causation method in which improbable alternative causes are ruled out and the single most likely cause is identified. The analysis is accomplished via the application of crash reconstruction, biomechanical, medical, and epidemiologic (risk assessment) principles."),
-    run_footnote(x = footnotes_blocklist[1], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[2], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[3], prop = fp_text_refnote),
-    ftext(" This 3-step methodology has been extensively described in the peer-reviewed literature, been deemed generally accepted by Courts in the United States, and has been adopted as part of case law in the U.S. -  See the Appendix at the end of this report for more information.")),
-  fpar(),
-  # must be rendered with style "Body Text 3" for inverted indentation
-  fpar(
-    ftext(
-      "The three fundamental elements or steps of an injury causation analysis are as follows: 
-Whether the injury mechanism had the potential to cause the injury in question (aka general causation);")),
-fpar(
-  ftext("The degree of temporal proximity between the injury mechanism and the onset of the symptoms reasonably indicating the presence of the injury; and")),
-fpar(
-  ftext("Whether there is a more likely alternative explanation for the occurrence of the symptoms at the same point in time (aka differential etiology).")),
-fpar(),
-fpar(
-  ftext("As applied to the facts in the subject case, these 3 steps are as follows:")),
-fpar(),
-fpar(
-  ftext("Reconstruction of the crash", prop = fp_text_lite(italic = TRUE))),
-fpar((ftext("CRASH RECONSTRUCTION", prop = fp_text_lite(italic = TRUE, bold = TRUE)))),
-fpar(),
-fpar(ftext("Injury biomechanics", prop = fp_text_lite(italic = TRUE))))
 
-inj_biomech$intro$rebuttal <- list(
-  fpar(
-    ftext(
-      "The generally accepted and peer-reviewed method of crash-related injury causation analysis for a specific individual is performed by assessing the risk of injury from the collision and comparing it to the probability that the injuries or conditions would have been present at the same point in time if the collision had not occurred. The process is referred to as a \"3-step\" injury causation method in which improbable alternative causes are ruled out and the single most likely cause is identified. The analysis is accomplished via the application of crash reconstruction, biomechanical, medical, and epidemiologic (risk assessment) principles."),
-    run_footnote(x = footnotes_blocklist[1], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[5], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[6], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[7], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[2], prop = fp_text_refnote),
-    ftext(" This 3-step methodology has been extensively described in the peer-reviewed literature, been deemed generally accepted by Courts in the United States, and has been adopted as part of case law in the U.S."),
-    run_footnote(x = footnotes_blocklist[3], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[7], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[8], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[9], prop = fp_text_refnote),
-    run_footnote(x = footnotes_blocklist[4], prop = fp_text_refnote)),
-  # must be rendered with style "Body Text 3" for inverted indentation
-  fpar(
-    ftext(
-      "The three fundamental elements or steps of an injury causation analysis are as follows: Whether the injury mechanism had the potential to cause the injury in question (aka general causation);"
-    )),
-  fpar(
-    ftext(
-      "The degree of temporal proximity between the injury mechanism and the onset of the symptoms reasonably indicating the presence of the injury;"
-    )),
-  fpar(
-    ftext(
-      "Whether there is a more likely alternative explanation for the occurrence of the symptoms at the same point in time (aka differential etiology)."
-    )),
-  fpar())
+notes_doc_build <- list(
+  content = list(
+    heading, 
+    background_facts$notes),
+  style = list(
+    "Body Text 2", 
+    "Normal")
+)
 
-inj_biomech$meat$caus$frontal$disk <- list(
-  fpar(
-    ftext(
-      paste0(
-        "The subject high speed frontal collision would have produced high loads in ", Mr_Ms_Lastname(), "’s entire ", single_plural("body"), ", as they continued to travel forward inside the vehicle and into the deploying airbags, seatbelts, steering wheel, and dashboard at ", mdf_deltaV, " mph. The loads on ", Mr_Ms_Lastname(), "’s ", single_plural("spine"), " and spinal ", single_plural("disk")," would have included high levels of compression, rotation, and shear, and would have had the potential to cause any level of injury severity to ", Mr_Ms_Lastname(), ", including all of the injuries that ", he_she(), " ", single_plural("was"), " ultimately diagnosed with. The US National Highway Traffic Safety Administration reports that at an approximately ", mdf_deltaV, " mph crash, nearly AMOUNT% of occupants will sustain some degree of injury that is immediately apparent and requires medical evaluation, around AMOUNT% will sustain a fracture or more significant injury, and around AMOUNT% will sustain a life-threatening injury (i.e., spinal cord injury, skull fracture, etc.)."
-             )),
-    run_footnote(x = footnotes_blocklist[10], prop = fp_text_refnote)),
-  fpar(
-    ftext(
-      paste0(
-        "Thus, all of the injuries diagnosed in ", Mr_Ms_Lastname(), " after the subject collision, and the associated treatments that ", he_she(), " sought for ", his_her(), " symptoms of significant and persisting spinal injury, are entirely explained by the exceedingly dangerous high speed frontal crash that ", he_she(), " ", single_plural("was"), " exposed to."
-        ))),
-  fpar())
+caus_doc_build <- list(
+  content = list(
+    heading,
+    receipt,
+    purpose$causation$general,
+    qualifications$causation,
+    background_facts$causation),
+  style = list(
+    "Body Text 2",
+    "Normal",
+    "Normal",
+    "Normal",
+    "Normal")
+)
 
-inj_biomech$meat$caus$rear$disk <- list(
-  fpar(
-    ftext(
-      paste0(
-        "The rear impact would have resulted in ", Mr_Ms_Lastname(), "’s ", single_plural("torso"), " and ", single_plural("head"), " initially being thrown rearwards into the seatback at around ", mdf_deltaV, " mph, and then rebounding forward into the restraining seat belt and toward the steering wheel (the first part of the crash kinematics that ", he_she(), " recall", ifelse(length(plaintiff$first_name) > 1, "", "s"), "). ", He_She(), " would have sustained substantial complex loads on ", his_her(), " ", single_plural("spine"), " in the collision, loads that include compression, rotation, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs)."))),
-  fpar(),
-  fpar(
-    ftext(
-      paste0("The most reliable and largest set of published data on occupant forces in rear impacts indicate that, for a ", plaintiff$age[1], "-year-old ", if(plaintiff$gender[1] == "m") paste0("male") else if (plaintiff$gender[1] == "f") paste0("female") else (paste0("person")), " the average peak head acceleration of a ", mdf_deltaV, " mph rear impact delta V would be around ", mdf_accel, " g, which would translate to a peak cervical spinal disk load of around ")), 
-    # change, see where this number comes from
-    ftext("100", prop = fp_text_lite(bold = TRUE)), 
-    ftext(
-      paste0(" lbs. on ", his_her(), single_plural("neck"), ".  The same data indicate a load of around ", mdf_accel, " g on ", his_her(), " low ", single_plural("back"), ", which would translate to a peak load of around ")), 
-    # change, see where this number comes from
-    ftext("360", prop = fp_text_lite(bold = TRUE)), 
-    ftext(
-      paste0(" lbs. on ", his_her(), " lumbar spinal ", single_plural("disk"), ". These loads are more than sufficient to cause a wide range of musculoligamentous and skeletal injuries, including injuries to the intervertebral disks of the low back and neck. In the general population, the risk of a symptomatic cervical disk in a rear impact crash like the subject collision is represented in the chart below:"))),
-  fpar(
-    ftext(
-      "Discussion")),
-  fpar(
-    ftext(
-      paste0(
-        "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus.", if(plaintiff$gender[1] == "m") paste0("Men") else if (plaintiff$gender[1] == "f") paste0("Women") else (paste0("People")), "in their late 
-      
-      2th
-      
-      decade, like ", Mr_Ms_Lastname(), " (who was 12 at the time of the crash) typically have ", if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate"), " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
-  fpar(),
-  fpar(
-    ftext(
-      paste0(
-        "The symptoms of spinal disk injury may, in some cases, be instantly recognizable after a traffic crash because of the sudden onset of radiculopathy, but recent research has demonstrated that only about 1 in 17 cervical disk injuries are recognized as such in the ED after a crash.")),
-    run_footnote(x = footnotes_blocklist[13], prop = fp_text_refnote),
-    ftext(
-      " By far, the majority (94%) of what are later determined to be spinal disk injuries are initially diagnosed as in the ED as spinal strains.")),
-  fpar(
-    ftext(
-      "Although the subject crash was no \"bumper tap\" it is well established in science and medicine that an excessive level of force is not required to cause symptomatic injury to a degenerated disk, and that in most cases, the diagnostic imaging of the disk will not reveal whether related symptoms are of a traumatic origin or not, in the absence of fracture.  Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing."),
-  run_footnote(x = footnotes_blocklist[15], prop = fp_text_refnote),
-  run_footnote(x = footnotes_blocklist[16], prop = fp_text_refnote),
-  run_footnote(x = footnotes_blocklist[17], prop = fp_text_refnote),
-  run_footnote(x = footnotes_blocklist[18], prop = fp_text_refnote),
-  run_footnote(x = footnotes_blocklist[19], prop = fp_text_refnote),
-  run_footnote(x = footnotes_blocklist[20], prop = fp_text_refnote),
-  run_footnote(x = footnotes_blocklist[21], prop = fp_text_refnote),
-  ftext(
-    paste0(" It is accurate to state that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur.
 
-Based on the preceding discussion there was ample and biomechanically appropriate force exerted on Mr. SAMPLE-P1-LN’s body in the subject collision to have caused his  medically documented injuries, and associated need for evaluation and treatment, including his  spinal pain management procedures, etc.
-"
-    ))))
+caus_doc_rear_disk_build <- list(
+  content = list(
+    heading,
+    qualifications$causation,
+    background_facts$causation,
+    inj_biomech$meat$caus$rear$disk[1:4],
+    inj_biomech$meat$caus$rear$disk[5],
+    inj_biomech$meat$caus$rear$disk[6],
+    inj_biomech$meat$caus$rear$disk[7:length(inj_biomech$meat$caus$rear$disk)]
+  ),
+  style = list(
+    "Body Text 2",
+    "Normal",
+    "Normal",
+    "Normal",
+    "Subtitle",
+    "caption",
+    "Normal")
+)
+
+# current job: make new entries for invisible footnote text and make invisible style in word template
+caus_doc_rear_shoulder_build <- list(
+  content = list(
+    heading, 
+    background_facts$causation,
+    inj_biomech$meat$caus$rear$shoulder[1:4],
+    inj_biomech$meat$caus$rear$shoulder[5],
+    inj_biomech$meat$caus$rear$shoulder[6:7],
+    inj_biomech$meat$caus$rear$shoulder[8],
+    inj_biomech$meat$caus$rear$shoulder[9:10],
+    inj_biomech$meat$caus$rear$shoulder[11],
+    inj_biomech$meat$caus$rear$shoulder[12:13],
+    inj_biomech$meat$caus$rear$shoulder[14],
+    inj_biomech$meat$caus$rear$shoulder[15],
+    inj_biomech$meat$caus$rear$shoulder[16:20],
+    inj_biomech$meat$caus$rear$shoulder[21],
+    inj_biomech$meat$caus$rear$shoulder[22:23],
+    inj_biomech$meat$caus$rear$shoulder[24],
+    inj_biomech$meat$caus$rear$shoulder[25:26],
+    inj_biomech$meat$caus$rear$shoulder[27],
+    inj_biomech$meat$caus$rear$shoulder[28:29],
+    inj_biomech$meat$caus$rear$shoulder[30:length(inj_biomech$meat$caus$rear$shoulder)]
+  ),
+  style = list(
+    "Body Text 2", # heading,
+    "Normal", # background_facts$causation,
+    "Normal", # inj_biomech$meat$caus$rear$shoulder[1:4],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[5],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[6:7],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[8],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[9:10],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[11],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[12:13],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[14],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[15],
+    "Normal", # inj_biomech$meat$caus$rear$shoulder[16:20],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[21],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[22:23],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[24],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[25:26],
+    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[27],
+    "caption", # inj_biomech$meat$caus$rear$shoulder[28:29],
+    "Normal" # inj_biomech$meat$caus$rear$shoulder[30:length(inj_biomech$meat$caus$rear$shoulder)]
+  )
+)
+
+caus_doc_near_side_disk_build <- list(
+  content = list(
+    heading, 
+    background_facts$causation,
+    inj_biomech$meat$caus$near_side$disk[1:4],
+    inj_biomech$meat$caus$near_side$disk[5],
+    inj_biomech$meat$caus$near_side$disk[6:7],
+    inj_biomech$meat$caus$near_side$disk[8],
+    inj_biomech$meat$caus$near_side$disk[9:10],
+    inj_biomech$meat$caus$near_side$disk[11],
+    inj_biomech$meat$caus$near_side$disk[12:13],
+    inj_biomech$meat$caus$near_side$disk[14],
+    inj_biomech$meat$caus$near_side$disk[15:16],
+    inj_biomech$meat$caus$near_side$disk[17:length(inj_biomech$meat$caus$near_side$disk)]
+  ),
+  style = list(
+    "Body Text 2", # heading,
+    "Normal", # background_facts$causation,
+    "Normal", # inj_biomech$meat$caus$near_side$disk[1:4],
+    "Subtitle", # inj_biomech$meat$caus$near_side$disk[1:4],
+    "caption", # inj_biomech$meat$caus$near_side$disk[5],
+    "Subtitle", # inj_biomech$meat$caus$near_side$disk[6:7],
+    "caption", # inj_biomech$meat$caus$near_side$disk[8],
+    "Subtitle", # inj_biomech$meat$caus$near_side$disk[9:10],
+    "caption", # inj_biomech$meat$caus$near_side$disk[11],
+    "Subtitle", # inj_biomech$meat$caus$near_side$disk[12:13],
+    "caption", # inj_biomech$meat$caus$near_side$disk[14],
+    "Normal" # inj_biomech$meat$caus$near_side$disk[1:length(inj_biomech$meat$caus$near_side$disk)]
+  )
+)
+
+caus_doc_near_side_shoulder_build <- list(
+  content = list(
+    heading, 
+    background_facts$causation,
+    inj_biomech$meat$caus$near_side$shoulder[1:length(inj_biomech$meat$caus$near_side$shoulder)]
+  ),
+  style = list(
+    "Body Text 2", # heading,
+    "Normal", # background_facts$causation,
+    "Normal" # inj_biomech$meat$caus$near_side$shoulder[1:length(inj_biomech$meat$caus$near_side$shoulder)]
+  )
+)
+
+rebut_doc_build <- list(
+  content = list(
+    heading, 
+    background_facts$rebuttal,
+    inj_biomech$meat$rebuttal[1:length(inj_biomech$meat$rebuttal)]
+  ),
+  style = list(
+    "Body Text 2", # heading,
+    "Normal", # background_facts$causation,
+    "Normal" #  inj_biomech$meat$rebuttal[1:length(inj_biomech$meat$rebuttal)]
+  )
+)
 ```
 
 ```{r heading loop function call}
-# style = "Normal": at least 16 pt line spacing; majority doc style
-# style = "Body Text 2": Single line spacing and 3.75 tab distance
-# style = "Author": block quote style indentation on both sides
-# style = "Definition": bullet point in summary
-# style = "Body Text 3": inverted indent in injury biomech section
+# define doc-build list that will be run
+doc_build_final <-
+  if (
+    doc_type == "notes") notes_doc_build else if (
+      doc_type == "causation") caus_doc_build
+
 
 doc %>%
   cursor_begin() %>% 
   body_remove() %>%
-  # report section order has to be backwards because of how body_add() function works
-  block_add_fun(inj_biomech$meat$caus$rear$disk[1]) %>%
-  block_add_fun(inj_biomech$meat$caus$rear$disk, style = "Body Text 3") %>%
-  block_add_fun(general_comments) %>%
-  # block_add_fun(background_facts$notes) %>%
-  # block_add_fun(qualifications$causation, style = "Normal") %>%
-  # block_add_fun(summary_opinions, style = "Definition") %>%
-  # block_add_fun(purpose$rebuttal, style = "Normal") %>%
-  # block_add_fun(purpose$causation$general, style = "Normal") %>%
-  # block_add_fun(purpose$causation$rollover$part2, style = "Normal") %>%
-  # block_add_fun(purpose$causation$rollover$publications, style = "Author") %>%
-  # block_add_fun(purpose$causation$rollover$part1, style = "Normal") %>%
-  # block_add_fun(receipt) %>%
-  # block_add_fun(heading, style = "Body Text 2") %>%
-  # body_add(block_pour_docx(background_facts_recon_file_name)) %>%
-# block_add_fun(notes_structure) %>%
-print(target = "../FRA-report-output.docx")
+  block_add_style_fun(caus_doc_build) %>%
+  #body_add(fpar(ftext("The test \t this should be far over"), fp_p = fp_par(word_style = "Body Text 2"))) %>%
+  
+  # eventual final code, when everything else has been defined
+  # block_add_style_fun(doc_build_final) %>%
+  
+  print(target = "../FRA-report-output.docx")
 ```
 
 ```{r test remove}

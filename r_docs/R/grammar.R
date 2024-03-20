@@ -41,16 +41,19 @@ calculate_age <- function(birthdate, reference_date) {
   return(floor(age))
 }
 
+plaintiff$age <- sapply(plaintiff$dob, calculate_age, crash$date)
+
 
 plural <- function(x) {
   #Conjugate simple verbs
-  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't")) {
+  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't", "it")) {
     if(x == "has") x <- "have"
     if(x == "is") x <- "are"
     if(x == "was") x <- "were"
     if(x == "hasn't") x <- "haven't"
     if(x == "isn't") x <- "aren't"
     if(x == "wasn't") x <- "weren't"
+    if(x == "it") x <- "they"
   } else if (nchar(x)==1) {
     return(paste0(x, "'s"))
   } else {
@@ -136,50 +139,53 @@ Mr_Ms <- function(gender_var = plaintiff$gender[1]) {
   else return("Mx.")
 }
 
-He_She <- function(person = plaintiff) {
-  if (length(person$gender) > 1) return("They")
-  else if (person$gender == "f") return("She")
-  else if (person$gender == "m") return("He")
+He_She <- function(number = length(person$gender), person = plaintiff) {
+  if (number > 1) return("They")
+  else if (person$gender[number] == "f") return("She")
+  else if (person$gender[number] == "m") return("He")
   else {return("They")}
 }
 
-he_she <- function(person = plaintiff) tolower(He_She(person))
+he_she <- function(number = length(person$gender), person = plaintiff) tolower(He_She(number, person))
 
-His_Her <- function(person = plaintiff) {
-  if (length(person$gender) > 1) return("Their")
-  else if (person$gender == "f") return("Her")
-  else if (person$gender == "m") return("His")
+His_Her <- function(number = length(person$gender), person = plaintiff) {
+  if (number > 1) return("Their")
+  else if (person$gender[number] == "f") return("Her")
+  else if (person$gender[number] == "m") return("His")
   else {return("Their")}
 }
 
-his_her <- function(person = plaintiff) tolower(His_Her(person))
+his_her <- function(number = length(person$gender), person = plaintiff) tolower(His_Her(number, person))
 
-Him_Her <- function(person = plaintiff) {
-  if (length(person$gender) > 1) return("Them")
-  else if (person$gender == "f") return("Her")
-  else if (person$gender == "m") return("Him")
+Him_Her <- function(number = length(person$gender), person = plaintiff) {
+  if (number > 1) return("Them")
+  else if (person$gender[number] == "f") return("Her")
+  else if (person$gender[number] == "m") return("Him")
   else {return("Them")}
 }
 
-him_her <- function(person = plaintiff) tolower(Him_Her(person))
+him_her <- function(number = length(person$gender), person = plaintiff) tolower(Him_Her(number, person))
+
+Men_Women <- if (plaintiff$gender[1] == "m") "Men" else if (plaintiff$gender[1] == "f") "Women" else "People"
+men_women <- tolower(Men_Women)
 
 # if plaintiff$number is 1: "Mr. Plaintiff"; if plaintiff$number is 2: "Mr. Plaintiff1 and/or Mr. Plaintiff2" (and/or depending on which word is put as an argument for the function); if same last name, "Mr. and Ms. X"
-Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and") {
+Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and", number = length(person$last_name)) {
   x <- ""
-  for (i in 1:length(person$last_name)) {
+  for (i in 1:number) {
     x <- paste0(x, 
                 Mr_Ms(person$gender[i]), 
                 " ", 
-                ifelse(length(person$last_name) > 1 & 
-                         (i == length(person$last_name) | 
+                ifelse(number > 1 & 
+                         (i == number | 
                             person$last_name[i] != person$last_name[i + 1]) |
-                         length(person$last_name) == 1, 
+                         number == 1, 
                        paste0(person$last_name[i], 
-                              ifelse(i != length(person$last_name), " ", "")
+                              ifelse(i != number, " ", "")
                        ), 
-                       ""),  # Closing parenthesis added here
+                       ""),
                 ifelse(
-                  i == length(person$last_name), 
+                  i == number, 
                   "", 
                   paste0( 
                     conjunction, 
@@ -214,3 +220,7 @@ Firstname_Lastname <- function(person = plaintiff, conjunction = "and") {
 }
 
 Dr_Mr_Ms_Expert_Lastname <- function() {paste(defense_biomech_expert$title, defense_biomech_expert$last_name)}
+
+nth_decade <- paste0(ifelse(plaintiff$age[1]%%10 >5, "late ", "early "), toOrdinal(floor((plaintiff$age[1]/10)+1)), " decade")
+
+asymptomatic_moderate <- if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate")

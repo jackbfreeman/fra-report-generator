@@ -20,7 +20,8 @@ lawyer <- list(
 
 crash <- list(
   date = "01/01/2020",
-  pdof = "rear" # frontal, rear, near-side, far-side, rollover
+  pdof = "rear", # frontal, rear, near-side, far-side, rollover
+  fatality = "no"
 )
 
 plaintiff <- list(
@@ -33,10 +34,11 @@ plaintiff <- list(
   car_make = "PlCarMake",
   car_model = "PlCarModel",
   car_year = "1995",
-  seat_position = c("driver", "front passenger", "rear right passenger") # driver, front passenger, rear left/right passenger
+  seat_position = c("driver", "front passenger", "rear right passenger"), # driver, front passenger, rear left/right passenger
+  dx_dr = c("Dr. Doctor")
 )
 
-plaintiff$age <- sapply(plaintiff$dob, calculate_age, crash$date)
+
 
 
 defendant <- list(
@@ -61,7 +63,8 @@ defense_biomech_expert <- list(
   acceleration = "6", # g
   report_citations_number = "12",
   report_pages_number = "15",
-  report_date = "01/01/2021"
+  report_date = "01/01/2021",
+  mdf_agree = "no"
 )
 
 action_individual <- ifelse(case == "yes", "action", "individual")
@@ -75,3 +78,4 @@ med_hx_file_name <- "../data/sample_med_hx.docx"
 case_name <- paste(plaintiff$first_name, plaintiff$last_name) %>% paste(collapse = "; ")
 if(case == "yes") case_name <- paste(case_name,
                                      paste0("et al. v ", case_defendant_name, " et al.,", " Case No: ", case_no, ", ", court_name))
+
