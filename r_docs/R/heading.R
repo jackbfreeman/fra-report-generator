@@ -2,28 +2,28 @@ heading <- list()
 
 if (doc_type != "notes") {
   heading <- list(
-    fpar(
+    fps(
       ftext(
         convert_date_format(
           ddd
         ))),
-    fpar(),
-    fpar(
+    fps(),
+    fps(
       ftext(
         paste(
           lawyer$first_name, 
           lawyer$last_name, 
           "Esquire"
         ))),
-    fpar(
+    fps(
       ftext(
         lawyer$firm_name
       )),
-    fpar(
+    fps(
       ftext(
         lawyer$address
       )),
-    fpar(
+    fps(
       ftext(
         paste0(
           lawyer$city,
@@ -32,29 +32,29 @@ if (doc_type != "notes") {
           " ",
           lawyer$zip
         ))),
-    fpar(),
-    fpar(
+    fps(),
+    fps(
       ftext(
         paste0(
           "Tel: ",
           phone_fun(
             lawyer$phone
           )))),
-    fpar(),
-    fpar()
+    fps(),
+    fps()
   )
 }
 
 heading <- c(heading, list(
-  fpar(
+  fps(
     ftext(
       paste0(
         "RE:\t")),
     ftext(case_name, prop = fp_text_lite(italic = TRUE))
   ),
-  fpar(),
-  fpar(),
-  fpar(
+  fps(),
+  fps(),
+  fps(
     ftext(
       paste0(
         "Date of Crash:\t", 
@@ -64,7 +64,7 @@ heading <- c(heading, list(
 
 for (i in 1:length(plaintiff$first_name)) {
   heading <- c(heading,
-               list(fpar(
+               list(fps(
                  ftext(
                    ifelse(i == 1, "Date of Birth:\t", "\t")),
                  ftext(paste0(
@@ -82,4 +82,9 @@ for (i in 1:length(plaintiff$first_name)) {
   )
 }
 
-heading <- c(heading, list(fpar(), fpar()))
+heading <- c(heading, list(fps(), fps()))
+
+#all par need style "Body Text 2"
+for(i in 1:length(heading)) {
+  heading[[i]]$style <- "Body Text 2"
+}

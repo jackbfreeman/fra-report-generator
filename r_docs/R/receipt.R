@@ -1,12 +1,12 @@
 receipt <- list(
-  fpar(
+  fps(
     ftext(
       paste("Dear", Mr_Ms_Lastname(lawyer))
     ),
     ftext(",")
   ),
-  fpar(),
-  fpar(
+  fps(),
+  fps(
     ftext(
       "I am in receipt of your correspondence regarding the above-named "),
     ftext(
@@ -40,4 +40,4 @@ receipt <- list(
             defense_biomech_expert$last_name,
             "."
           ))}),
-  fpar())
+  fps())
