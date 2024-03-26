@@ -89,19 +89,6 @@ added "it" -> "they" which is not ideal because could be they or them
 # "footnote text": invisible for footnotes (when more than 2 in one text)
 
 
-notes_doc_build <- list(
-    heading, 
-    background_facts$notes)
-
-caus_doc_build <- list(
-  heading,
-  receipt,
-  purpose$causation$general,
-  qualifications$causation,
-  background_facts$causation,
-  three_steps$causation
-)
-
 caus_doc_rear_disk_build <- list(
   heading,
   qualifications$causation,
@@ -117,21 +104,36 @@ caus_doc_rear_shoulder_build <- list(
 )
 
 caus_doc_near_side_disk_build <- list(
-    heading, 
-    background_facts$causation,
-    inj_biomech$meat$caus$near_side$disk
-  )
+  heading, 
+  background_facts$causation,
+  inj_biomech$meat$caus$near_side$disk,
+  three_steps$causation$disk
+)
 
 caus_doc_near_side_shoulder_build <- list(
-    heading, 
-    background_facts$causation,
-    inj_biomech$meat$caus$near_side$shoulder
-  )
+  heading, 
+  background_facts$causation,
+  inj_biomech$meat$caus$near_side$shoulder
+)
 
 rebut_doc_build <- list(
-    heading, 
-    background_facts$rebuttal,
-    inj_biomech$meat$rebuttal
+  heading, 
+  background_facts$rebuttal,
+  inj_biomech$meat$rebuttal,
+  three_steps$rebuttal
+)
+
+
+notes_doc_build <- list(
+  heading, 
+  background_facts$notes)
+
+caus_doc_build <- list(
+  heading,
+  receipt,
+  purpose$causation$general,
+  qualifications$causation,
+  background_facts$causation
 )
 ```
 
@@ -148,7 +150,7 @@ doc %>%
   cursor_begin() %>%
   body_remove() %>%
   #block_pour_docx("sample_med_hx.docx") %>%
-  block_add_fps_fun(caus_doc_build) %>%
+  block_add_fps_fun(rebut_doc_build) %>%
   print(target = "FRA-report-output.docx")
 
 ```

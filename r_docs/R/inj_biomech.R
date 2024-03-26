@@ -411,6 +411,7 @@ inj_biomech$meat$rebuttal <- list(
   fps(
     ftext(
       paste0("Crash severity analysis"))),
+  fps(),
   fps(
     ftext(
       paste0("RECON CRASH RELATED ACCELERATION DELTA V ANALYSIS PLACEHOLDER"
