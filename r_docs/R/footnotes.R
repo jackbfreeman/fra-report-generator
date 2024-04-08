@@ -27,22 +27,19 @@ footnotes_blocklist <- block_list(fpar(ftext("Melia P et al. Development of the 
   fpar(ftext("Bartsch et al. Minor crashes and 'whiplash' in the United States. Ann Adv Automot Med 2008;52:117-28."), fp_p = fp_par_footnote),
   fpar(ftext("Adams M et al. Biomechanics of back pain. London, UK, Churchill Livingstone, 2012."), fp_p = fp_par_footnote),
   fpar(ftext("I was involved with the experimental protocols associated with the crash testing depicted in the proceding stills and can authenticate the results."), fp_p = fp_par_footnote),
-  fpar(ftext("Wang, J.-S. (2022, May). MAIS(05/08) injury probability curves as functions of delta V (Report No. DOT HS 813 219). National Highway Traffic Safety Administration."), fp_p = fp_par_footnote),
   fpar(ftext("Human tolerance to impact conditions as related to motor vehicle design. SAE J885 2011"), fp_p = fp_par_footnote),
   fpar(ftext("Nationwide Inpatient Sample, Healthcare Utilization Project, Agency for Health Research and Quality, US Department of Health and Human Resources"), fp_p = fp_par_footnote),
   fpar(ftext("Nolet et al. Exposure to a Motor Vehicle Collision and the Risk of Future Neck Pain: A Systematic Review and Meta-Analysis. PM R. 2019 Apr 25. doi: 10.1002/pmrj.12173."), fp_p = fp_par_footnote),
-  fpar(ftext("Nolet et al. Exposure to a motor vehicle collision and the risk of future back pain: a systematic review and meta-analysis. Accid Analysis Prev 2020: https://doi.org/10.1016/j.aap.2020.105546"), fp_p = fp_par_footnote),
+  fpar(ftext("Nolet et al. Exposure to a motor vehicle collision and the risk of future back pain: A systematic review and meta-analysis. Accid Analysis Prev 2020: https://doi.org/10.1016/j.aap.2020.105546"), fp_p = fp_par_footnote),
   fpar(ftext("https://libguides.winona.edu/c.php?g=11614&p=61584"), fp_p = fp_par_footnote),
   fpar(ftext("Freeman MD, Croft AC, Rossignol AM, Weaver DS, Reiser M. A review and methodologic critique of the literature refuting whiplash syndrome. Spine 1999;24(1):86-98."), run_linebreak(), ftext("(NB this paper has been cited as an authority more than 220 times in the scientific literature – see https://scholar.google.com/scholar?hl=en&as_sdt=0%2C38&q=Freeman+MD+methodologic&btnG=)"), fp_p = fp_par_footnote),
   fpar(ftext("Nolet PS, Nordhoff L Kristman KL, Croft AC, Zeegers MP, Freeman MD. Is acceleration a valid proxy for injury risk in minimal damage traffic crashes? A comparative review of volunteer, ADL and real-world studies. Int J Environ Res Public Health 2021 2021;18:2901; https://doi.org/10.3390/ijerph18062901."), fp_p = fp_par_footnote),
-  fpar(ftext("Wang, J.-S. (2022, May). MAIS(05/08) injury probability curves as functions of delta V (Report No. DOT HS 813 219). National Highway Traffic Safety Administration"), fp_p = fp_par_footnote),
   fpar(ftext("Freeman MD, Leith WM. Estimating the number of traffic crash-related cervical spine injuries in the United States; an analysis and comparison of national crash and hospital data. Accident Analysis and Prevention 2020: doi:https://doi.org/10.1016/j. aap.2020.105571."), fp_p = fp_par_footnote),
   fpar(ftext("Giuliano V, Giuliano C, Pinto F, Scaglione M. The use of flexion and extension MR in the evaluation of cervical spine trauma: initial experience in 100 trauma patients compared with 100 normal subjects. Emerg Radiol. 2002;9(5):249-53."), fp_p = fp_par_footnote),
   fpar(ftext("Freeman MD, Croft AC, Nicodemus CN, Centeno CJ, Welkins WL. Significant spinal injury resulting from low-level accelerations: A case series of roller coaster injuries. Arch Phys Med Rehab November 2005;86:2126-30."), fp_p = fp_par_footnote),
   fpar(ftext("Oppenheim JS, Spitzer DE, Segal DH. Nonvascular complications following spinal manipulation. Spine J. 2005;5(6):660-6."), fp_p = fp_par_footnote),
   fpar(ftext("Lutz JD, Smith RR, Jones HM. CT myelography of a fragment of a lumbar disk sequestered posterior to the thecal sac. AJNR Am J Neuroradiol. 1990;11(3):610-1."), fp_p = fp_par_footnote),
-  fpar(ftext("Sadanand V, Kelly M, Varughese G, Fourney DR. Sudden quadriplegia after acute cervical disc herniation. Can J Neurol Sci. 2005;32(3):356-8."), fp_p = fp_par_footnote),
-  fpar(ftext("Adams M et al. Biomechanics of back pain. London, UK, Churchill Livingstone, 2012."), fp_p = fp_par_footnote)
+  fpar(ftext("Sadanand V, Kelly M, Varughese G, Fourney DR. Sudden quadriplegia after acute cervical disc herniation. Can J Neurol Sci. 2005;32(3):356-8."), fp_p = fp_par_footnote)
 )
 
 footnote_fpar <- fpar(

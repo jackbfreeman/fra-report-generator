@@ -18,20 +18,13 @@ library(officer)
 library(officedown)
 library(dplyr)
 library(toOrdinal)
-source("r_docs/R/styles.R")
-source("r_docs/R/variables.R")
-source("r_docs/R/grammar.R")
+source("r_docs/R/styles_variables_functions.R")
 source("r_docs/R/footnotes.R")
-source("r_docs/R/header_replacement.R")
-source("r_docs/R/heading.R")
-source("r_docs/R/receipt.R")
-source("r_docs/R/purpose.R")
-source("r_docs/R/summary_opinions.R")
-source("r_docs/R/qualifications.R")
+source("r_docs/R/intro_parts.R")
 source("r_docs/R/background_facts_med_hx.R")
 source("r_docs/R/general_comments.R")
 source("r_docs/R/inj_biomech.R")
-source("r_docs/R/three_steps_alt_explan.R")
+source("r_docs/R/signature_block_appendix.R")
 # table for reading styles
 styles_tab <- styles_info(doc)
 ```
@@ -74,6 +67,48 @@ length(plaintiff\$first_name) == 1, otherwise pluralize - pluralizes
 verbs too (is, isn't, was, wasn't, has, hasn't)
 added "it" -> "they" which is not ideal because could be they or them
 
+```{r separate and alter external docx documents}
+# # Load the existing Word document
+# doc_split <- read_docx(background_facts_recon_file_name)
+# 
+# # Get the document's blocks
+# content <- docx_summary(doc_split)
+# 
+# # Find the position where the document says "Reconstruction"
+# split_position <- NULL
+# for (i in seq_len(nrow(content))) {
+#   if (grepl("Reconstruction", content$text[i])) {
+#     split_position <- i
+#     break
+#   }
+# }
+# 
+# if (is.null(split_position)) {
+#   stop("Text 'Reconstruction' not found in the background facts/reconstruction document.")
+# }
+# 
+# # Split the document into two parts
+# part1 <- block_list(doc_split)[1:(split_position - 1)]
+# part2 <- block_list(doc_split)[split_position:nrow(content)]
+# 
+# # Create new documents for each part
+# doc1 <- read_docx()
+# doc2 <- read_docx()
+# 
+# # Add blocks to each document
+# for (block in part1) {
+#   doc1 <- body_add(doc1, block)
+# }
+# for (block in part2) {
+#   doc2 <- body_add(doc2, block)
+# }
+# 
+# # Write each part into separate Word documents
+# print(doc1, target = "background_facts.docx")
+# print(doc2, target = "reconstruction.docx")
+
+```
+
 
 ```{r test full doc build code}
 # the idea here is to have an entry after each report element that appends to a list that updates and doesn't duplicate. then the block_add_style_fun() function will take each element, apply the associated $style value, and put it through the block_add_fun() function.
@@ -87,6 +122,7 @@ added "it" -> "they" which is not ideal because could be they or them
 # "caption": size 9, bold, justified, margins 2.25 in from both sides, for biomech image description subtitles
 # "Subtitle": (for images and crash summary image descriptions) size 10, bold, centered, margins 2.25 in from both sides
 # "footnote text": invisible for footnotes (when more than 2 in one text)
+# "Author": size 10, everything else Normal (for signature block)
 
 
 caus_doc_rear_disk_build <- list(
@@ -107,7 +143,8 @@ caus_doc_near_side_disk_build <- list(
   heading, 
   background_facts$causation,
   inj_biomech$meat$caus$near_side$disk,
-  three_steps$causation$disk
+  three_steps$causation$disk,
+  signature_block
 )
 
 caus_doc_near_side_shoulder_build <- list(
@@ -120,7 +157,8 @@ rebut_doc_build <- list(
   heading, 
   background_facts$rebuttal,
   inj_biomech$meat$rebuttal,
-  three_steps$rebuttal
+  three_steps$rebuttal$all_experts,
+  signature_block
 )
 
 
@@ -133,7 +171,9 @@ caus_doc_build <- list(
   receipt,
   purpose$causation$general,
   qualifications$causation,
-  background_facts$causation
+  background_facts$causation,
+  signature_block,
+  appendix$causation$general
 )
 ```
 
@@ -150,7 +190,7 @@ doc %>%
   cursor_begin() %>%
   body_remove() %>%
   #block_pour_docx("sample_med_hx.docx") %>%
-  block_add_fps_fun(rebut_doc_build) %>%
+  block_add_fps_fun(caus_doc_build) %>%
   print(target = "FRA-report-output.docx")
 
 ```
