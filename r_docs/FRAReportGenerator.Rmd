@@ -10,25 +10,21 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
+datapath <- "data/"
+imgpath <- "images/"
 knitr::opts_chunk$set(echo = FALSE)
 library(magrittr)
 library(officer)
 library(officedown)
 library(dplyr)
 library(toOrdinal)
-source("../r_docs/R/styles.R")
-source("../r_docs/R/variables.R")
-source("../r_docs/R/grammar.R")
-source("../r_docs/R/footnotes.R")
-source("../r_docs/R/header_replacement.R")
-source("../r_docs/R/heading.R")
-source("../r_docs/R/receipt.R")
-source("../r_docs/R/purpose.R")
-source("../r_docs/R/summary_opinions.R")
-source("../r_docs/R/qualifications.R")
-source("../r_docs/R/background_facts_med_hx.R")
-source("../r_docs/R/general_comments.R")
-source("../r_docs/R/inj_biomech.R")
+source("r_docs/R/styles_variables_functions.R")
+source("r_docs/R/footnotes.R")
+source("r_docs/R/intro_parts.R")
+source("r_docs/R/background_facts_med_hx.R")
+source("r_docs/R/general_comments.R")
+source("r_docs/R/inj_biomech.R")
+source("r_docs/R/signature_block_appendix.R")
 # table for reading styles
 styles_tab <- styles_info(doc)
 ```
@@ -48,6 +44,14 @@ block_add_style_fun <- function(x, list) {
   return(x)
 }
 
+block_add_fps_fun <- function(x, list) {
+  for (i in length(list):1) {
+    for (j in length(list[[i]]):1) {
+      body_add(x, list[[i]][[j]], style = list[[i]][[j]]$style)
+    }
+  }
+  return(x)
+}
 ```
 
 ## reference for replacing grammar in report language:
@@ -63,6 +67,48 @@ length(plaintiff\$first_name) == 1, otherwise pluralize - pluralizes
 verbs too (is, isn't, was, wasn't, has, hasn't)
 added "it" -> "they" which is not ideal because could be they or them
 
+```{r separate and alter external docx documents}
+# # Load the existing Word document
+# doc_split <- read_docx(background_facts_recon_file_name)
+# 
+# # Get the document's blocks
+# content <- docx_summary(doc_split)
+# 
+# # Find the position where the document says "Reconstruction"
+# split_position <- NULL
+# for (i in seq_len(nrow(content))) {
+#   if (grepl("Reconstruction", content$text[i])) {
+#     split_position <- i
+#     break
+#   }
+# }
+# 
+# if (is.null(split_position)) {
+#   stop("Text 'Reconstruction' not found in the background facts/reconstruction document.")
+# }
+# 
+# # Split the document into two parts
+# part1 <- block_list(doc_split)[1:(split_position - 1)]
+# part2 <- block_list(doc_split)[split_position:nrow(content)]
+# 
+# # Create new documents for each part
+# doc1 <- read_docx()
+# doc2 <- read_docx()
+# 
+# # Add blocks to each document
+# for (block in part1) {
+#   doc1 <- body_add(doc1, block)
+# }
+# for (block in part2) {
+#   doc2 <- body_add(doc2, block)
+# }
+# 
+# # Write each part into separate Word documents
+# print(doc1, target = "background_facts.docx")
+# print(doc2, target = "reconstruction.docx")
+
+```
+
 
 ```{r test full doc build code}
 # the idea here is to have an entry after each report element that appends to a list that updates and doesn't duplicate. then the block_add_style_fun() function will take each element, apply the associated $style value, and put it through the block_add_fun() function.
@@ -76,158 +122,62 @@ added "it" -> "they" which is not ideal because could be they or them
 # "caption": size 9, bold, justified, margins 2.25 in from both sides, for biomech image description subtitles
 # "Subtitle": (for images and crash summary image descriptions) size 10, bold, centered, margins 2.25 in from both sides
 # "footnote text": invisible for footnotes (when more than 2 in one text)
-
-
-notes_doc_build <- list(
-  content = list(
-    heading, 
-    background_facts$notes),
-  style = list(
-    "Body Text 2", 
-    "Normal")
-)
-
-caus_doc_build <- list(
-  content = list(
-    heading,
-    receipt,
-    purpose$causation$general,
-    qualifications$causation,
-    background_facts$causation),
-  style = list(
-    "Body Text 2",
-    "Normal",
-    "Normal",
-    "Normal",
-    "Normal")
-)
+# "Author": size 10, everything else Normal (for signature block)
 
 
 caus_doc_rear_disk_build <- list(
-  content = list(
-    heading,
-    qualifications$causation,
-    background_facts$causation,
-    inj_biomech$meat$caus$rear$disk[1:4],
-    inj_biomech$meat$caus$rear$disk[5],
-    inj_biomech$meat$caus$rear$disk[6],
-    inj_biomech$meat$caus$rear$disk[7:length(inj_biomech$meat$caus$rear$disk)]
-  ),
-  style = list(
-    "Body Text 2",
-    "Normal",
-    "Normal",
-    "Normal",
-    "Subtitle",
-    "caption",
-    "Normal")
+  heading,
+  qualifications$causation,
+  background_facts$causation,
+  inj_biomech$meat$caus$rear$disk
 )
 
 # current job: make new entries for invisible footnote text and make invisible style in word template
 caus_doc_rear_shoulder_build <- list(
-  content = list(
-    heading, 
-    background_facts$causation,
-    inj_biomech$meat$caus$rear$shoulder[1:4],
-    inj_biomech$meat$caus$rear$shoulder[5],
-    inj_biomech$meat$caus$rear$shoulder[6:7],
-    inj_biomech$meat$caus$rear$shoulder[8],
-    inj_biomech$meat$caus$rear$shoulder[9:10],
-    inj_biomech$meat$caus$rear$shoulder[11],
-    inj_biomech$meat$caus$rear$shoulder[12:13],
-    inj_biomech$meat$caus$rear$shoulder[14],
-    inj_biomech$meat$caus$rear$shoulder[15],
-    inj_biomech$meat$caus$rear$shoulder[16:20],
-    inj_biomech$meat$caus$rear$shoulder[21],
-    inj_biomech$meat$caus$rear$shoulder[22:23],
-    inj_biomech$meat$caus$rear$shoulder[24],
-    inj_biomech$meat$caus$rear$shoulder[25:26],
-    inj_biomech$meat$caus$rear$shoulder[27],
-    inj_biomech$meat$caus$rear$shoulder[28:29],
-    inj_biomech$meat$caus$rear$shoulder[30:length(inj_biomech$meat$caus$rear$shoulder)]
-  ),
-  style = list(
-    "Body Text 2", # heading,
-    "Normal", # background_facts$causation,
-    "Normal", # inj_biomech$meat$caus$rear$shoulder[1:4],
-    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[5],
-    "caption", # inj_biomech$meat$caus$rear$shoulder[6:7],
-    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[8],
-    "caption", # inj_biomech$meat$caus$rear$shoulder[9:10],
-    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[11],
-    "caption", # inj_biomech$meat$caus$rear$shoulder[12:13],
-    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[14],
-    "caption", # inj_biomech$meat$caus$rear$shoulder[15],
-    "Normal", # inj_biomech$meat$caus$rear$shoulder[16:20],
-    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[21],
-    "caption", # inj_biomech$meat$caus$rear$shoulder[22:23],
-    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[24],
-    "caption", # inj_biomech$meat$caus$rear$shoulder[25:26],
-    "Subtitle", # inj_biomech$meat$caus$rear$shoulder[27],
-    "caption", # inj_biomech$meat$caus$rear$shoulder[28:29],
-    "Normal" # inj_biomech$meat$caus$rear$shoulder[30:length(inj_biomech$meat$caus$rear$shoulder)]
-  )
+  heading, 
+  background_facts$causation,
+  inj_biomech$meat$caus$rear$shoulder
 )
 
 caus_doc_near_side_disk_build <- list(
-  content = list(
-    heading, 
-    background_facts$causation,
-    inj_biomech$meat$caus$near_side$disk[1:4],
-    inj_biomech$meat$caus$near_side$disk[5],
-    inj_biomech$meat$caus$near_side$disk[6:7],
-    inj_biomech$meat$caus$near_side$disk[8],
-    inj_biomech$meat$caus$near_side$disk[9:10],
-    inj_biomech$meat$caus$near_side$disk[11],
-    inj_biomech$meat$caus$near_side$disk[12:13],
-    inj_biomech$meat$caus$near_side$disk[14],
-    inj_biomech$meat$caus$near_side$disk[15:16],
-    inj_biomech$meat$caus$near_side$disk[17:length(inj_biomech$meat$caus$near_side$disk)]
-  ),
-  style = list(
-    "Body Text 2", # heading,
-    "Normal", # background_facts$causation,
-    "Normal", # inj_biomech$meat$caus$near_side$disk[1:4],
-    "Subtitle", # inj_biomech$meat$caus$near_side$disk[1:4],
-    "caption", # inj_biomech$meat$caus$near_side$disk[5],
-    "Subtitle", # inj_biomech$meat$caus$near_side$disk[6:7],
-    "caption", # inj_biomech$meat$caus$near_side$disk[8],
-    "Subtitle", # inj_biomech$meat$caus$near_side$disk[9:10],
-    "caption", # inj_biomech$meat$caus$near_side$disk[11],
-    "Subtitle", # inj_biomech$meat$caus$near_side$disk[12:13],
-    "caption", # inj_biomech$meat$caus$near_side$disk[14],
-    "Normal" # inj_biomech$meat$caus$near_side$disk[1:length(inj_biomech$meat$caus$near_side$disk)]
-  )
+  heading, 
+  background_facts$causation,
+  inj_biomech$meat$caus$near_side$disk,
+  three_steps$causation$disk,
+  signature_block
 )
 
 caus_doc_near_side_shoulder_build <- list(
-  content = list(
-    heading, 
-    background_facts$causation,
-    inj_biomech$meat$caus$near_side$shoulder[1:length(inj_biomech$meat$caus$near_side$shoulder)]
-  ),
-  style = list(
-    "Body Text 2", # heading,
-    "Normal", # background_facts$causation,
-    "Normal" # inj_biomech$meat$caus$near_side$shoulder[1:length(inj_biomech$meat$caus$near_side$shoulder)]
-  )
+  heading, 
+  background_facts$causation,
+  inj_biomech$meat$caus$near_side$shoulder
 )
 
 rebut_doc_build <- list(
-  content = list(
-    heading, 
-    background_facts$rebuttal,
-    inj_biomech$meat$rebuttal[1:length(inj_biomech$meat$rebuttal)]
-  ),
-  style = list(
-    "Body Text 2", # heading,
-    "Normal", # background_facts$causation,
-    "Normal" #  inj_biomech$meat$rebuttal[1:length(inj_biomech$meat$rebuttal)]
-  )
+  heading, 
+  background_facts$rebuttal,
+  inj_biomech$meat$rebuttal,
+  three_steps$rebuttal$all_experts,
+  signature_block
+)
+
+
+notes_doc_build <- list(
+  heading, 
+  background_facts$notes)
+
+caus_doc_build <- list(
+  heading,
+  receipt,
+  purpose$causation$general,
+  qualifications$causation,
+  background_facts$causation,
+  signature_block,
+  appendix$causation$general
 )
 ```
 
-```{r heading loop function call}
+```{r final doc build function call}
 # define doc-build list that will be run
 doc_build_final <-
   if (
@@ -235,41 +185,14 @@ doc_build_final <-
       doc_type == "causation") caus_doc_build
 
 
+#fps function call
 doc %>%
-  cursor_begin() %>% 
+  cursor_begin() %>%
   body_remove() %>%
-  block_add_style_fun(caus_doc_build) %>%
-  #body_add(fpar(ftext("The test \t this should be far over"), fp_p = fp_par(word_style = "Body Text 2"))) %>%
-  
-  # eventual final code, when everything else has been defined
-  # block_add_style_fun(doc_build_final) %>%
-  
-  print(target = "../FRA-report-output.docx")
-```
+  #block_pour_docx("sample_med_hx.docx") %>%
+  block_add_fps_fun(caus_doc_build) %>%
+  print(target = "FRA-report-output.docx")
 
-```{r test remove}
-# library(officer)
-# 
-# str1 <- rep("Lorem ipsum dolor sit amet, consectetur adipiscing elit. ", 20)
-# str1 <- paste(str1, collapse = "")
-# 
-# str2 <- "Drop that text"
-# 
-# str3 <- rep("Aenean venenatis varius elit et fermentum vivamus vehicula. ", 20)
-# str3 <- paste(str3, collapse = "")
-# 
-# my_doc <- read_docx()
-# my_doc <- body_add_par(my_doc, value = str1, style = "Normal")
-# my_doc <- body_add_par(my_doc, value = str2, style = "centered")
-# my_doc <- body_add_par(my_doc, value = str3, style = "Normal")
-# 
-# new_doc_file <- print(my_doc, target = "one.docx")
-# 
-# my_doc <- read_docx(path = new_doc_file)
-# my_doc <- cursor_reach(my_doc, keyword = "that text")
-# my_doc <- body_remove(my_doc)
-# 
-# print(my_doc, target = "two.docx")
 ```
 
 ```{r final build}

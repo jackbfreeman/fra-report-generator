@@ -2,32 +2,32 @@ background_facts <- list()
 
 background_facts$notes <- list(
   block_pour_docx(background_facts_recon_file_name),
-  fpar(),
-  fpar(),
+  fps(),
+  fps(),
   block_pour_docx(med_hx_file_name),
-  fpar()
+  fps()
 )
 
 background_facts$causation <- list(
   block_pour_docx(background_facts_recon_file_name),
-  fpar(
+  fps(
     ftext(
       "At the time of the crash, "
     )),
-  fpar(),
-  fpar(),
+  fps(),
+  fps(),
   block_pour_docx(med_hx_file_name),
-  fpar()
+  fps()
 )
 
 background_facts$rebuttal <- list(
   block_pour_docx(background_facts_recon_file_name),
-  fpar(
+  fps(
     ftext(
       "At the time of the crash, "
     )),
-  fpar(),
-  fpar(),
+  fps(),
+  fps(),
   block_pour_docx(med_hx_file_name),
-  fpar()
+  fps()
 )
