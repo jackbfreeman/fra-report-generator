@@ -15,7 +15,7 @@ fp_text_normal <- fp_text_lite()
 
 
 ddd <- "01/01/2021"
-doc_type <- "causation"
+doc_type <- "notes"
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
@@ -40,8 +40,8 @@ crash <- list(
 )
 
 plaintiff <- list(
-  first_name = c("Pl1FirstName", "Pl2FirstName", "The Ugly One"),
-  last_name = c("Pl1LastName", "Pl1LastName", "Ugly Last Name"),
+  first_name = c("Pl1FirstName", "Pl2FirstName", "Third One"),
+  last_name = c("Pl1LastName", "Pl1LastName", "Third Name"),
   et_al = "yes", # check box for yes, default to yes
   gender = c("f", "m", "nb"),
   dob = c("01/01/1999", "01/02/1990", "01/04/1994"),
@@ -81,7 +81,7 @@ defense_biomech_expert <- list(
   mdf_agree = "no"
 )
 
-action_individual <- ifelse(case == "yes", "action", "individual")
+action_individual <- ifelse(case == "yes", "action", single_plural("individual"))
 
 doc <- read_docx(ifelse(doc_type == "notes", file.path(datapath, "fra-template-notes.dotx"),
                         file.path(datapath, "fra-template-caus-rebut.dotx")))

@@ -1,6 +1,7 @@
 inj_biomech <- list()
 
 inj_biomech$intro$causation <- list(
+  fps(),
   fps(
     ftext(
       "Injury Causation Analysis", 
@@ -32,11 +33,12 @@ inj_biomech$intro$causation <- list(
   fps(),
   fps(
     ftext("Reconstruction of the crash", prop = fp_text_lite(italic = TRUE))),
-  fps((ftext("CRASH RECONSTRUCTION", prop = fp_text_lite(italic = TRUE, bold = TRUE)))),
+  block_pour_docx(recon_new_path),
   fps(),
   fps(ftext("Injury biomechanics", prop = fp_text_lite(italic = TRUE))))
 
 inj_biomech$intro$rebuttal <- list(
+  fps(),
   fps(
     ftext(
       "The generally accepted and peer-reviewed method of crash-related injury causation analysis for a specific individual is performed by assessing the risk of injury from the collision and comparing it to the probability that the injuries or conditions would have been present at the same point in time if the collision had not occurred. The process is referred to as a \"3-step\" injury causation method in which improbable alternative causes are ruled out and the single most likely cause is identified. The analysis is accomplished via the application of crash reconstruction, biomechanical, medical, and epidemiologic (risk assessment) principles."),

@@ -30,20 +30,6 @@ styles_tab <- styles_info(doc)
 ```
 
 ```{r loop fpar add function}
-block_add_fun <- function(x, blocklist, style = "Normal") {
-  for (i in length(blocklist):1) {
-    body_add(x, blocklist[[i]], style = style)
-  }
-  return(x)
-}
-
-block_add_style_fun <- function(x, list) {
-  for (i in length(list$content):1) {
-    block_add_fun(x, blocklist = list$content[[i]], style = list$style[[i]])
-  }
-  return(x)
-}
-
 block_add_fps_fun <- function(x, list) {
   for (i in length(list):1) {
     for (j in length(list[[i]]):1) {
@@ -54,75 +40,12 @@ block_add_fps_fun <- function(x, list) {
 }
 ```
 
-## reference for replacing grammar in report language:
-
-Mr_Ms_Lastname()/Firstname_Lastname() - defaults to plaintiff; otherwise argument will be "defendant" or "lawyer" - includes all plaintiffs,
-genders for single and naturalizes language for multiple
-
-he_she()/He_She() him_her()/Him_Her() his_her()/His_Her() - defaults to
-plaintiff; otherwise argument will be "defendant" or "lawyer"
-
-single_plural() - argument ("in quotes") will be single if
-length(plaintiff\$first_name) == 1, otherwise pluralize - pluralizes
-verbs too (is, isn't, was, wasn't, has, hasn't)
-added "it" -> "they" which is not ideal because could be they or them
-
-```{r separate and alter external docx documents}
-# # Load the existing Word document
-# doc_split <- read_docx(background_facts_recon_file_name)
-# 
-# # Get the document's blocks
-# content <- docx_summary(doc_split)
-# 
-# # Find the position where the document says "Reconstruction"
-# split_position <- NULL
-# for (i in seq_len(nrow(content))) {
-#   if (grepl("Reconstruction", content$text[i])) {
-#     split_position <- i
-#     break
-#   }
-# }
-# 
-# if (is.null(split_position)) {
-#   stop("Text 'Reconstruction' not found in the background facts/reconstruction document.")
-# }
-# 
-# # Split the document into two parts
-# part1 <- block_list(doc_split)[1:(split_position - 1)]
-# part2 <- block_list(doc_split)[split_position:nrow(content)]
-# 
-# # Create new documents for each part
-# doc1 <- read_docx()
-# doc2 <- read_docx()
-# 
-# # Add blocks to each document
-# for (block in part1) {
-#   doc1 <- body_add(doc1, block)
-# }
-# for (block in part2) {
-#   doc2 <- body_add(doc2, block)
-# }
-# 
-# # Write each part into separate Word documents
-# print(doc1, target = "background_facts.docx")
-# print(doc2, target = "reconstruction.docx")
-
-```
-
-
 ```{r test full doc build code}
-# the idea here is to have an entry after each report element that appends to a list that updates and doesn't duplicate. then the block_add_style_fun() function will take each element, apply the associated $style value, and put it through the block_add_fun() function.
+# need to redo this completely, dynamically for crash and report types
 
-# Style guide for block_add_style_fun() function
-# "Normal": at least 16 pt line spacing; majority doc style
-# "Body Text 2": Single line spacing and 3.75 tab distance
-# "Author": block quote style indentation on both sides
-# "Definition": bullet point in summary
-# "Body Text 3": inverted indent in injury biomech section
-# "caption": size 9, bold, justified, margins 2.25 in from both sides, for biomech image description subtitles
-# "Subtitle": (for images and crash summary image descriptions) size 10, bold, centered, margins 2.25 in from both sides
-# "footnote text": invisible for footnotes (when more than 2 in one text)
-# "Author": size 10, everything else Normal (for signature block)
+notes_doc_build <- list(
+  heading, 
+  background_facts$notes)
 
 
 caus_doc_rear_disk_build <- list(
@@ -140,8 +63,12 @@ caus_doc_rear_shoulder_build <- list(
 )
 
 caus_doc_near_side_disk_build <- list(
-  heading, 
+  heading,
+  receipt,
+  purpose$causation$general,
+  qualifications$causation, 
   background_facts$causation,
+  inj_biomech$intro$causation,
   inj_biomech$meat$caus$near_side$disk,
   three_steps$causation$disk,
   signature_block
@@ -162,9 +89,7 @@ rebut_doc_build <- list(
 )
 
 
-notes_doc_build <- list(
-  heading, 
-  background_facts$notes)
+
 
 caus_doc_build <- list(
   heading,
@@ -190,7 +115,7 @@ doc %>%
   cursor_begin() %>%
   body_remove() %>%
   #block_pour_docx("sample_med_hx.docx") %>%
-  block_add_fps_fun(caus_doc_build) %>%
+  block_add_fps_fun(notes_doc_build) %>%
   print(target = "FRA-report-output.docx")
 
 ```
