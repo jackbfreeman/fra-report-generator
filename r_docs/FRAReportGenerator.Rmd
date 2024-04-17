@@ -77,7 +77,8 @@ caus_doc_near_side_disk_build <- list(
 caus_doc_near_side_shoulder_build <- list(
   heading, 
   background_facts$causation,
-  inj_biomech$meat$caus$near_side$shoulder
+  inj_biomech$meat$caus$near_side$shoulder,
+  inj_biomech$meat$caus$rear$shoulder
 )
 
 rebut_doc_build <- list(
@@ -88,7 +89,14 @@ rebut_doc_build <- list(
   signature_block
 )
 
-
+rebut_short_doc_build <- list(
+  heading, 
+  qualifications$rebuttal_short,
+  background_facts$rebuttal,
+  inj_biomech$meat$rebuttal,
+  three_steps$rebuttal$all_experts,
+  signature_block
+)
 
 
 caus_doc_build <- list(
@@ -115,7 +123,8 @@ doc %>%
   cursor_begin() %>%
   body_remove() %>%
   #block_pour_docx("sample_med_hx.docx") %>%
-  block_add_fps_fun(notes_doc_build) %>%
+  block_add_fps_fun(caus_doc_near_side_disk_build) %>%
+  body_add(fpar(run_wordtext("Here's the thing that will be invisible!"))) %>%
   print(target = "FRA-report-output.docx")
 
 ```

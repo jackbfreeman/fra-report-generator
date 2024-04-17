@@ -274,3 +274,7 @@ qualifications$causation <- list(
     run_pagebreak()
   )
 )
+
+qualifications$rebuttal_short <- list(
+  fps(ftext("As I have already outlined my qualifications in my prior report in this matter, I will not repeat them here, but rather refer the reader to my current CV, which is attached.")),
+  fps())

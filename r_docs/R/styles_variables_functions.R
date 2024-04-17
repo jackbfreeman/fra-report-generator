@@ -15,7 +15,7 @@ fp_text_normal <- fp_text_lite()
 
 
 ddd <- "01/01/2021"
-doc_type <- "notes"
+doc_type <- "rebuttal"
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
@@ -88,6 +88,8 @@ doc <- read_docx(ifelse(doc_type == "notes", file.path(datapath, "fra-template-n
 
 background_facts_recon_file_name <- file.path(datapath, "sample_background_facts_analysis.docx")
 med_hx_file_name <- file.path(datapath, "sample_med_hx.docx")
+# only used for rebuttals, where background facts document needs to be split again
+background_facts_new_recon_file_name <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
 
 # case name is only plaintiff name(s) if case is "no"
 case_name <- paste(plaintiff$first_name, plaintiff$last_name) %>% paste(collapse = "; ")
