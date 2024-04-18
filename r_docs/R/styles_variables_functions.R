@@ -71,6 +71,7 @@ defense_biomech_expert <- list(
   last_name = "ExpertLast",
   title = "Dr.", # Dr. Mr. Ms.
   gender = "f",
+  firm = "BRC", # multiple choice or Other
   depo_reviewed = "no",
   depo_date = "01/01/2021",
   deltaV = "8", # mph

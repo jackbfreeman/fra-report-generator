@@ -382,7 +382,7 @@ inj_biomech$meat$caus$near_side$shoulder <- list(
 )
 
 
-inj_biomech$meat$rebuttal <- list(
+inj_biomech$meat$rebuttal$all_experts <- list(
   fps(
     ftext(
       paste0(
@@ -414,14 +414,16 @@ inj_biomech$meat$rebuttal <- list(
     ftext(
       paste0("Crash severity analysis"))),
   fps(),
+  block_pour_docx(recon_new_path)
+)
+
+inj_biomech$meat$rebuttal$BRC <- list(
   fps(
     ftext(
-      paste0("RECON CRASH RELATED ACCELERATION DELTA V ANALYSIS PLACEHOLDER"
-      )
+      "Exponent placeholder"
     )
   )
 )
-
 
 
 

@@ -19,12 +19,6 @@ print(doc_split_bkgrd, target = file.path(datapath, "temp_import_docx", "backgro
 
 
 
-
-
-
-
-
-
 # Load the existing Word document for Reconstruction
 doc_split_recon <- read_docx(background_facts_recon_file_name) %>%
   cursor_begin()
@@ -40,7 +34,7 @@ if (doc_type == "rebuttal") {
   doc_split_recon <- doc_split_recon %>%
     # Move cursor to beginning of Opinions section
     cursor_reach(keyword = "Opinions of")
-
+  
   # save recon as rebuttal
   doc_split_opinions <- doc_split_recon
   
@@ -74,11 +68,8 @@ if (doc_type == "rebuttal") {
     body_remove(doc_split_opinions)
   }
   
-  
-  
-  
-    # Print remaining document to new opinion docx
-    print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
+  # Print remaining document to new opinion docx
+  print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
 }
 
 
@@ -100,42 +91,6 @@ for (i in 1:(ifelse(doc_type == "notes", med_hx_point-1, med_hx_point))) {
 
 # Print remaining document to new medical history docx
 print(doc_split_med_hx, target = file.path(datapath, "temp_import_docx", "med_hx.docx"))
-
-
-
-
-
-
-
-
-# # create document for rebuttal opinions if doc_type is rebuttal
-# if (doc_type == "rebuttal") {
-#   
-#   
-#   doc_split_opinions <- read_docx(background_facts_new_recon_file_name) %>%
-#     # Move cursor to beginning of opinion section
-#     cursor_reach(keyword = "Opinions of defendant")
-# 
-#   # Store opinion break point
-#   opinion_point <- doc_split_opinions$officer_cursor$which
-# 
-#   # move cursor to beginning of document
-#   doc_split_opinions %>%
-#     cursor_begin()
-# 
-#   # create loop to delete objects before opinion segment
-#   for (i in 1:opinion_point) {
-#     body_remove(doc_split_opinions)
-#   }
-# 
-#   # Print remaining document to new opinion docx
-#   print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
-# }
-
-
-
-
-
 
 
 
