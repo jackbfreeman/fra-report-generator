@@ -43,12 +43,62 @@ block_add_fps_fun <- function(x, list) {
 ```{r test full doc build code}
 
 default_placeholder <- list(
+  fps(),
   fps(
     ftext(
       "Placeholder text"
     )
   )
 )
+
+
+# build intro section
+# causation
+if (doc_type == "causation") {
+  if (crash$pdof == "rollover") {
+    intro_build <- list(
+      heading,
+      receipt,
+      purpose$causation$rollover,
+      qualifications$general
+    )} else {
+      intro_build <- list(
+        heading,
+        receipt,
+        purpose$causation$general,
+        qualifications$general
+      )}
+  # rebuttal
+} else if (doc_type == "rebuttal") {
+  if (rebut_short == "yes") {
+    intro_build <- list(
+      heading,
+      receipt,
+      purpose$rebuttal,
+      summary_opinions,
+      qualifications$rebuttal_short
+    )} else {
+      intro_build <- list(
+        heading,
+        receipt,
+        purpose$rebuttal,
+        summary_opinions,
+        qualifications$general
+      )}
+  # all other situations
+} else if (doc_type == "notes") {
+  intro_build <- list(
+    heading
+  )
+} else {
+  intro_build <- list(
+    default_placeholder
+  )
+}
+
+
+
+
 
 # build injury biomechanics section
 # causation
@@ -84,16 +134,9 @@ if (doc_type == "causation") {
   }
   # rebuttal
 } else if (doc_type == "rebuttal") {
-  if (defense_biomech_expert$firm == "BRC") {
-    injury_biomechanics_build <- list(
-      inj_biomech$meat$rebuttal$BRC
-    )
-  } else {
-    injury_biomechanics_build <- list(
-      inj_biomech$meat$rebuttal$all_experts
-    )
-  }
-  # all other situations
+  injury_biomechanics_build <- list(
+    inj_biomech$meat$rebuttal$BRC
+  )
 } else {
   injury_biomechanics_build <- list(
     default_placeholder
@@ -106,64 +149,10 @@ notes_doc_build <- list(
   background_facts$notes)
 
 
-
-caus_doc_rear_disk_build <- list(
-  heading,
-  qualifications$causation,
-  background_facts$causation,
-  inj_biomech$meat$caus$rear$disk
-)
-
-# current job: make new entries for invisible footnote text and make invisible style in word template
-caus_doc_rear_shoulder_build <- list(
-  heading, 
-  background_facts$causation,
-  inj_biomech$meat$caus$rear$shoulder
-)
-
-caus_doc_near_side_disk_build <- list(
-  heading,
-  receipt,
-  purpose$causation$general,
-  qualifications$causation, 
-  background_facts$causation,
-  inj_biomech$intro$causation,
-  inj_biomech$meat$caus$near_side$disk,
-  three_steps$causation$disk,
-  signature_block
-)
-
-caus_doc_near_side_shoulder_build <- list(
-  heading, 
-  background_facts$causation,
-  inj_biomech$meat$caus$near_side$shoulder,
-  inj_biomech$meat$caus$rear$shoulder
-)
-
-rebut_doc_build <- list(
-  heading, 
-  background_facts$rebuttal,
-  inj_biomech$meat$rebuttal,
-  three_steps$rebuttal$all_experts,
-  signature_block
-)
-
-rebut_short_doc_build <- list(
-  heading, 
-  qualifications$rebuttal_short,
-  background_facts$rebuttal,
-  inj_biomech$meat$rebuttal,
-  three_steps$rebuttal$all_experts,
-  signature_block
-)
-
-
 caus_doc_build <- list(
-  heading,
-  receipt,
-  purpose$causation$general,
-  qualifications$causation,
+  unlist(intro_build, recursive = FALSE),
   background_facts$causation,
+  unlist(injury_biomechanics_build, recursive = FALSE),
   signature_block,
   appendix$causation$general
 )
@@ -174,7 +163,7 @@ caus_doc_build <- list(
 doc %>%
   cursor_begin() %>%
   body_remove() %>%
-  block_add_fps_fun(injury_biomechanics_build) %>%
+  block_add_fps_fun(caus_doc_build) %>%
   #body_add(fpar(run_wordtext("Here's the thing that will be invisible!"))) %>%
   print(target = "FRA-report-output.docx")
 

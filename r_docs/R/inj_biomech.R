@@ -418,6 +418,7 @@ inj_biomech$meat$rebuttal$all_experts <- list(
 )
 
 inj_biomech$meat$rebuttal$BRC <- list(
+  fps(),
   fps(
     ftext(
       "Exponent placeholder"

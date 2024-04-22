@@ -120,10 +120,7 @@ background_facts$causation <- list(
     ftext(
       "At the time of the crash, "
     )),
-  block_pour_docx(med_hx_new_path),
-  fps(),
-  fps(),
-  block_pour_docx(recon_new_path)
+  block_pour_docx(med_hx_new_path)
 )
 
 background_facts$rebuttal <- list(
@@ -136,5 +133,5 @@ background_facts$rebuttal <- list(
   block_pour_docx(med_hx_new_path),
   fps(),
   fps(),
-  block_pour_docx(recon_new_path)
+  block_pour_docx(opinions_new_path)
 )

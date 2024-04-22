@@ -145,19 +145,13 @@ receipt <- list(
 
 
 purpose <- list()
-purpose$causation$rollover$part1 <- list(
+purpose$causation$rollover <- list(
   fps(
     ftext(
       paste0(
         "The purpose of this report is to provide an opinion regarding the causal relationship between the degree of roof crush observed in the subject ", plaintiff$car_make, " ", plaintiff$car_model, " and the severe spine and spinal cord injuries sustained by ", Mr_Ms_Lastname(), " in the ", convert_date_format(crash$date), ", rollover crash. Specifically, my opinions address the theory of occupant \"diving\" in rollover crashes as the cause of serious head and neck injury, versus excessive roof crush. The methods and conclusions described in this report are largely based on peer-reviewed published research that I supervised and co-authored, specifically:"
-      )
-    )
-    
-  ),
-  fps()
-)
-
-purpose$causation$rollover$publications <- list(
+      ))),
+  fps(),
   fps(
     ftext(
       "Dobbertin KM, Freeman MD, Lambert WE, Lasarev MR, Kohles SS. The relationship between vehicle roof crush and head, neck and spine injury in rollover crashes. Accid Anal Prev 2013;58:46-52"
@@ -168,10 +162,7 @@ purpose$causation$rollover$publications <- list(
       "Freeman MD, Dobbertin K, Kohles SS, Uhrenholt L, Eriksson A. Serious head and neck injury as a predictor of occupant position in fatal rollover crashes. Forensic Sci Int 2012;222:228–33."
     )
   ),
-  fps()
-)
-
-purpose$causation$rollover$part2 <- list(
+  fps(),
   fps(
     ftext(
       paste("The conclusions of the investigation described herein, as they apply to", Mr_Ms_Lastname(), "'s injuries and the subject crash, are described beginning on page 41 of this report.")
@@ -207,19 +198,19 @@ purpose$rebuttal <- list(
 
 
 summary_opinions <- list(
-  fpar(
+  fps(
     ftext(
       paste0(
         Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject collision did not have the capacity to cause or exacerbate any of the injuries indisputably diagnosed in ", Mr_Ms_Lastname(), "are lacking a foundation in science, medicine, or the facts in this case. ", Dr_Mr_Ms_Expert_Lastname, "'s opinions are based on a confusing and disingenuous presentation of a novel and distorted approach to causality and a misrepresentation and misuse of published literature."
       ), fp_text_lite(bold = TRUE)),
     run_linebreak()),
-  fpar(
+  fps(
     ftext(
       paste0(
         Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject crash only produced minimal and benign forces that could not have cause ", Mr_Ms_Lastname(), "'s diagnosed spinal disk and other injuries because the forces in the collision were supposedly equal to those of ordinary and benign forces is not a reliable, relevant, or validated method of assessing injury cause. Using ", Dr_Mr_Ms_Expert_Lastname, "'s claimed delta V of ", defense_biomech_expert$deltaV, " mph for the subject collision indicates significant occupant motion and forces that in no way resemble any of the absurdly innocuous comparisons claimed by ", Dr_Mr_Ms_Expert_Lastname, ". Such comparisons are demonstrably unscientific and highly misleading, and irrelevant to any disputed issues in ", Mr_Ms_Lastname(), "'s case."
       ), fp_text_lite(bold = TRUE)),
     run_linebreak()),
-  fpar(
+  fps(
     ftext(
       paste0(
         "There is no scientific or factual basis for ", Dr_Mr_Ms_Expert_Lastname, "'s claim that ", Mr_Ms_Lastname(), "'s previous spinal injuries could not or should not have been \"exacerbated\" by the subject crash. Indeed, ", Dr_Mr_Ms_Expert_Lastname, "'s use of the term is both meaningless and misleading, and neither ", he_she(person = defense_biomech_expert), " nor anyone else has the faintest idea of what forces would have been required to have caused ", Mr_Ms_Lastname(), "'s previously diagnosed spinal disk and other injuries to become symptomatic, or to worsen. To suggest otherwise is frankly dishonest."
@@ -227,7 +218,7 @@ summary_opinions <- list(
     ),
     run_linebreak()
   ),
-  fpar(
+  fps(
     ftext(
       paste0(
         "The methodology and principles used by ", Dr_Mr_Ms_Expert_Lastname, " to arrive at ", his_her(person = defense_biomech_expert), " opinions regarding the risk of injury from the crash to ", Mr_Ms_Lastname(), " are not scientifically reliable, either in general or as they were applied to the facts of this case. Despite a superficial appearance of scientific validity, ", Dr_Mr_Ms_Expert_Lastname, "'s methods are speculative, unscientific, and unreliable, and ", his_her(person = defense_biomech_expert), " conclusions are meaningless."
@@ -241,7 +232,7 @@ summary_opinions <- list(
 
 
 qualifications <- list()
-qualifications$causation <- list(
+qualifications$general <- list(
   fps(
     ftext(
       "My qualifications to provide opinions concerning the matters herein, particularly on issues of the causal relationship between trauma and injury, are as follows:",
@@ -277,4 +268,5 @@ qualifications$causation <- list(
 
 qualifications$rebuttal_short <- list(
   fps(ftext("As I have already outlined my qualifications in my prior report in this matter, I will not repeat them here, but rather refer the reader to my current CV, which is attached.")),
-  fps())
+  fps()
+)
