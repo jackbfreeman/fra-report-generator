@@ -144,6 +144,11 @@ if (doc_type == "causation") {
 }
 
 
+
+
+
+
+
 notes_doc_build <- list(
   heading, 
   background_facts$notes)
@@ -159,8 +164,9 @@ caus_doc_build <- list(
 
 rebut_doc_build <- list(
   unlist(intro_build, recursive = FALSE),
-  background_facts$causation,
+  background_facts$rebuttal,
   unlist(injury_biomechanics_build, recursive = FALSE),
+  opinions_general_comments,
   signature_block,
   appendix$causation$general
 )
