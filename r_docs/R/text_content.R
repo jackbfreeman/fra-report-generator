@@ -1018,10 +1018,7 @@ if (doc_type == "causation") {
 
 
 
-conclusions <- list()
-
-
-if (doc_type == "causation") {
+if (doc_type != "notes") {
   conclusions <- list(
     fps(),
     fps(),
@@ -1032,28 +1029,8 @@ if (doc_type == "causation") {
     fps(
       ftext(
         paste0(
-          "Given the contiguous chain of causation from the day of the crash through Mr. SAMPLE-P1-LN's and Mr. SAMPLE-P2-LN’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in Mr. SAMPLE-P1-LN's and Mr. SAMPLE-P2-LN’s medical records and summarized in this report, including their symptomatic cervical and lumbar disk derangements, is the subject 1/1/2002 frontal impact crash."))),
-    fps(),
-    fps(
-      ftext(
-        paste0(
-          "I have examined neither Mr. SAMPLE-P1-LN nor Mr. SAMPLE-P2-LN and I therefore have no opinions about their diagnoses, treatment, or prognoses outside of what is reflected in the medical record. This is not to say that I am not qualified, licensed, and extensively experienced in performing such evaluations, but that I have not done so in this case."
-        ))))
-} else if (doc_type == "rebuttal") {
-  conclusions <- list(
-    fps(),
-    fps(),
-    fps(
-      ftext(
-        "Conclusions", prop = fp_text_bold)),
-    fps(),
-    fps(
-      ftext(
-        paste0(
-          "Given the contiguous chain of causation from the day of the crash through Mr. SAMPLE-P1-LN's and Mr. SAMPLE-P2-LN’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in Mr. SAMPLE-P1-LN's and Mr. SAMPLE-P2-LN’s medical records and summarized in this report, including their symptomatic cervical and lumbar disk derangements, is the subject 1/1/2002 frontal impact crash."))),
-    fps())
-}
-
+          "Given the contiguous chain of causation from the day of the crash through Mr. SAMPLE-P1-LN's and Mr. SAMPLE-P2-LN’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in Mr. SAMPLE-P1-LN's and Mr. SAMPLE-P2-LN’s medical records and summarized in this report, including their symptomatic cervical and lumbar disk derangements, is the subject 1/1/2002 frontal impact crash."
+        ))))}
 
 
 
