@@ -16,7 +16,7 @@ fp_text_normal <- fp_text_lite()
 
 ddd <- "01/01/2021"
 doc_type <- "causation"
-rebut_short <- "no" # yes/no, only shows if doc_type = rebut
+short <- "no" # yes/no, only shows if doc_type = rebut
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"

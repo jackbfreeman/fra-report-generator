@@ -93,45 +93,46 @@ for (i in 1:(ifelse(doc_type == "notes", med_hx_point-1, med_hx_point))) {
 print(doc_split_med_hx, target = file.path(datapath, "temp_import_docx", "med_hx.docx"))
 
 
-
-
-
-background_facts <- list()
-
 background_facts_new_path <- file.path(datapath, "temp_import_docx", "background_facts.docx")
 med_hx_new_path <- file.path(datapath, "temp_import_docx", "med_hx.docx")
 recon_new_path <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
 opinions_new_path <- file.path(datapath, "temp_import_docx", "opinions.docx")
 
-background_facts$notes <- list(
-  block_pour_docx(background_facts_new_path),
-  fps(),
-  fps(),
-  block_pour_docx(med_hx_new_path),
-  fps(),
-  fps(),
-  block_pour_docx(recon_new_path)
-)
 
-background_facts$causation <- list(
-  block_pour_docx(background_facts_new_path),
-  fps(),
-  fps(
-    ftext(
-      "At the time of the crash, "
-    )),
-  block_pour_docx(med_hx_new_path)
-)
 
-background_facts$rebuttal <- list(
-  block_pour_docx(background_facts_new_path),
-  fps(),
-  fps(
-    ftext(
-      "At the time of the crash, "
-    )),
-  block_pour_docx(med_hx_new_path),
-  fps(),
-  fps(),
-  block_pour_docx(opinions_new_path)
-)
+background_facts <- list()
+
+if (doc_type == "notes") {
+  background_facts <- list(
+    block_pour_docx(background_facts_new_path),
+    fps(),
+    fps(),
+    block_pour_docx(med_hx_new_path),
+    fps(),
+    fps(),
+    block_pour_docx(recon_new_path)
+  )
+} else if (doc_type == "causation") {
+  background_facts <- list(
+    block_pour_docx(background_facts_new_path),
+    fps(),
+    fps(
+      ftext(
+        "At the time of the crash, "
+      )),
+    block_pour_docx(med_hx_new_path)
+  )
+} else if (doc_type == "notes") {
+  background_facts <- list(
+    block_pour_docx(background_facts_new_path),
+    fps(),
+    fps(
+      ftext(
+        "At the time of the crash, "
+      )),
+    block_pour_docx(med_hx_new_path),
+    fps(),
+    fps(),
+    block_pour_docx(opinions_new_path)
+  )
+}
