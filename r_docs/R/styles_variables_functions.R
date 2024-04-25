@@ -36,7 +36,7 @@ lawyer <- list(
 
 crash <- list(
   date = "01/01/2020",
-  pdof = "rear", # frontal, rear, near-side, far-side, rollover
+  pdof = "frontal", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 

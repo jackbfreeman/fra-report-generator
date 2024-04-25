@@ -156,6 +156,14 @@ caus_doc_build <- list(
   signature_block,
   appendix$causation$general
 )
+
+rebut_doc_build <- list(
+  unlist(intro_build, recursive = FALSE),
+  background_facts$causation,
+  unlist(injury_biomechanics_build, recursive = FALSE),
+  signature_block,
+  appendix$causation$general
+)
 ```
 
 ```{r function call}
