@@ -210,30 +210,27 @@ summary_opinions <- list(
       paste0(
         Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject collision did not have the capacity to cause or exacerbate any of the injuries indisputably diagnosed in ", Mr_Ms_Lastname(), "are lacking a foundation in science, medicine, or the facts in this case. ", Dr_Mr_Ms_Expert_Lastname, "'s opinions are based on a confusing and disingenuous presentation of a novel and distorted approach to causality and a misrepresentation and misuse of published literature."
       ), fp_text_lite(bold = TRUE)),
-    run_linebreak()),
+    run_linebreak(), style =  "Definition"),
   fps(
     ftext(
       paste0(
         Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject crash only produced minimal and benign forces that could not have cause ", Mr_Ms_Lastname(), "'s diagnosed spinal disk and other injuries because the forces in the collision were supposedly equal to those of ordinary and benign forces is not a reliable, relevant, or validated method of assessing injury cause. Using ", Dr_Mr_Ms_Expert_Lastname, "'s claimed delta V of ", defense_biomech_expert$deltaV, " mph for the subject collision indicates significant occupant motion and forces that in no way resemble any of the absurdly innocuous comparisons claimed by ", Dr_Mr_Ms_Expert_Lastname, ". Such comparisons are demonstrably unscientific and highly misleading, and irrelevant to any disputed issues in ", Mr_Ms_Lastname(), "'s case."
       ), fp_text_lite(bold = TRUE)),
-    run_linebreak()),
+    run_linebreak(), style =  "Definition"),
   fps(
     ftext(
       paste0(
         "There is no scientific or factual basis for ", Dr_Mr_Ms_Expert_Lastname, "'s claim that ", Mr_Ms_Lastname(), "'s previous spinal injuries could not or should not have been \"exacerbated\" by the subject crash. Indeed, ", Dr_Mr_Ms_Expert_Lastname, "'s use of the term is both meaningless and misleading, and neither ", he_she(person = defense_biomech_expert), " nor anyone else has the faintest idea of what forces would have been required to have caused ", Mr_Ms_Lastname(), "'s previously diagnosed spinal disk and other injuries to become symptomatic, or to worsen. To suggest otherwise is frankly dishonest."
       ), fp_text_lite(bold = TRUE)
     ),
-    run_linebreak()
-  ),
+    run_linebreak(), style =  "Definition"),
   fps(
     ftext(
       paste0(
         "The methodology and principles used by ", Dr_Mr_Ms_Expert_Lastname, " to arrive at ", his_her(person = defense_biomech_expert), " opinions regarding the risk of injury from the crash to ", Mr_Ms_Lastname(), " are not scientifically reliable, either in general or as they were applied to the facts of this case. Despite a superficial appearance of scientific validity, ", Dr_Mr_Ms_Expert_Lastname, "'s methods are speculative, unscientific, and unreliable, and ", his_her(person = defense_biomech_expert), " conclusions are meaningless."
       ), fp_text_lite(bold = TRUE)
     ),
-    run_linebreak(),
-    run_linebreak()
-  )
+    run_linebreak(), style =  "Definition")
 )
 
 
@@ -301,22 +298,15 @@ if (short == "yes") {
 # (for rebuttals) import opinions of expert from external document, then general comments on expert opinions
 opinions_general_comments <- list(
   fps(),
-  block_pour_docx(background_facts_new_path),
-  fps(),
-  fps(),
   fps(
     ftext(
       "General comments on SAMPLE-BIOMECH-LN’s approach",
-      prop = fp_text_lite(italic = TRUE)
-    )),
+      prop = fp_text_italic_underline)),
   fps(
     ftext(
       paste0(
         "The purpose of ", Dr_Mr_Ms_Expert_Lastname, "'s opinion is to provide a backdoor medical causation opinion that ", Mr_Ms_Lastname(), " ", single_plural("was"), " not injured in the subject collision because ", he_she(), " (", Dr_Mr_Ms_Expert_Lastname, ") deemed any injury to be ")), ftext("impossible", prop = fp_text_lite(italic = TRUE)), ftext(paste0(" in the crash. ", Dr_Mr_Ms_Expert_Lastname, " made no attempt to assess the actual probability of injury from any real-world crash like the subject collision, information which can only come from observational (epidemiologic) study of injuries associated with real world crashes, not from intellectually dishonest comparisons between one of the most common causes of injury in the US to innocuous activities of daily living. ", Dr_Mr_Ms_Expert_Lastname, " cites to multiple (", paste0(defense_biomech_expert$report_citations_number, ifelse(defense_biomech_expert$report_citations_number >39, "!", "")), ") publications in his ", defense_biomech_expert$report_pages_number, "-page report, yet none of them provide valid or reliable evidence that the injuries diagnosed in ", Mr_Ms_Lastname(), " cannot, or did not, result from the collision that ", he_she(), " ", single_plural("was"), " exposed to.")
-        )
-  ),
-  fps()
-)
+        )))
 
 
 
@@ -389,18 +379,23 @@ if (doc_type == "causation") {
       run_footnote(x = footnotes_blocklist[9], prop = fp_text_refnote),
       run_footnote(x = footnotes_blocklist[4], prop = fp_text_refnote)),
     # must be rendered with style "Body Text 3" for inverted indentation
+    fps(),
     fps(
       ftext(
-        "The three fundamental elements or steps of an injury causation analysis are as follows: Whether the injury mechanism had the potential to cause the injury in question (aka general causation);"
-      )),
+        "The three fundamental elements or steps of an injury causation analysis are as follows:"
+        )), 
+    fps(
+      ftext(
+      "Whether the injury mechanism had the potential to cause the injury in question (aka general causation);"
+      ), style = "Body Text 3"),
     fps(
       ftext(
         "The degree of temporal proximity between the injury mechanism and the onset of the symptoms reasonably indicating the presence of the injury;"
-      )),
+      ), style = "Body Text 3"),
     fps(
       ftext(
         "Whether there is a more likely alternative explanation for the occurrence of the symptoms at the same point in time (aka differential etiology)."
-      )),
+      ), style = "Body Text 3"),
     fps())
 }
 
@@ -772,12 +767,18 @@ if (doc_type == "causation") {
       fps(),
       fps(
         ftext(
-          paste0("\"Such [tolerance] specifications are beyond the state-of-the-art in biomechanics except perhaps for a few academic situations. There are several difficulties which prevent a ready establishment of human tolerance levels. First, there are differences in judgment as to the specific degree of injury severity that should serve as the tolerance level. Second, large differences exist in the tolerances of different individuals. It is not unusual for bone fracture tests on a sample of adult cadavers to show a three-to-one load variation. Presumably, variations of at least this magnitude exist in the living population. Finally, most tolerance levels are sensitive to modest changes in the direction, shape, and stiffness of the loading source. The above considerations indicate that complete and precise definitions of human tolerance levels will require large amounts of data based on controlled statistical samples. Only in this way can the influence of age, size, sex, and weight be comprehensively assessed and only in this way can mean loads and statistical measures of scatter be linked to specific tolerance levels.\""))),
+          paste0("\"Such [tolerance] specifications are beyond the state-of-the-art in biomechanics except perhaps for a few academic situations. There are several difficulties which prevent a ready establishment of human tolerance levels. First, there are differences in judgment as to the specific degree of injury severity that should serve as the tolerance level. Second, large differences exist in the tolerances of different individuals. It is not unusual for bone fracture tests on a sample of adult cadavers to show a three-to-one load variation. Presumably, variations of at least this magnitude exist in the living population. Finally, most tolerance levels are sensitive to modest changes in the direction, shape, and stiffness of the loading source. The above considerations indicate that complete and precise definitions of human tolerance levels will require large amounts of data based on controlled statistical samples. Only in this way can the influence of age, size, sex, and weight be comprehensively assessed and only in this way can mean loads and statistical measures of scatter be linked to specific tolerance levels.\""
+                 )), style = "Quote"),
       fps(),
       fps(
         ftext(
-          paste0("Crash severity analysis"))),
+          paste0("Crash severity analysis"), prop = fp_text_underline)),
       fps(),
+      fps(
+        ftext(
+        "Reconstruction:",
+        prop = fp_text_italic_underline
+      )),
       block_pour_docx(recon_new_path)
     )
   }
@@ -917,7 +918,9 @@ if (doc_type == "causation") {
     fps(),
     fps(
       ftext(
-        paste0("The actual risk of injury from a lower speed crash is not determined by a comparison to an activity that never causes injury, of course. Such determinations are made by examining epidemiologic data regarding real world crashes and the types of injuries that result from them. This is precisely what my colleagues and I did in a recent peer-reviewed research publication, in which we noted the following:")),
+        paste0(
+          "The actual risk of injury from a lower speed crash is not determined by a comparison to an activity that never causes injury, of course. Such determinations are made by examining epidemiologic data regarding real world crashes and the types of injuries that result from them. This is precisely what my colleagues and I did in a recent peer-reviewed research publication, in which we noted the following:"
+          )),
       run_footnote(x = footnotes_blocklist[36], prop = fp_text_refnote)),
     fps(),
     fps(

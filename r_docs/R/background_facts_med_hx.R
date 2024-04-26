@@ -29,7 +29,7 @@ for (i in 1:(ifelse(doc_type == "notes", recon_point-1, recon_point))) {
 }
 
 
-# delete rebuttal section if doc_type is rebuttal
+# delete opinion section if doc_type is rebuttal
 if (doc_type == "rebuttal") {
   doc_split_recon <- doc_split_recon %>%
     # Move cursor to beginning of Opinions section
@@ -64,7 +64,7 @@ if (doc_type == "rebuttal") {
   # return cursor to beginning
   doc_split_opinions <- cursor_begin(doc_split_opinions)
   
-  for (i in 1:opinion_point) {
+  for (i in 1:(opinion_point-1)) {
     body_remove(doc_split_opinions)
   }
   
@@ -122,7 +122,7 @@ if (doc_type == "notes") {
       )),
     block_pour_docx(med_hx_new_path)
   )
-} else if (doc_type == "notes") {
+} else if (doc_type == "rebuttal") {
   background_facts <- list(
     block_pour_docx(background_facts_new_path),
     fps(),

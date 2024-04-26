@@ -15,7 +15,7 @@ fp_text_normal <- fp_text_lite()
 
 
 ddd <- "01/01/2021"
-doc_type <- "causation"
+doc_type <- "rebuttal"
 short <- "no" # yes/no, only shows if doc_type = rebut
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
@@ -72,7 +72,7 @@ defense_biomech_expert <- list(
   last_name = "ExpertLast",
   title = "Dr.", # Dr. Mr. Ms.
   gender = "f",
-  firm = "BRC", # multiple choice or Other
+  firm = "LMNOP", # multiple choice or Other
   depo_reviewed = "no",
   depo_date = "01/01/2021",
   deltaV = "8", # mph

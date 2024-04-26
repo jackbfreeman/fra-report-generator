@@ -60,8 +60,17 @@ if (doc_type == "notes") {
   )
 } else if (doc_type == "rebuttal") {
   final_build <- list(
-    intro_build,
+    heading,
+    receipt,
+    purpose,
+    summary_opinions,
+    qualifications,
     background_facts,
+    opinions_general_comments,
+    inj_biomech$intro,
+    inj_biomech$meat,
+    three_steps,
+    conclusions,
     signature_block
   )
 }
