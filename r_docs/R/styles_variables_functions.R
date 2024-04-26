@@ -15,7 +15,7 @@ fp_text_normal <- fp_text_lite()
 
 
 ddd <- "01/01/2021"
-doc_type <- "rebuttal"
+doc_type <- "causation"
 short <- "no" # yes/no, only shows if doc_type = rebut
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
@@ -36,7 +36,7 @@ lawyer <- list(
 
 crash <- list(
   date = "01/01/2020",
-  pdof = "frontal", # frontal, rear, near-side, far-side, rollover
+  pdof = "rollover", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
@@ -71,7 +71,7 @@ defense_biomech_expert <- list(
   first_name = "ExpertFirst",
   last_name = "ExpertLast",
   title = "Dr.", # Dr. Mr. Ms.
-  gender = "f",
+  gender = "m",
   firm = "LMNOP", # multiple choice or Other
   depo_reviewed = "no",
   depo_date = "01/01/2021",
