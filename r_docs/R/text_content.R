@@ -306,7 +306,7 @@ opinions_general_comments <- list(
   fps(
     ftext(
       paste0(
-        "The purpose of ", Dr_Mr_Ms_Expert_Lastname, "'s opinion is to provide a backdoor medical causation opinion that ", Mr_Ms_Lastname(), " ", single_plural("was"), " not injured in the subject collision because ", he_she(), " (", Dr_Mr_Ms_Expert_Lastname, ") deemed any injury to be ")), ftext("impossible", prop = fp_text_lite(italic = TRUE)), ftext(paste0(" in the crash. ", Dr_Mr_Ms_Expert_Lastname, " made no attempt to assess the actual probability of injury from any real-world crash like the subject collision, information which can only come from observational (epidemiologic) study of injuries associated with real world crashes, not from intellectually dishonest comparisons between one of the most common causes of injury in the US to innocuous activities of daily living. ", Dr_Mr_Ms_Expert_Lastname, " cites to multiple (", paste0(defense_biomech_expert$report_citations_number, ifelse(defense_biomech_expert$report_citations_number >39, "!", "")), ") publications in ", his_her(person = defense_biomech_expert), " ", defense_biomech_expert$report_pages_number, "-page report, yet none of them provide valid or reliable evidence that the injuries diagnosed in ", Mr_Ms_Lastname(), " cannot, or did not, result from the collision that ", he_she(), " ", single_plural("was"), " exposed to.")
+        "The purpose of ", Dr_Mr_Ms_Expert_Lastname, "'s opinion is to provide a backdoor medical causation opinion that ", Mr_Ms_Lastname(), " ", single_plural("was"), " not injured in the subject collision because ", he_she(person = defense_biomech_expert), " (", Dr_Mr_Ms_Expert_Lastname, ") deemed any injury to be ")), ftext("impossible", prop = fp_text_lite(italic = TRUE)), ftext(paste0(" in the crash. ", Dr_Mr_Ms_Expert_Lastname, " made no attempt to assess the actual probability of injury from any real-world crash like the subject collision, information which can only come from observational (epidemiologic) study of injuries associated with real world crashes, not from intellectually dishonest comparisons between one of the most common causes of injury in the US to innocuous activities of daily living. ", Dr_Mr_Ms_Expert_Lastname, " cites to multiple (", paste0(defense_biomech_expert$report_citations_number, ifelse(defense_biomech_expert$report_citations_number >39, "!", "")), ") publications in ", his_her(person = defense_biomech_expert), " ", defense_biomech_expert$report_pages_number, "-page report, yet none of them provide valid or reliable evidence that the injuries diagnosed in ", Mr_Ms_Lastname(), " cannot, or did not, result from the collision that ", he_she(person = plaintiff), " ", single_plural("was"), " exposed to.")
         )))
 
 
@@ -410,13 +410,13 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The subject high speed frontal collision would have produced high loads in ", Mr_Ms_Lastname(), "’s entire ", single_plural("body"), ", as they continued to travel forward inside the vehicle and into the deploying airbags, seatbelts, steering wheel, and dashboard at ", mdf_deltaV, " mph. The loads on ", Mr_Ms_Lastname(), "’s ", single_plural("spine"), " and spinal ", single_plural("disk")," would have included high levels of compression, rotation, and shear, and would have had the potential to cause any level of injury severity to ", Mr_Ms_Lastname(), ", including all of the injuries that ", he_she(), " ", single_plural("was"), " ultimately diagnosed with. The US National Highway Traffic Safety Administration reports that at an approximately ", mdf_deltaV, " mph crash, nearly AMOUNT% of occupants will sustain some degree of injury that is immediately apparent and requires medical evaluation, around AMOUNT% will sustain a fracture or more significant injury, and around AMOUNT% will sustain a life-threatening injury (i.e., spinal cord injury, skull fracture, etc.)."
+              "The subject high speed frontal collision would have produced high loads in ", Mr_Ms_Lastname(), "’s entire ", single_plural("body"), ", as they continued to travel forward inside the vehicle and into the deploying airbags, seatbelts, steering wheel, and dashboard at ", mdf_deltaV, " mph. The loads on ", Mr_Ms_Lastname(), "’s ", single_plural("spine"), " and spinal ", single_plural("disk")," would have included high levels of compression, rotation, and shear, and would have had the potential to cause any level of injury severity to ", Mr_Ms_Lastname(), ", including all of the injuries that ", he_she(person = plaintiff), " ", single_plural("was"), " ultimately diagnosed with. The US National Highway Traffic Safety Administration reports that at an approximately ", mdf_deltaV, " mph crash, nearly AMOUNT% of occupants will sustain some degree of injury that is immediately apparent and requires medical evaluation, around AMOUNT% will sustain a fracture or more significant injury, and around AMOUNT% will sustain a life-threatening injury (i.e., spinal cord injury, skull fracture, etc.)."
             )),
           run_footnote(x = footnotes_blocklist[10], prop = fp_text_refnote)),
         fps(
           ftext(
             paste0(
-              "Thus, all of the injuries diagnosed in ", Mr_Ms_Lastname(), " after the subject collision, and the associated treatments that ", he_she(), " sought for ", his_her(), " symptoms of significant and persisting spinal injury, are entirely explained by the exceedingly dangerous high speed frontal crash that ", he_she(), " ", single_plural("was"), " exposed to."
+              "Thus, all of the injuries diagnosed in ", Mr_Ms_Lastname(), " after the subject collision, and the associated treatments that ", he_she(person = plaintiff), " sought for ", his_her(), " symptoms of significant and persisting spinal injury, are entirely explained by the exceedingly dangerous high speed frontal crash that ", he_she(person = plaintiff), " ", single_plural("was"), " exposed to."
             ))),
         fps())
       
@@ -438,7 +438,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The rear impact would have resulted in ", Mr_Ms_Lastname(), "’s ", single_plural("torso"), " and ", single_plural("head"), " initially being thrown rearwards into the seatback at around ", mdf_deltaV, " mph, and then rebounding forward into the restraining seat belt and toward the steering wheel (the first part of the crash kinematics that ", he_she(), " recall", ifelse(length(plaintiff$first_name) > 1, "", "s"), "). ", He_She(), " would have sustained substantial complex loads on ", his_her(), " ", single_plural("spine"), " in the collision, loads that include compression, rotation, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs)."))),
+              "The rear impact would have resulted in ", Mr_Ms_Lastname(), "’s ", single_plural("torso"), " and ", single_plural("head"), " initially being thrown rearwards into the seatback at around ", mdf_deltaV, " mph, and then rebounding forward into the restraining seat belt and toward the steering wheel (the first part of the crash kinematics that ", he_she(person = plaintiff), " recall", ifelse(length(plaintiff$first_name) > 1, "", "s"), "). ", he_she(person = plaintiff), " would have sustained substantial complex loads on ", his_her(), " ", single_plural("spine"), " in the collision, loads that include compression, rotation, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs)."))),
         fps(),
         fps(
           ftext(
@@ -1115,9 +1115,10 @@ signature_block <- list(
 
 appendix <- list(
   run_pagebreak(),
-  fps(
+  # needs to be fpar (not fps) to allow center aligned text
+  fpar(
     ftext(
-      "Appendix")),
+      "Appendix", prop = fp_text_bold), fp_p = fp_par(text.align = "center")),
   fps(),
   fps(
     ftext(

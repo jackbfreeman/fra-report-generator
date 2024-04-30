@@ -24,7 +24,7 @@ case_defendant_name <- "SampleCaseDefendantName"
 
 lawyer <- list(
   first_name = "LawyerFirst",
-  last_name = "LawyerLast",
+  last_name = "LawyerLast", # ignore postnominals (i.e., Jr. or II)
   gender = "m",
   firm_name = "SampleFirmName",
   address = "123 Address St.",
@@ -47,7 +47,7 @@ plaintiff <- list(
   gender = c("f", "m", "nb"),
   dob = c("01/01/1999", "01/02/1990", "01/04/1994"),
   weight = "100", # pounds
-  injury_location = "disk", # disk, shoulder, spine (rollover)
+  injury_location = "disk", # disk, shoulder, spine (rollover), seatbelt efficacy
   car_make = "PlCarMake",
   car_model = "PlCarModel",
   car_year = "1995",
