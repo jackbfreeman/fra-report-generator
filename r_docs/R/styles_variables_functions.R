@@ -36,7 +36,7 @@ lawyer <- list(
 
 crash <- list(
   date = "01/01/2020",
-  pdof = "rollover", # frontal, rear, near-side, far-side, rollover
+  pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
@@ -47,7 +47,7 @@ plaintiff <- list(
   gender = c("f", "m", "nb"),
   dob = c("01/01/1999", "01/02/1990", "01/04/1994"),
   weight = "100", # pounds
-  injury_location = "disk", # disk, shoulder, spine (rollover), seatbelt efficacy
+  injury_location = "shoulder", # disk, shoulder, spine (rollover), seatbelt efficacy
   car_make = "PlCarMake",
   car_model = "PlCarModel",
   car_year = "1995",
@@ -228,7 +228,7 @@ plural <- function(x) {
     
     #if not already plural: just add s
     if(x %in% c("man", "woman", "child", "foot", "tooth", "goose", "mouse",
-                "men", "women", "children", "feet", "teeth", "geese", "mice")) {
+                "men", "women", "children", "feet", "teeth", "geese", "mice", "it", "they")) {
       if(x == "man") x <- "men"
       if(x == "woman") x <- "women"
       if(x == "child") x <- "children"
@@ -236,6 +236,7 @@ plural <- function(x) {
       if(x == "tooth") x <- "teeth"
       if(x == "goose") x <- "geese"
       if(x == "mouse") x <- "mice"
+      if(x == "it") x <- "they"
     } else if (x %in% c("fish", "sheep", "deer", "moose", "aircraft", "dice")) {
       #singular same as plural
     } else if(substr(x, nchar(x), nchar(x)) != "s") {

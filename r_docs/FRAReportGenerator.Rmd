@@ -43,7 +43,7 @@ if (doc_type == "notes") {
   final_build <- list(
     heading, 
     background_facts
-    )
+  )
 } else if (doc_type == "causation") {
   final_build <- list(
     heading,
@@ -55,9 +55,11 @@ if (doc_type == "notes") {
     inj_biomech$meat,
     three_steps,
     conclusions,
-    signature_block,
-    if (plaintiff$injury_location == "disk") {appendix}
+    signature_block
   )
+  if (plaintiff$injury_location == "disk") {
+    final_build <- c(final_build, list(appendix))
+  }
 } else if (doc_type == "rebuttal") {
   final_build <- list(
     heading,
