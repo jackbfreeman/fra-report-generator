@@ -159,18 +159,27 @@ calculate_age <- function(birthdate, reference_date) {
 
 plaintiff$age <- sapply(plaintiff$dob, calculate_age, crash$date)
 
-
-plural <- function(x) {
-  #Conjugate simple verbs
-  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't", "it")) {
+# conjugate verb based on number of plaintiffs
+conjugate <- function(x) {
+  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't")) {
+    if (length(plaintiff$first_name) == 1) {
+    return(x)
+  } else {
     if(x == "has") x <- "have"
     if(x == "is") x <- "are"
     if(x == "was") x <- "were"
     if(x == "hasn't") x <- "haven't"
     if(x == "isn't") x <- "aren't"
     if(x == "wasn't") x <- "weren't"
-    if(x == "it") x <- "they"
-  } else if (nchar(x)==1) {
+  }
+    return(x)
+  }
+  
+}
+  
+plural <- function(x) {
+  #Conjugate simple verbs
+  if (nchar(x)==1) {
     return(paste0(x, "'s"))
   } else {
     #noun may already be plural:

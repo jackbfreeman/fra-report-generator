@@ -145,7 +145,7 @@ if (doc_type == "causation") {
       fps(
         ftext(
           paste0(
-            "The purpose of this report is to provide an opinion regarding the causal relationship between the degree of roof crush observed in the subject ", plaintiff$car_make, " ", plaintiff$car_model, " and the severe spine and spinal cord injuries sustained by ", Mr_Ms_Lastname(), " in the ", convert_date_format(crash$date), ", rollover crash. Specifically, my opinions address the theory of occupant \"diving\" in rollover crashes as the cause of serious head and neck injury, versus excessive roof crush. The methods and conclusions described in this report are largely based on peer-reviewed published research that I supervised and co-authored, specifically:"
+            "The purpose of this report is to provide an opinion regarding the causal relationship between the degree of roof crush observed in the subject ", plaintiff$car_make, " ", plaintiff$car_model, " and the severe spine and spinal cord injuries sustained by ", Mr_Ms_Lastname(person = plaintiff), " in the ", convert_date_format(crash$date), ", rollover crash. Specifically, my opinions address the theory of occupant \"diving\" in rollover crashes as the cause of serious head and neck injury, versus excessive roof crush. The methods and conclusions described in this report are largely based on peer-reviewed published research that I supervised and co-authored, specifically:"
           ))),
       fps(),
       fps(
@@ -161,7 +161,7 @@ if (doc_type == "causation") {
       fps(),
       fps(
         ftext(
-          paste("The conclusions of the investigation described herein, as they apply to", Mr_Ms_Lastname(), "'s injuries and the subject crash, are described beginning on page 41 of this report.")
+          paste("The conclusions of the investigation described herein, as they apply to", Mr_Ms_Lastname(person = plaintiff), "'s injuries and the subject crash, are described beginning on page 41 of this report.")
         )
       ),
       fps()
@@ -174,7 +174,7 @@ if (doc_type == "causation") {
     purpose <- list(
       fps(
         ftext(
-          paste0("The purpose of this report is to provide an analysis of the causal relationship between the subject ", crash$pdof, " impact collision and ", Mr_Ms_Lastname(), "’s subsequently diagnosed ", plaintiff$injury_location[1], " injuries and need for treatment.")
+          paste0("The purpose of this report is to provide an analysis of the causal relationship between the subject ", crash$pdof, " impact collision and ", Mr_Ms_Lastname(person = plaintiff), "’s subsequently diagnosed ", plaintiff$injury_location[1], " injuries and need for treatment.")
         )
       ),
       fps()
@@ -188,7 +188,7 @@ if (doc_type == "causation") {
   purpose <- list(
     fps(
       ftext(
-        paste0("The purpose of this report is to assess the methods and conclusions of ", Dr_Mr_Ms_Expert_Lastname, " as they pertain to the injury potential of the subject collision, relative to ", Mr_Ms_Lastname(), "’s post-crash diagnoses and treatment.)"
+        paste0("The purpose of this report is to assess the methods and conclusions of ", Dr_Mr_Ms_Expert_Lastname, " as they pertain to the injury potential of the subject collision, relative to ", Mr_Ms_Lastname(person = plaintiff), "’s post-crash diagnoses and treatment.)"
         )
       )
     ),
@@ -208,26 +208,26 @@ summary_opinions <- list(
   fps(
     ftext(
       paste0(
-        Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject collision did not have the capacity to cause or exacerbate any of the injuries indisputably diagnosed in ", Mr_Ms_Lastname(), "is lacking a foundation in science, medicine, or the facts in this case. ", Dr_Mr_Ms_Expert_Lastname, "'s opinions are based on a confusing and disingenuous presentation of a novel and distorted approach to causality and a misrepresentation and misuse of published literature."
+        Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject collision did not have the capacity to cause or exacerbate any of the injuries indisputably diagnosed in ", Mr_Ms_Lastname(person = plaintiff), "is lacking a foundation in science, medicine, or the facts in this case. ", Dr_Mr_Ms_Expert_Lastname, "'s opinions are based on a confusing and disingenuous presentation of a novel and distorted approach to causality and a misrepresentation and misuse of published literature."
       ), fp_text_lite(bold = TRUE)),
     run_linebreak(), style =  "Definition"),
   fps(
     ftext(
       paste0(
-        Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject crash only produced minimal and benign forces that could not have cause ", Mr_Ms_Lastname(), "'s diagnosed spinal disk and other injuries because the forces in the collision were supposedly equal to those of ordinary and benign forces is not a reliable, relevant, or validated method of assessing injury cause. Using ", Dr_Mr_Ms_Expert_Lastname, "'s claimed delta V of ", defense_biomech_expert$deltaV, " mph for the subject collision indicates significant occupant motion and forces that in no way resemble any of the absurdly innocuous comparisons claimed by ", Dr_Mr_Ms_Expert_Lastname, ". Such comparisons are demonstrably unscientific and highly misleading, and irrelevant to any disputed issues in ", Mr_Ms_Lastname(), "'s case."
+        Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject crash only produced minimal and benign forces that could not have cause ", Mr_Ms_Lastname(person = plaintiff), "'s diagnosed spinal disk and other injuries because the forces in the collision were supposedly equal to those of ordinary and benign forces is not a reliable, relevant, or validated method of assessing injury cause. Using ", Dr_Mr_Ms_Expert_Lastname, "'s claimed delta V of ", defense_biomech_expert$deltaV, " mph for the subject collision indicates significant occupant motion and forces that in no way resemble any of the absurdly innocuous comparisons claimed by ", Dr_Mr_Ms_Expert_Lastname, ". Such comparisons are demonstrably unscientific and highly misleading, and irrelevant to any disputed issues in ", Mr_Ms_Lastname(person = plaintiff), "'s case."
       ), fp_text_lite(bold = TRUE)),
     run_linebreak(), style =  "Definition"),
   fps(
     ftext(
       paste0(
-        "There is no scientific or factual basis for ", Dr_Mr_Ms_Expert_Lastname, "'s claim that ", Mr_Ms_Lastname(), "'s previous spinal injuries could not or should not have been \"exacerbated\" by the subject crash. Indeed, ", Dr_Mr_Ms_Expert_Lastname, "'s use of the term is both meaningless and misleading, and neither ", he_she(person = defense_biomech_expert), " nor anyone else has the faintest idea of what forces would have been required to have caused ", Mr_Ms_Lastname(), "'s previously diagnosed spinal disk and other injuries to become symptomatic, or to worsen. To suggest otherwise is frankly dishonest."
+        "There is no scientific or factual basis for ", Dr_Mr_Ms_Expert_Lastname, "'s claim that ", Mr_Ms_Lastname(person = plaintiff), "'s previous spinal injuries could not or should not have been \"exacerbated\" by the subject crash. Indeed, ", Dr_Mr_Ms_Expert_Lastname, "'s use of the term is both meaningless and misleading, and neither ", he_she(person = defense_biomech_expert), " nor anyone else has the faintest idea of what forces would have been required to have caused ", Mr_Ms_Lastname(person = plaintiff), "'s previously diagnosed spinal disk and other injuries to become symptomatic, or to worsen. To suggest otherwise is frankly dishonest."
       ), fp_text_lite(bold = TRUE)
     ),
     run_linebreak(), style =  "Definition"),
   fps(
     ftext(
       paste0(
-        "The methodology and principles used by ", Dr_Mr_Ms_Expert_Lastname, " to arrive at ", his_her(person = defense_biomech_expert), " opinions regarding the risk of injury from the crash to ", Mr_Ms_Lastname(), " are not scientifically reliable, either in general or as they were applied to the facts of this case. Despite a superficial appearance of scientific validity, ", Dr_Mr_Ms_Expert_Lastname, "'s methods are speculative, unscientific, and unreliable, and ", his_her(person = defense_biomech_expert), " conclusions are meaningless."
+        "The methodology and principles used by ", Dr_Mr_Ms_Expert_Lastname, " to arrive at ", his_her(person = defense_biomech_expert), " opinions regarding the risk of injury from the crash to ", Mr_Ms_Lastname(person = plaintiff), " are not scientifically reliable, either in general or as they were applied to the facts of this case. Despite a superficial appearance of scientific validity, ", Dr_Mr_Ms_Expert_Lastname, "'s methods are speculative, unscientific, and unreliable, and ", his_her(person = defense_biomech_expert), " conclusions are meaningless."
       ), fp_text_lite(bold = TRUE)
     ),
     run_linebreak(), style =  "Definition")
@@ -306,7 +306,7 @@ opinions_general_comments <- list(
   fps(
     ftext(
       paste0(
-        "The purpose of ", Dr_Mr_Ms_Expert_Lastname, "'s opinion is to provide a backdoor medical causation opinion that ", Mr_Ms_Lastname(), " ", single_plural("was"), " not injured in the subject collision because ", he_she(person = defense_biomech_expert), " (", Dr_Mr_Ms_Expert_Lastname, ") deemed any injury to be ")), ftext("impossible", prop = fp_text_lite(italic = TRUE)), ftext(paste0(" in the crash. ", Dr_Mr_Ms_Expert_Lastname, " made no attempt to assess the actual probability of injury from any real-world crash like the subject collision, information which can only come from observational (epidemiologic) study of injuries associated with real world crashes, not from intellectually dishonest comparisons between one of the most common causes of injury in the US to innocuous activities of daily living. ", Dr_Mr_Ms_Expert_Lastname, " cites to multiple (", paste0(defense_biomech_expert$report_citations_number, ifelse(defense_biomech_expert$report_citations_number >39, "!", "")), ") publications in ", his_her(person = defense_biomech_expert), " ", defense_biomech_expert$report_pages_number, "-page report, yet none of them provide valid or reliable evidence that the injuries diagnosed in ", Mr_Ms_Lastname(), " cannot, or did not, result from the collision that ", he_she(person = plaintiff), " ", single_plural("was"), " exposed to.")
+        "The purpose of ", Dr_Mr_Ms_Expert_Lastname, "'s opinion is to provide a backdoor medical causation opinion that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " not injured in the subject collision because ", he_she(person = defense_biomech_expert), " (", Dr_Mr_Ms_Expert_Lastname, ") deemed any injury to be ")), ftext("impossible", prop = fp_text_lite(italic = TRUE)), ftext(paste0(" in the crash. ", Dr_Mr_Ms_Expert_Lastname, " made no attempt to assess the actual probability of injury from any real-world crash like the subject collision, information which can only come from observational (epidemiologic) study of injuries associated with real world crashes, not from intellectually dishonest comparisons between one of the most common causes of injury in the US to innocuous activities of daily living. ", Dr_Mr_Ms_Expert_Lastname, " cites to multiple (", paste0(defense_biomech_expert$report_citations_number, ifelse(defense_biomech_expert$report_citations_number >39, "!", "")), ") publications in ", his_her(person = defense_biomech_expert), " ", defense_biomech_expert$report_pages_number, "-page report, yet none of them provide valid or reliable evidence that the injuries diagnosed in ", Mr_Ms_Lastname(person = plaintiff), " cannot, or did not, result from the collision that ", he_she(person = plaintiff), " ", conjugate("was"), " exposed to.")
         )))
 
 
@@ -410,13 +410,13 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The subject high speed frontal collision would have produced high loads in ", Mr_Ms_Lastname(), "’s entire ", single_plural("body"), ", as they continued to travel forward inside the vehicle and into the deploying airbags, seatbelts, steering wheel, and dashboard at ", mdf_deltaV, " mph. The loads on ", Mr_Ms_Lastname(), "’s ", single_plural("spine"), " and spinal ", single_plural("disk")," would have included high levels of compression, rotation, and shear, and would have had the potential to cause any level of injury severity to ", Mr_Ms_Lastname(), ", including all of the injuries that ", he_she(person = plaintiff), " ", single_plural("was"), " ultimately diagnosed with. The US National Highway Traffic Safety Administration reports that at an approximately ", mdf_deltaV, " mph crash, nearly AMOUNT% of occupants will sustain some degree of injury that is immediately apparent and requires medical evaluation, around AMOUNT% will sustain a fracture or more significant injury, and around AMOUNT% will sustain a life-threatening injury (i.e., spinal cord injury, skull fracture, etc.)."
+              "The subject high speed frontal collision would have produced high loads in ", Mr_Ms_Lastname(person = plaintiff), "’s entire ", single_plural("body"), ", as they continued to travel forward inside the vehicle and into the deploying airbags, seatbelts, steering wheel, and dashboard at ", mdf_deltaV, " mph. The loads on ", Mr_Ms_Lastname(person = plaintiff), "’s ", single_plural("spine"), " and spinal ", single_plural("disk")," would have included high levels of compression, rotation, and shear, and would have had the potential to cause any level of injury severity to ", Mr_Ms_Lastname(person = plaintiff), ", including all of the injuries that ", he_she(person = plaintiff), " ", conjugate("was"), " ultimately diagnosed with. The US National Highway Traffic Safety Administration reports that at an approximately ", mdf_deltaV, " mph crash, nearly AMOUNT% of occupants will sustain some degree of injury that is immediately apparent and requires medical evaluation, around AMOUNT% will sustain a fracture or more significant injury, and around AMOUNT% will sustain a life-threatening injury (i.e., spinal cord injury, skull fracture, etc.)."
             )),
           run_footnote(x = footnotes_blocklist[10], prop = fp_text_refnote)),
         fps(
           ftext(
             paste0(
-              "Thus, all of the injuries diagnosed in ", Mr_Ms_Lastname(), " after the subject collision, and the associated treatments that ", he_she(person = plaintiff), " sought for ", his_her(), " symptoms of significant and persisting spinal injury, are entirely explained by the exceedingly dangerous high speed frontal crash that ", he_she(person = plaintiff), " ", single_plural("was"), " exposed to."
+              "Thus, all of the injuries diagnosed in ", Mr_Ms_Lastname(person = plaintiff), " after the subject collision, and the associated treatments that ", he_she(person = plaintiff), " sought for ", his_her(), " symptoms of significant and persisting spinal injury, are entirely explained by the exceedingly dangerous high speed frontal crash that ", he_she(person = plaintiff), " ", conjugate("was"), " exposed to."
             ))),
         fps())
       
@@ -438,7 +438,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The rear impact would have resulted in ", Mr_Ms_Lastname(), "’s ", single_plural("torso"), " and ", single_plural("head"), " initially being thrown rearwards into the seatback at around ", mdf_deltaV, " mph, and then rebounding forward into the restraining seat belt and toward the steering wheel (the first part of the crash kinematics that ", he_she(person = plaintiff), " recall", ifelse(length(plaintiff$first_name) > 1, "", "s"), "). ", he_she(person = plaintiff), " would have sustained substantial complex loads on ", his_her(), " ", single_plural("spine"), " in the collision, loads that include compression, rotation, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs)."))),
+              "The rear impact would have resulted in ", Mr_Ms_Lastname(person = plaintiff), "’s ", single_plural("torso"), " and ", single_plural("head"), " initially being thrown rearwards into the seatback at around ", mdf_deltaV, " mph, and then rebounding forward into the restraining seat belt and toward the steering wheel (the first part of the crash kinematics that ", he_she(person = plaintiff), " recall", ifelse(length(plaintiff$first_name) > 1, "", "s"), "). ", he_she(person = plaintiff), " would have sustained substantial complex loads on ", his_her(), " ", single_plural("spine"), " in the collision, loads that include compression, rotation, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs)."))),
         fps(),
         fps(
           ftext(
@@ -462,7 +462,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(plaintiff, number = 1), " (who was ", plaintiff$age[1], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
+              "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " was diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(plaintiff, number = 1), " (who was ", plaintiff$age[1], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(person = plaintiff), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
         fps(),
         fps(
           ftext(
@@ -491,7 +491,7 @@ if (doc_type == "causation") {
         fps(),
         fps(
           ftext(
-            paste0("Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s body in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " spinal pain management procedures, etc."
+            paste0("Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(person = plaintiff), "’s body in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " spinal pain management procedures, etc."
             ))),
         fps())
       
@@ -503,7 +503,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The rear impact would have resulted in ", Mr_Ms_Lastname(), "’s ", single_plural("torso"), " and ", single_plural("head"), " initially being thrown rearwards into the seatback at around 5-6 mph, and then rebounding forward into the restraining seat belt and toward the steering wheel. ", Mr_Ms_Lastname(), " would have sustained substantial complex loads on ", his_her(), " ", single_plural("spine"), " in the collision, loads that include compression, rotation, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs). The load on ", his_her(), " left ", single_plural("shoulder"), ", when ", single_plural("it"), " ", single_plural("was"), " restrained by the shoulder belt, would have likely exceeded several hundred lbs. The peak cervical, thoracic, and lumbar spinal disk loads could have ranged from 150 to 400 or more lbs., respectively, more than sufficient to cause a wide range of musculoligamentous and skeletal injuries."))),
+              "The rear impact would have resulted in ", Mr_Ms_Lastname(person = plaintiff), "’s ", single_plural("torso"), " and ", single_plural("head"), " initially being thrown rearwards into the seatback at around 5-6 mph, and then rebounding forward into the restraining seat belt and toward the steering wheel. ", Mr_Ms_Lastname(person = plaintiff), " would have sustained substantial complex loads on ", his_her(), " ", single_plural("spine"), " in the collision, loads that include compression, rotation, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs). The load on ", his_her(), " left ", single_plural("shoulder"), ", when ", single_plural("it"), " ", conjugate("was"), " restrained by the shoulder belt, would have likely exceeded several hundred lbs. The peak cervical, thoracic, and lumbar spinal disk loads could have ranged from 150 to 400 or more lbs., respectively, more than sufficient to cause a wide range of musculoligamentous and skeletal injuries."))),
         fps(),
         fps(
           ftext(
@@ -541,26 +541,26 @@ if (doc_type == "causation") {
         fps(),
         fps(
           ext_img(src = file.path(imgpath, "biomech", "rear_shoulder5.png"), width = 4.2), style = "Subtitle"),
-        fps(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and peak head acceleration measured in 126 volunteers. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, peak head accelerations can exceed 17g (17 times the forces of gravity). Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart.")), style = "caption"),
+        fps(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and peak head acceleration measured in 126 volunteers. The red band shows the magnitude of the crash", Mr_Ms_Lastname(person = plaintiff), "was exposed to. As demonstrated in the chart, peak head accelerations can exceed 17g (17 times the forces of gravity). Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart.")), style = "caption"),
         fps(),
         fps(
           ext_img(src = file.path(imgpath, "biomech", "rear_shoulder6.png"), width = 4.2), style = "Subtitle"),
-        fps(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and peak low back acceleration measured in 39 volunteers. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, peak low back accelerations can exceed 7g (7 times the forces of gravity). Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart.")), style = "caption"),
+        fps(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and peak low back acceleration measured in 39 volunteers. The red band shows the magnitude of the crash", Mr_Ms_Lastname(person = plaintiff), "was exposed to. As demonstrated in the chart, peak low back accelerations can exceed 7g (7 times the forces of gravity). Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart.")), style = "caption"),
         fps(),
         fps(
           ext_img(src = file.path(imgpath, "biomech", "rear_shoulder7.png"), width = 4.2), style = "Subtitle"),
-        fps(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and cervical disk injury risk observed in 113 people exposed to real-world crashes. The red band shows the magnitude of the crash", Mr_Ms_Lastname(), "was exposed to. As demonstrated in the chart, the risk of a cervical disk injury ranges from 2.5 to 3.2% or around 1 in 31 to 1 in 40. Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart.")), style = "caption"),
+        fps(ftext(paste("Chart showing the relationship between a 5-6 mph delta V rear impact and cervical disk injury risk observed in 113 people exposed to real-world crashes. The red band shows the magnitude of the crash", Mr_Ms_Lastname(person = plaintiff), "was exposed to. As demonstrated in the chart, the risk of a cervical disk injury ranges from 2.5 to 3.2% or around 1 in 31 to 1 in 40. Note: 5-6 mph is approximately equal to 8 to 10 km/h on the chart.")), style = "caption"),
         fps(),
         fps(
           ftext(
             paste0(
-              "The types of shoulder and spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (a SLAP lesion and cervical and thoracic disk derangements) are consistent with the injury mechanism of the crash. The sheer forces exerted on ", Mr_Ms_Lastname(), "’s left shoulder by the shoulder belt (or possibly transmitted by transferred forces through ", Mr_Ms_Lastname(), "’s grip on the steering wheel), would have had the potential to cause the SLAP lesion diagnosed by ", plaintiff$dx_dr, ". This is one of the reasons that the American Academy of Orthopedic Surgeons lists traffic crashes prominently as one of the causes of SLAP lesions, along with falls, sports involving overhead movement, and dislocations.  The risk of SLAP lesions is closely associated with age, and ", men_women, " in ", Mr_Ms_Lastname(), "’s age group are at nearly ")), ftext("3", prop = fp_text_bold), ftext(paste0(" times the risk of the injury as ", men_women, " in their ", 10 * floor(plaintiff$age[1]/10) , "s, regardless of activity.  This is due to the normal wear and tear-related degenerative changes that occur in the shoulder over time, which has the tendency to make the shoulder more susceptible to injury in the event of a sudden traumatic load. There is no lower threshold of crash force for causing a SLAP lesion; any force that could cause a strain could also potentially cause a SLAP lesion, as the same structures are loaded regardless of the diagnosis. A study of rear impact crashes with an average delta V of 4 mph reported that around 1 in 10 subjects had persisting symptoms and diagnosis of shoulder injury at 5 or more weeks post-crash."
+              "The types of shoulder and spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " was diagnosed with (a SLAP lesion and cervical and thoracic disk derangements) are consistent with the injury mechanism of the crash. The sheer forces exerted on ", Mr_Ms_Lastname(person = plaintiff), "’s left shoulder by the shoulder belt (or possibly transmitted by transferred forces through ", Mr_Ms_Lastname(person = plaintiff), "’s grip on the steering wheel), would have had the potential to cause the SLAP lesion diagnosed by ", plaintiff$dx_dr, ". This is one of the reasons that the American Academy of Orthopedic Surgeons lists traffic crashes prominently as one of the causes of SLAP lesions, along with falls, sports involving overhead movement, and dislocations.  The risk of SLAP lesions is closely associated with age, and ", men_women, " in ", Mr_Ms_Lastname(person = plaintiff), "’s age group are at nearly ")), ftext("3", prop = fp_text_bold), ftext(paste0(" times the risk of the injury as ", men_women, " in their ", 10 * floor(plaintiff$age[1]/10) , "s, regardless of activity.  This is due to the normal wear and tear-related degenerative changes that occur in the shoulder over time, which has the tendency to make the shoulder more susceptible to injury in the event of a sudden traumatic load. There is no lower threshold of crash force for causing a SLAP lesion; any force that could cause a strain could also potentially cause a SLAP lesion, as the same structures are loaded regardless of the diagnosis. A study of rear impact crashes with an average delta V of 4 mph reported that around 1 in 10 subjects had persisting symptoms and diagnosis of shoulder injury at 5 or more weeks post-crash."
               ))),
         fps(),
         fps(
           ftext(
             paste0(
-              "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily symptomatic disk derangements in the neck and middle back) are highly consistent with the injury mechanism of the crash as well. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, " like ", Mr_Ms_Lastname(plaintiff, number = 1), " typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a factor that increases the risk of injury in the event of the crash like the subject rear impact. "
+              "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " was diagnosed with (primarily symptomatic disk derangements in the neck and middle back) are highly consistent with the injury mechanism of the crash as well. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, " like ", Mr_Ms_Lastname(plaintiff, number = 1), " typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a factor that increases the risk of injury in the event of the crash like the subject rear impact. "
             ))),
         fps(),
         fps(
@@ -580,7 +580,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s", single_plural("body"), " in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " left shoulder SLAP repair surgery, etc."
+              "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(person = plaintiff), "’s", single_plural("body"), " in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " left shoulder SLAP repair surgery, etc."
             ))))
     }
     
@@ -593,10 +593,10 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The driver’s-side impact would have resulted in the ", plaintiff$car_make, "’s ", single_plural("occupant"), " to initially move to the left and somewhat forward at ", mdf_deltaV, " mph, until ", Mr_Ms_Lastname(), " struck the center console ", ifelse(length(plaintiff$first_name > 1), "and passenger door")," with ", his_her(), " lower extremities and ", single_plural("was"), " restrained by ", his_her(), " ",  single_plural("seatbelt"), " which would have caused ", his_her(), " ", single_plural("head"), " to continue to accelerate left and forward and create high bending loads on the joints and disks of ", his_her(), " ", single_plural("neck"), ", combined with sudden muscular protective forces which would have produced high levels of compression on the spinal disks in the neck and back.")),
+              "The driver’s-side impact would have resulted in the ", plaintiff$car_make, "’s ", single_plural("occupant"), " to initially move to the left and somewhat forward at ", mdf_deltaV, " mph, until ", Mr_Ms_Lastname(person = plaintiff), " struck the center console ", ifelse(length(plaintiff$first_name > 1), "and passenger door")," with ", his_her(), " lower extremities and ", conjugate("was"), " restrained by ", his_her(), " ",  single_plural("seatbelt"), " which would have caused ", his_her(), " ", single_plural("head"), " to continue to accelerate left and forward and create high bending loads on the joints and disks of ", his_her(), " ", single_plural("neck"), ", combined with sudden muscular protective forces which would have produced high levels of compression on the spinal disks in the neck and back.")),
           run_footnote(x = footnotes_blocklist[28], prop = fp_text_refnote), 
           ftext(
-            paste0(" Per ", his_her(), " description, ", Mr_Ms_Lastname(), " then rebounded back to ", his_her(), " right and struck the passenger side door and window. This all would have taken less time than it takes to blink an eye (around 250 msecs)."))),
+            paste0(" Per ", his_her(), " description, ", Mr_Ms_Lastname(person = plaintiff), " then rebounded back to ", his_her(), " right and struck the passenger side door and window. This all would have taken less time than it takes to blink an eye (around 250 msecs)."))),
         fps(),
         fps(
           ftext(
@@ -626,7 +626,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The types of spinal injuries that ", Mr_Ms_Lastname(), " was diagnosed with (primarily symptomatic disk derangements and associated sequelae) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(), " (who was 12 at the time of the crash) typically have d age-related degenerative changes of the disks of the spine, a fact that makes the collision more likely to have \"converted\" at least some asymptomatic disk degeneration to a symptomatic state, rather than being the sole cause of all of the pathology identified in the post-crash imaging."))),
+              "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " was diagnosed with (primarily symptomatic disk derangements and associated sequelae) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(person = plaintiff), " (who was 12 at the time of the crash) typically have d age-related degenerative changes of the disks of the spine, a fact that makes the collision more likely to have \"converted\" at least some asymptomatic disk degeneration to a symptomatic state, rather than being the sole cause of all of the pathology identified in the post-crash imaging."))),
         fps(),
         fps(
           ftext(
@@ -658,7 +658,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s body in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " spinal pain management procedures and cervical spine surgery."
+              "Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(person = plaintiff), "’s body in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " spinal pain management procedures and cervical spine surgery."
             )
           )
         ),
@@ -672,7 +672,7 @@ if (doc_type == "causation") {
       inj_biomech$meat <- list(
         fps(
           ftext(
-            paste0("The initial impact would have resulted in ", Mr_Ms_Lastname(), "’s body initially being thrown forward and to the left at around a 10:30 vector at around ", mdf_deltaV, " mph and into his restraining shoulder belt and toward the driver’s side door, as well as the steering wheel. He would have sustained substantial complex loads on his spine in the collision, loads that include compression, rotation, forward and lateral flexion, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs). ", Mr_Ms_Lastname(), "’s left shoulder would have sustained a sudden transient load potentially exceeding 500 lbs. as it interacted with the shoulder belt, or possibly the driver’s side door."))),
+            paste0("The initial impact would have resulted in ", Mr_Ms_Lastname(person = plaintiff), "’s body initially being thrown forward and to the left at around a 10:30 vector at around ", mdf_deltaV, " mph and into his restraining shoulder belt and toward the driver’s side door, as well as the steering wheel. He would have sustained substantial complex loads on his spine in the collision, loads that include compression, rotation, forward and lateral flexion, and shear all occurring at the same time and to varying degrees in less time than it takes to blink an eye (around 250 msecs). ", Mr_Ms_Lastname(person = plaintiff), "’s left shoulder would have sustained a sudden transient load potentially exceeding 500 lbs. as it interacted with the shoulder belt, or possibly the driver’s side door."))),
         fps(),
         fps(
           ftext(
@@ -680,7 +680,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The types of spine and extremity injuries that ", Mr_Ms_Lastname(), " was diagnosed with are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(number = 1), " (who was ", plaintiff$age[[1]], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(), "’s imaging more likely due to a combination of the trauma of the crash, and some degree of pre-existing degeneration. The same principles apply to ", Mr_Ms_Lastname(), "’s left shoulder injury; ", plaintiff$age[[1]], "-year-old ", men_women, " typically have some degenerative changes in the joints and rotator cuff of the shoulder, but the frank tear and other injuries observed in ", Mr_Ms_Lastname(), "’s MRI and during the arthroscopic procedure performed on his left shoulder are likely a result of the acute trauma of the subject collision, rather than purely a pre-existing asymptomatic condition that was converted to symptomatic by the crash."))),
+              "The types of spine and extremity injuries that ", Mr_Ms_Lastname(person = plaintiff), " was diagnosed with are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(number = 1), " (who was ", plaintiff$age[[1]], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(person = plaintiff), "’s imaging more likely due to a combination of the trauma of the crash, and some degree of pre-existing degeneration. The same principles apply to ", Mr_Ms_Lastname(person = plaintiff), "’s left shoulder injury; ", plaintiff$age[[1]], "-year-old ", men_women, " typically have some degenerative changes in the joints and rotator cuff of the shoulder, but the frank tear and other injuries observed in ", Mr_Ms_Lastname(person = plaintiff), "’s MRI and during the arthroscopic procedure performed on his left shoulder are likely a result of the acute trauma of the subject collision, rather than purely a pre-existing asymptomatic condition that was converted to symptomatic by the crash."))),
         fps(
           ftext(
             paste0("It is well established in science and medicine that an excessive level of force is not required to cause symptomatic injury to a degenerated disk, and that in most cases, the diagnostic imaging of the disk will not reveal whether related symptoms are of a traumatic origin or not, in the absence of fracture.  Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing.")),
@@ -697,7 +697,7 @@ if (doc_type == "causation") {
               " It is accurate to state that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur. The same principle applies to traumatic derangement of the joints and rotator cuff of the shoulder."))),
         fps(
           ftext(
-            paste0("Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(), "’s ", single_plural("body"), " in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " spinal pain management procedures, etc."
+            paste0("Based on the preceding discussion there was ample and biomechanically appropriate force exerted on ", Mr_Ms_Lastname(person = plaintiff), "’s ", single_plural("body"), " in the subject collision to have caused ", his_her(), " medically documented injuries, and associated need for evaluation and treatment, including ", his_her(), " spinal pain management procedures, etc."
             )
           )
         ),
@@ -749,20 +749,20 @@ if (doc_type == "causation") {
       fps(
         ftext(
           paste0(
-            Dr_Mr_Ms_Expert_Lastname, "’s frankly absurd comparisons to everyday activities and volunteer crash tests in no way addressed whether the subject collision could have caused the injuries and sequelae observed in ", Mr_Ms_Lastname(), ", the first element of the causal analysis. ", Dr_Mr_Ms_Expert_Lastname, "’s blanket denial that a mechanism existed in the subject collision for any of ", Mr_Ms_Lastname(), "’s diagnosed and persisting injuries is an uninformed assertion with no basis in science, medicine, or the facts in this case and does not constitute an assessment of the plausibility of his injuries resulting from the collision."))),
+            Dr_Mr_Ms_Expert_Lastname, "’s frankly absurd comparisons to everyday activities and volunteer crash tests in no way addressed whether the subject collision could have caused the injuries and sequelae observed in ", Mr_Ms_Lastname(person = plaintiff), ", the first element of the causal analysis. ", Dr_Mr_Ms_Expert_Lastname, "’s blanket denial that a mechanism existed in the subject collision for any of ", Mr_Ms_Lastname(person = plaintiff), "’s diagnosed and persisting injuries is an uninformed assertion with no basis in science, medicine, or the facts in this case and does not constitute an assessment of the plausibility of his injuries resulting from the collision."))),
       fps(),
       fps(
         ftext(
           paste0(
-            Dr_Mr_Ms_Expert_Lastname, " has no information on the pre-crash condition of ", Mr_Ms_Lastname(), "’s spine, or any other part of his body. He couldn’t pick him out of a lineup and hasn’t the faintest idea of his tolerance to any type of trauma, including the subject crash. ")), ftext("The tolerance of an individual to forceful external loads is only defined once it has been exceeded,", prop = fp_text_bold), ftext(paste0(" not based on comparisons to studies of dissimilar forces applied to bits and pieces of dead bodies (part of the basis for ", Dr_Mr_Ms_Expert_Lastname, "’s opinion). A review of all of the evidence in the subject case clearly established the fact that ", Mr_Ms_Lastname(), "’s tolerance was exceeded by the forces of the subject crash."))),
+            Dr_Mr_Ms_Expert_Lastname, " has no information on the pre-crash condition of ", Mr_Ms_Lastname(person = plaintiff), "’s spine, or any other part of his body. He couldn’t pick him out of a lineup and hasn’t the faintest idea of his tolerance to any type of trauma, including the subject crash. ")), ftext("The tolerance of an individual to forceful external loads is only defined once it has been exceeded,", prop = fp_text_bold), ftext(paste0(" not based on comparisons to studies of dissimilar forces applied to bits and pieces of dead bodies (part of the basis for ", Dr_Mr_Ms_Expert_Lastname, "’s opinion). A review of all of the evidence in the subject case clearly established the fact that ", Mr_Ms_Lastname(person = plaintiff), "’s tolerance was exceeded by the forces of the subject crash."))),
       fps(),
       fps(
         ftext(
-          paste0("As ", Dr_Mr_Ms_Expert_Lastname, " does not (and cannot) dispute any of ", Mr_Ms_Lastname(), "’s diagnoses, and he does not provide an alternative explanation for how his diagnosed injuries would have occurred at the same time as the collision, ", his_her(person = defense_biomech_expert), " analysis is incomplete, and fails to account for the undeniable evidence of injury following the crash."))),
+          paste0("As ", Dr_Mr_Ms_Expert_Lastname, " does not (and cannot) dispute any of ", Mr_Ms_Lastname(person = plaintiff), "’s diagnoses, and he does not provide an alternative explanation for how his diagnosed injuries would have occurred at the same time as the collision, ", his_her(person = defense_biomech_expert), " analysis is incomplete, and fails to account for the undeniable evidence of injury following the crash."))),
       fps(),
       fps(
         ftext(
-          paste0("The generally accepted 3-step approach to causation described above dictates that if there are no other contemporaneous competing causes for the injury that are more likely than an investigated plausible cause of the injury, then it is the investigated cause that is the most likely cause. ", Dr_Mr_Ms_Expert_Lastname, " simply ignored ", Mr_Ms_Lastname(), "’s medical history like it never happened; ", his_her(person = defense_biomech_expert), " approach to \"assessing\" the cause of his injuries was to reject any evidence that he was injured in the first place. ", Dr_Mr_Ms_Expert_Lastname, " doesn’t consider, much less mention the fact, that there are no plausible competing causes of ", Mr_Ms_Lastname(), "’s injuries occurring at the same time as the crash."))),
+          paste0("The generally accepted 3-step approach to causation described above dictates that if there are no other contemporaneous competing causes for the injury that are more likely than an investigated plausible cause of the injury, then it is the investigated cause that is the most likely cause. ", Dr_Mr_Ms_Expert_Lastname, " simply ignored ", Mr_Ms_Lastname(person = plaintiff), "’s medical history like it never happened; ", his_her(person = defense_biomech_expert), " approach to \"assessing\" the cause of his injuries was to reject any evidence that he was injured in the first place. ", Dr_Mr_Ms_Expert_Lastname, " doesn’t consider, much less mention the fact, that there are no plausible competing causes of ", Mr_Ms_Lastname(person = plaintiff), "’s injuries occurring at the same time as the crash."))),
       fps(),
       fps(
         ftext(
@@ -834,7 +834,7 @@ if (doc_type == "causation") {
       fps(
         ftext(
           paste0(
-            "Based on this history, there was a strong temporal relationship between the subject collision and ", Mr_Ms_Lastname(), "’s first development of symptoms indicative of spinal injury."))),
+            "Based on this history, there was a strong temporal relationship between the subject collision and ", Mr_Ms_Lastname(person = plaintiff), "’s first development of symptoms indicative of spinal injury."))),
       fps(),
       fps(),
       fps(
@@ -852,11 +852,11 @@ if (doc_type == "causation") {
       fps(
         ftext(
           paste0(
-            "The second part of the analysis requires an assessment of the probability that ", Mr_Ms_Lastname(conjunction = "or"), " would have developed the symptoms and diagnoses of spine injury at the same point in time had they not been initially injured in the ", convert_date_format(crash$date), " ", crash$pdof, " impact crash. As a generally healthy 12-year-old man, ", Mr_Ms_Lastname(), " was at a negligible annual risk of spontaneously developing chronically painful and potentially surgical cervical or lumbar spinal disk derangements; less than 1 in 2,000 is indicated by epidemiologic study and national hospital data.")),
+            "The second part of the analysis requires an assessment of the probability that ", Mr_Ms_Lastname(conjunction = "or"), " would have developed the symptoms and diagnoses of spine injury at the same point in time had they not been initially injured in the ", convert_date_format(crash$date), " ", crash$pdof, " impact crash. As a generally healthy 12-year-old man, ", Mr_Ms_Lastname(person = plaintiff), " was at a negligible annual risk of spontaneously developing chronically painful and potentially surgical cervical or lumbar spinal disk derangements; less than 1 in 2,000 is indicated by epidemiologic study and national hospital data.")),
         run_footnote(x = footnotes_blocklist[32], prop = fp_text_refnote),
         ftext(
           paste0(
-            " The chance that they were going to develop the onset of chronic neck or low back pain attributable to symptomatic disk derangements on the same day as the crash by pure coincidence is obviously much smaller; less than 1 in 730,000 (the annual risk divided by 365 days). In comparison the risk of acute spine injury in the subject crash was more than 50%, and the risk of a spinal disk injury was likely no less than 1 in 25 in the general population.  Based on this comparison of risk during the timeframe of interest, the crash is the most likely cause of ", Mr_Ms_Lastname(), "’s chronic spinal injuries by >99%."))),
+            " The chance that they were going to develop the onset of chronic neck or low back pain attributable to symptomatic disk derangements on the same day as the crash by pure coincidence is obviously much smaller; less than 1 in 730,000 (the annual risk divided by 365 days). In comparison the risk of acute spine injury in the subject crash was more than 50%, and the risk of a spinal disk injury was likely no less than 1 in 25 in the general population.  Based on this comparison of risk during the timeframe of interest, the crash is the most likely cause of ", Mr_Ms_Lastname(person = plaintiff), "’s chronic spinal injuries by >99%."))),
       fps(),
       fps(
         ftext(
@@ -864,7 +864,7 @@ if (doc_type == "causation") {
       fps(),
       fps(
         ftext(
-          paste0("The answer to this question is now decided science. Along with my research colleagues, I have recently published 2 analyses and systematic reviews of nearly 10,000 articles regarding the long-term effects of traffic crash-related injury to the neck and low back and associated chronic pain. ,  Systematic reviews are considered the most reliable and strongest form of scientific evidence (i.e. Level I evidence), as they consist of a comprehensive synthesis of world literature on a topic.  The result of the analyses indicate that when ", men_women, " like ", Mr_Ms_Lastname(), " have persisting neck or back pain after an acute crash-related injury, ")), ftext("more often than not", prop = fp_text_italic), ftext(" (>50% of the time) the symptoms are due to the crash, versus all other causes, regardless of pre-crash medical history."
+          paste0("The answer to this question is now decided science. Along with my research colleagues, I have recently published 2 analyses and systematic reviews of nearly 10,000 articles regarding the long-term effects of traffic crash-related injury to the neck and low back and associated chronic pain. ,  Systematic reviews are considered the most reliable and strongest form of scientific evidence (i.e. Level I evidence), as they consist of a comprehensive synthesis of world literature on a topic.  The result of the analyses indicate that when ", men_women, " like ", Mr_Ms_Lastname(person = plaintiff), " have persisting neck or back pain after an acute crash-related injury, ")), ftext("more often than not", prop = fp_text_italic), ftext(" (>50% of the time) the symptoms are due to the crash, versus all other causes, regardless of pre-crash medical history."
           )))
     
     
@@ -884,7 +884,7 @@ if (doc_type == "causation") {
     fps(
       ftext(
         paste0(
-          Dr_Mr_Ms_Expert_Lastname, " cited to human volunteer crash testing for ", his_her(person = defense_biomech_expert), " opinion that ", Mr_Ms_Lastname(), " could not have sustained any significant injury in the subject crash. The comparison between a real-world crash and the results of volunteer crash tests as a means of assessing injury causation is a practice that has been rejected by the relevant scientific and automotive engineering community as improper and unreliable. I have written and had published a number of peer-reviewed papers as well as a book on human volunteer crash testing and can state as a certainty that it is well established in the scientific literature that human volunteer testing (mostly crash testing) is not a valid basis for any determination of injury risk, probability, or cause in real world crashes. ")), ftext(paste0("There are no crash tests that have ever been structured like the subject crash ("), prop = fp_text_italic), ftext(paste0("", crash$pdof, " impact of SAMPLE-MDF-DV mph delta V"), prop = fp_text_bold_italic), ftext("), as it would be irresponsible to perform such a test.", prop = fp_text_italic)),
+          Dr_Mr_Ms_Expert_Lastname, " cited to human volunteer crash testing for ", his_her(person = defense_biomech_expert), " opinion that ", Mr_Ms_Lastname(person = plaintiff), " could not have sustained any significant injury in the subject crash. The comparison between a real-world crash and the results of volunteer crash tests as a means of assessing injury causation is a practice that has been rejected by the relevant scientific and automotive engineering community as improper and unreliable. I have written and had published a number of peer-reviewed papers as well as a book on human volunteer crash testing and can state as a certainty that it is well established in the scientific literature that human volunteer testing (mostly crash testing) is not a valid basis for any determination of injury risk, probability, or cause in real world crashes. ")), ftext(paste0("There are no crash tests that have ever been structured like the subject crash ("), prop = fp_text_italic), ftext(paste0("", crash$pdof, " impact of SAMPLE-MDF-DV mph delta V"), prop = fp_text_bold_italic), ftext("), as it would be irresponsible to perform such a test.", prop = fp_text_italic)),
     fps(),
     fps(
       ftext(
@@ -896,7 +896,7 @@ if (doc_type == "causation") {
     fps(),
     fps(
       ftext(
-        paste0("Despite the warning that \"true tolerance levels cannot be determined with volunteers\" from ")), ftext("the", prop = fp_text_bold), ftext(paste0(" authoritative publication on automotive testing and human tolerance, ", Dr_Mr_Ms_Expert_Lastname, " described and referred to studies primarily consisting of single ", crash$pdof, " impact collisions of less than 5 mph (with no secondary frontal crash) on healthy male volunteers, and from these papers drew the conclusion that it was essentially impossible for ", Mr_Ms_Lastname(), " to have been injured in the subject collision."))),
+        paste0("Despite the warning that \"true tolerance levels cannot be determined with volunteers\" from ")), ftext("the", prop = fp_text_bold), ftext(paste0(" authoritative publication on automotive testing and human tolerance, ", Dr_Mr_Ms_Expert_Lastname, " described and referred to studies primarily consisting of single ", crash$pdof, " impact collisions of less than 5 mph (with no secondary frontal crash) on healthy male volunteers, and from these papers drew the conclusion that it was essentially impossible for ", Mr_Ms_Lastname(person = plaintiff), " to have been injured in the subject collision."))),
     fps(),
     fps(
       ftext(
@@ -908,7 +908,7 @@ if (doc_type == "causation") {
       run_footnote(x = footnotes_blocklist[35], prop = fp_text_refnote),
       ftext(
         paste0(
-          Dr_Mr_Ms_Expert_Lastname, " presents no evidence to demonstrate that the basic scientific principles described in this 23-year old publication should be violated for ", his_her(person = defense_biomech_expert), " assertions regarding the cause of ", Mr_Ms_Lastname(), "’s post-collision diagnoses and need for treatment."))),
+          Dr_Mr_Ms_Expert_Lastname, " presents no evidence to demonstrate that the basic scientific principles described in this 23-year old publication should be violated for ", his_her(person = defense_biomech_expert), " assertions regarding the cause of ", Mr_Ms_Lastname(person = plaintiff), "’s post-collision diagnoses and need for treatment."))),
     fps(),
     fps(
       ftext(
@@ -968,7 +968,7 @@ if (doc_type == "causation") {
     fps(
       ftext(
         paste0(
-          "Can a biomechanical analysis demonstrate that ", Mr_Ms_Lastname(), " ", single_plural("was"), " not injured in the subject crash?"), prop = fp_text_italic_underline)),
+          "Can a biomechanical analysis demonstrate that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " not injured in the subject crash?"), prop = fp_text_italic_underline)),
     fps(
       ftext(
         paste0("Traumatic spinal disk injuries have been described in the peer-reviewed literature as occurring in low to moderate force events, such as minimal damage traffic crashes and roller coaster rides, but also with even more mild forces, including therapeutic manipulation of the spine, and even sneezing.")),
@@ -982,7 +982,7 @@ if (doc_type == "causation") {
       run_footnote(x = footnotes_blocklist[21], prop = fp_text_refnote),
       ftext(
         paste0(
-          " It is accurate to state that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur. ", Dr_Mr_Ms_Expert_Lastname, "’s claims to the contrary are contrived and easily disproven, not to mention at odds with the specific facts in ", Mr_Ms_Lastname(), "’s case."))),
+          " It is accurate to state that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur. ", Dr_Mr_Ms_Expert_Lastname, "’s claims to the contrary are contrived and easily disproven, not to mention at odds with the specific facts in ", Mr_Ms_Lastname(person = plaintiff), "’s case."))),
     fps(),
     fps(
       ftext(
@@ -1018,7 +1018,7 @@ if (doc_type == "causation") {
     fps(),
     fps(
       ftext(
-        paste0("It is clear that ", Dr_Mr_Ms_Expert_Lastname, "’s approach to providing ", his_her(person = defense_biomech_expert), " opinions regarding ", Mr_Ms_Lastname(), "’s injuries is characterized by experts that he deems to be authorities in the field of spinal biomechanics as a \"serious mistake.\""))))
+        paste0("It is clear that ", Dr_Mr_Ms_Expert_Lastname, "’s approach to providing ", his_her(person = defense_biomech_expert), " opinions regarding ", Mr_Ms_Lastname(person = plaintiff), "’s injuries is characterized by experts that he deems to be authorities in the field of spinal biomechanics as a \"serious mistake.\""))))
 }
 
 
@@ -1037,7 +1037,7 @@ if (doc_type != "notes") {
     fps(
       ftext(
         paste0(
-          "Given the contiguous chain of causation from the day of the crash through ", Mr_Ms_Lastname(), "’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in ", Mr_Ms_Lastname(), "’s medical records and summarized in this report, including ", his_her(), " symptomatic cervical and lumbar disk derangements, is the subject ", convert_date_format(crash$date), " frontal impact crash."
+          "Given the contiguous chain of causation from the day of the crash through ", Mr_Ms_Lastname(person = plaintiff), "’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in ", Mr_Ms_Lastname(person = plaintiff), "’s medical records and summarized in this report, including ", his_her(), " symptomatic cervical and lumbar disk derangements, is the subject ", convert_date_format(crash$date), " frontal impact crash."
         ))))}
 
 
