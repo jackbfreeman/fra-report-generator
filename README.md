@@ -17,7 +17,7 @@ added "it" -> "they" which is not ideal because could be they or them
 ## Style guide for block_add_fps_fun() function
 "Normal": at least 16 pt line spacing; majority doc style
 "Body Text 2": Single line spacing and 3.75 tab distance
-"Author": block quote style indentation on both sides
+"Quote": block quote style indentation on both sides
 "Definition": bullet point in summary
 "Body Text 3": inverted indent in injury biomech section
 "caption": size 9, bold, justified, margins 2.25 in from both sides, for biomech image description subtitles

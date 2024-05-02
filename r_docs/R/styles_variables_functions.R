@@ -14,8 +14,8 @@ fp_text_bold_italic <- fp_text_lite(bold = TRUE, italic = TRUE)
 fp_text_normal <- fp_text_lite()
 
 
-ddd <- "01/01/2021"
-doc_type <- "notes"
+doc_type <- "rebuttal"
+short <- "no" # yes/no, only shows if doc_type = rebut; for follow-up reports
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
@@ -23,7 +23,7 @@ case_defendant_name <- "SampleCaseDefendantName"
 
 lawyer <- list(
   first_name = "LawyerFirst",
-  last_name = "LawyerLast",
+  last_name = "LawyerLast", # ignore postnominals (i.e., Jr. or II)
   gender = "m",
   firm_name = "SampleFirmName",
   address = "123 Address St.",
@@ -36,17 +36,17 @@ lawyer <- list(
 crash <- list(
   date = "01/01/2020",
   pdof = "rear", # frontal, rear, near-side, far-side, rollover
-  fatality = "no"
+  fatality = "yes"
 )
 
 plaintiff <- list(
-  first_name = c("Pl1FirstName", "Pl2FirstName", "Third One"),
-  last_name = c("Pl1LastName", "Pl1LastName", "Third Name"),
+  first_name = c("Pl1FirstName", "Pl2FirstName", "ThirdOne"),
+  last_name = c("Pl1LastName", "Pl1LastName", "ThirdName"),
   et_al = "yes", # check box for yes, default to yes
   gender = c("f", "m", "nb"),
   dob = c("01/01/1999", "01/02/1990", "01/04/1994"),
   weight = "100", # pounds
-  injury_location = "disk", # disk, shoulder, spine (rollover)
+  injury_location = "shoulder", # disk, shoulder, spine (rollover), seatbelt efficacy
   car_make = "PlCarMake",
   car_model = "PlCarModel",
   car_year = "1995",
@@ -70,7 +70,8 @@ defense_biomech_expert <- list(
   first_name = "ExpertFirst",
   last_name = "ExpertLast",
   title = "Dr.", # Dr. Mr. Ms.
-  gender = "f",
+  gender = "m",
+  firm = "LMNOP", # multiple choice or Other
   depo_reviewed = "no",
   depo_date = "01/01/2021",
   deltaV = "8", # mph
@@ -81,6 +82,25 @@ defense_biomech_expert <- list(
   mdf_agree = "no"
 )
 
+final_doc_name <- paste0(
+  lawyer$last_name, substr(lawyer$first_name, 1, 1), " ", 
+  format(Sys.Date(), "%y%m%d"), " ",
+  paste0(
+    sapply(1:length(plaintiff$first_name), function(i) {
+      paste0(plaintiff$last_name[[i]],  substr(plaintiff$first_name[[i]], 1, 1), " ")
+    }),
+    collapse = ""  # Adding space as separator
+  ),
+   
+  if (crash$fatality == "no") {paste0(
+    crash$pdof, " ", plaintiff$injury_location, " ")
+    } else {"fatality "},
+  doc_type,
+  if (doc_type == "rebuttal") {
+    paste0(" ", defense_biomech_expert$last_name)
+  }
+)
+
 action_individual <- ifelse(case == "yes", "action", single_plural("individual"))
 
 doc <- read_docx(ifelse(doc_type == "notes", file.path(datapath, "fra-template-notes.dotx"),
@@ -88,6 +108,8 @@ doc <- read_docx(ifelse(doc_type == "notes", file.path(datapath, "fra-template-n
 
 background_facts_recon_file_name <- file.path(datapath, "sample_background_facts_analysis.docx")
 med_hx_file_name <- file.path(datapath, "sample_med_hx.docx")
+# only used for rebuttals, where background facts document needs to be split again
+background_facts_new_recon_file_name <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
 
 # case name is only plaintiff name(s) if case is "no"
 case_name <- paste(plaintiff$first_name, plaintiff$last_name) %>% paste(collapse = "; ")
@@ -155,18 +177,27 @@ calculate_age <- function(birthdate, reference_date) {
 
 plaintiff$age <- sapply(plaintiff$dob, calculate_age, crash$date)
 
-
-plural <- function(x) {
-  #Conjugate simple verbs
-  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't", "it")) {
+# conjugate verb based on number of plaintiffs
+conjugate <- function(x) {
+  if(x %in% c("has", "is", "was", "isn't", "wasn't", "have", "are", "were", "aren't", "weren't")) {
+    if (length(plaintiff$first_name) == 1) {
+    return(x)
+  } else {
     if(x == "has") x <- "have"
     if(x == "is") x <- "are"
     if(x == "was") x <- "were"
     if(x == "hasn't") x <- "haven't"
     if(x == "isn't") x <- "aren't"
     if(x == "wasn't") x <- "weren't"
-    if(x == "it") x <- "they"
-  } else if (nchar(x)==1) {
+  }
+    return(x)
+  }
+  
+}
+  
+plural <- function(x) {
+  #Conjugate simple verbs
+  if (nchar(x)==1) {
     return(paste0(x, "'s"))
   } else {
     #noun may already be plural:
@@ -215,7 +246,7 @@ plural <- function(x) {
     
     #if not already plural: just add s
     if(x %in% c("man", "woman", "child", "foot", "tooth", "goose", "mouse",
-                "men", "women", "children", "feet", "teeth", "geese", "mice")) {
+                "men", "women", "children", "feet", "teeth", "geese", "mice", "it", "they")) {
       if(x == "man") x <- "men"
       if(x == "woman") x <- "women"
       if(x == "child") x <- "children"
@@ -223,6 +254,7 @@ plural <- function(x) {
       if(x == "tooth") x <- "teeth"
       if(x == "goose") x <- "geese"
       if(x == "mouse") x <- "mice"
+      if(x == "it") x <- "they"
     } else if (x %in% c("fish", "sheep", "deer", "moose", "aircraft", "dice")) {
       #singular same as plural
     } else if(substr(x, nchar(x), nchar(x)) != "s") {

@@ -20,11 +20,9 @@ library(dplyr)
 library(toOrdinal)
 source("r_docs/R/styles_variables_functions.R")
 source("r_docs/R/footnotes.R")
-source("r_docs/R/intro_parts.R")
+source("r_docs/R/header_text.R")
 source("r_docs/R/background_facts_med_hx.R")
-source("r_docs/R/general_comments.R")
-source("r_docs/R/inj_biomech.R")
-source("r_docs/R/signature_block_appendix.R")
+source("r_docs/R/text_content.R")
 # table for reading styles
 styles_tab <- styles_info(doc)
 ```
@@ -40,84 +38,54 @@ block_add_fps_fun <- function(x, list) {
 }
 ```
 
-```{r test full doc build code}
-# need to redo this completely, dynamically for crash and report types
-
-notes_doc_build <- list(
-  heading, 
-  background_facts$notes)
-
-
-caus_doc_rear_disk_build <- list(
-  heading,
-  qualifications$causation,
-  background_facts$causation,
-  inj_biomech$meat$caus$rear$disk
-)
-
-# current job: make new entries for invisible footnote text and make invisible style in word template
-caus_doc_rear_shoulder_build <- list(
-  heading, 
-  background_facts$causation,
-  inj_biomech$meat$caus$rear$shoulder
-)
-
-caus_doc_near_side_disk_build <- list(
-  heading,
-  receipt,
-  purpose$causation$general,
-  qualifications$causation, 
-  background_facts$causation,
-  inj_biomech$intro$causation,
-  inj_biomech$meat$caus$near_side$disk,
-  three_steps$causation$disk,
-  signature_block
-)
-
-caus_doc_near_side_shoulder_build <- list(
-  heading, 
-  background_facts$causation,
-  inj_biomech$meat$caus$near_side$shoulder
-)
-
-rebut_doc_build <- list(
-  heading, 
-  background_facts$rebuttal,
-  inj_biomech$meat$rebuttal,
-  three_steps$rebuttal$all_experts,
-  signature_block
-)
-
-
-
-
-caus_doc_build <- list(
-  heading,
-  receipt,
-  purpose$causation$general,
-  qualifications$causation,
-  background_facts$causation,
-  signature_block,
-  appendix$causation$general
-)
+```{r final doc build}
+if (doc_type == "notes") {
+  final_build <- list(
+    heading, 
+    background_facts
+  )
+} else if (doc_type == "causation") {
+  final_build <- list(
+    heading,
+    receipt,
+    purpose,
+    qualifications,
+    background_facts,
+    inj_biomech$intro,
+    inj_biomech$meat,
+    three_steps,
+    conclusions,
+    signature_block
+  )
+  if (plaintiff$injury_location == "disk") {
+    final_build <- c(final_build, list(appendix))
+  }
+} else if (doc_type == "rebuttal") {
+  final_build <- list(
+    heading,
+    receipt,
+    purpose,
+    summary_opinions,
+    qualifications,
+    background_facts,
+    opinions_general_comments,
+    inj_biomech$intro,
+    inj_biomech$meat,
+    three_steps,
+    conclusions,
+    signature_block
+  )
+}
 ```
 
-```{r final doc build function call}
-# define doc-build list that will be run
-doc_build_final <-
-  if (
-    doc_type == "notes") notes_doc_build else if (
-      doc_type == "causation") caus_doc_build
-
-
+```{r function call}
 #fps function call
 doc %>%
   cursor_begin() %>%
   body_remove() %>%
-  #block_pour_docx("sample_med_hx.docx") %>%
-  block_add_fps_fun(notes_doc_build) %>%
-  print(target = "FRA-report-output.docx")
-
+  block_add_fps_fun(final_build) %>%
+  #block_add_fps_fun(list(appendix)) %>%
+  print(target = paste0(final_doc_name, ".docx"))
 ```
 
 ```{r final build}
