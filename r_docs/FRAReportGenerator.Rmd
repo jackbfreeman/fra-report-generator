@@ -85,7 +85,7 @@ doc %>%
   body_remove() %>%
   block_add_fps_fun(final_build) %>%
   #block_add_fps_fun(list(appendix)) %>%
-  print(target = "FRA-report-output.docx")
+  print(target = paste0(final_doc_name, ".docx"))
 ```
 
 ```{r final build}

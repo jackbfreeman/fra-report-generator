@@ -14,9 +14,8 @@ fp_text_bold_italic <- fp_text_lite(bold = TRUE, italic = TRUE)
 fp_text_normal <- fp_text_lite()
 
 
-ddd <- "01/01/2021"
-doc_type <- "causation"
-short <- "no" # yes/no, only shows if doc_type = rebut
+doc_type <- "rebuttal"
+short <- "no" # yes/no, only shows if doc_type = rebut; for follow-up reports
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
@@ -37,12 +36,12 @@ lawyer <- list(
 crash <- list(
   date = "01/01/2020",
   pdof = "rear", # frontal, rear, near-side, far-side, rollover
-  fatality = "no"
+  fatality = "yes"
 )
 
 plaintiff <- list(
-  first_name = c("Pl1FirstName", "Pl2FirstName", "Third One"),
-  last_name = c("Pl1LastName", "Pl1LastName", "Third Name"),
+  first_name = c("Pl1FirstName", "Pl2FirstName", "ThirdOne"),
+  last_name = c("Pl1LastName", "Pl1LastName", "ThirdName"),
   et_al = "yes", # check box for yes, default to yes
   gender = c("f", "m", "nb"),
   dob = c("01/01/1999", "01/02/1990", "01/04/1994"),
@@ -81,6 +80,25 @@ defense_biomech_expert <- list(
   report_pages_number = "15",
   report_date = "01/01/2021",
   mdf_agree = "no"
+)
+
+final_doc_name <- paste0(
+  lawyer$last_name, substr(lawyer$first_name, 1, 1), " ", 
+  format(Sys.Date(), "%y%m%d"), " ",
+  paste0(
+    sapply(1:length(plaintiff$first_name), function(i) {
+      paste0(plaintiff$last_name[[i]],  substr(plaintiff$first_name[[i]], 1, 1), " ")
+    }),
+    collapse = ""  # Adding space as separator
+  ),
+   
+  if (crash$fatality == "no") {paste0(
+    crash$pdof, " ", plaintiff$injury_location, " ")
+    } else {"fatality "},
+  doc_type,
+  if (doc_type == "rebuttal") {
+    paste0(" ", defense_biomech_expert$last_name)
+  }
 )
 
 action_individual <- ifelse(case == "yes", "action", single_plural("individual"))

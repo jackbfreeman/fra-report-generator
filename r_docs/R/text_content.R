@@ -12,9 +12,8 @@ if (doc_type != "notes") {
   heading <- list(
     fps(
       ftext(
-        convert_date_format(
-          ddd
-        ))),
+        convert_date_format(Sys.Date())
+        )),
     fps(),
     fps(
       ftext(
