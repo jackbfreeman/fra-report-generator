@@ -296,7 +296,28 @@ if (short == "yes") {
 
 
 
+
+
+
+
+
+
+
+
+
 # background facts and medical history are imported from other documents here in final product
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -754,6 +775,10 @@ if (doc_type == "causation") {
     inj_biomech$meat <- list(
       fps(ftext("BRC injury biomechanics sample"))
     )
+    
+    
+    
+  # all other rebuttal inj biomech meat
   } else {
     inj_biomech$meat <- list(
       fps(

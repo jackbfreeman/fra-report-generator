@@ -72,67 +72,89 @@ if (doc_type == "rebuttal") {
   print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
 }
 
-
-
+for (x in 1:length(med_hx_file_name)) {
 # Load the existing Word document for Medical History
-doc_split_med_hx <- read_docx(med_hx_file_name) %>%
+doc_split_med_hx[[x]] <- read_docx(med_hx_file_name[x]) %>%
   cursor_reach("Post-crash medical history")
 
 # Store location of first line of useful med hx info
-med_hx_point <- doc_split_med_hx$officer_cursor$which
+med_hx_point <- doc_split_med_hx[[x]]$officer_cursor$which
 
 # Move cursor back to beginning
-doc_split_med_hx <- cursor_begin(doc_split_med_hx)
+doc_split_med_hx[[x]] <- cursor_begin(doc_split_med_hx[[x]])
 
 # Delete first lines
-for (i in 1:(ifelse(doc_type == "notes", med_hx_point-1, med_hx_point))) {
-  body_remove(doc_split_med_hx)
+for (i in 1:med_hx_point) {
+  body_remove(doc_split_med_hx[[x]])
 }
 
 # Print remaining document to new medical history docx
-print(doc_split_med_hx, target = file.path(datapath, "temp_import_docx", "med_hx.docx"))
-
+print(doc_split_med_hx[[x]], target = file.path(datapath, "temp_import_docx", paste0("med_hx", x, ".docx")))
+}
 
 background_facts_new_path <- file.path(datapath, "temp_import_docx", "background_facts.docx")
-med_hx_new_path <- file.path(datapath, "temp_import_docx", "med_hx.docx")
+# create object
+med_hx_new_path <- NULL
+for (x in 1:length(med_hx_file_name)) {
+  med_hx_new_path[x] <- file.path(datapath, "temp_import_docx", paste0("med_hx", x, ".docx"))
+}
 recon_new_path <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
 opinions_new_path <- file.path(datapath, "temp_import_docx", "opinions.docx")
+
+
+
+
+med_hx_build_list <- list()
+
+if (length(med_hx_file_name) > 1) {
+  for (x in 1:length(med_hx_file_name)) {
+    med_hx_build_list <- append(med_hx_build_list, list(
+      fps(ftext(paste0("Post-crash history, ", plaintiff$first_name[[x]], " ", plaintiff$last_name[[x]], " (", plaintiff$seat_position[[x]], ")"), prop = fp_text_italic_underline)),
+      block_pour_docx(paste0(med_hx_new_path[[x]])),
+      fps()
+    ))
+  }
+} else {
+  for (x in 1:length(med_hx_file_name)) {
+    med_hx_build_list <- append(med_hx_build_list, list(
+      fps(),
+      block_pour_docx(paste0(med_hx_new_path[[x]])),
+      fps()
+    ))
+  }
+}
+
 
 
 
 background_facts <- list()
 
 if (doc_type == "notes") {
-  background_facts <- list(
-    block_pour_docx(background_facts_new_path),
-    fps(),
-    fps(),
-    block_pour_docx(med_hx_new_path),
-    fps(),
-    fps(),
-    block_pour_docx(recon_new_path)
-  )
+  background_facts <- c(
+    background_facts,
+    list(
+      block_pour_docx(background_facts_new_path),
+      fps()),
+    med_hx_build_list,
+    list(
+      block_pour_docx(recon_new_path)
+    ))
 } else if (doc_type == "causation") {
-  background_facts <- list(
-    block_pour_docx(background_facts_new_path),
-    fps(),
-    fps(
-      ftext(
-        "At the time of the crash, "
-      )),
-    block_pour_docx(med_hx_new_path)
+  background_facts <- c(
+    background_facts,
+    list(
+      block_pour_docx(background_facts_new_path),
+      fps()),
+    med_hx_build_list
   )
 } else if (doc_type == "rebuttal") {
-  background_facts <- list(
-    block_pour_docx(background_facts_new_path),
-    fps(),
-    fps(
-      ftext(
-        "At the time of the crash, "
-      )),
-    block_pour_docx(med_hx_new_path),
-    fps(),
-    fps(),
-    block_pour_docx(opinions_new_path)
-  )
+  background_facts <- c(
+    background_facts,
+    list(
+      block_pour_docx(background_facts_new_path),
+      fps()),
+    med_hx_build_list,
+    list(
+      block_pour_docx(opinions_new_path)
+    ))
 }

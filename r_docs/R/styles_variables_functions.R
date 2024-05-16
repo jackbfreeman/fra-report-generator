@@ -35,8 +35,8 @@ lawyer <- list(
 
 crash <- list(
   date = "01/01/2020",
-  pdof = "rear", # frontal, rear, near-side, far-side, rollover
-  fatality = "yes"
+  pdof = "rear", # frontal, rear, near-side (driver-side if >1 plaintiff), far-side (passenger-side if >1 plaintiff), rollover
+  fatality = "no"
 )
 
 plaintiff <- list(
@@ -107,7 +107,10 @@ doc <- read_docx(ifelse(doc_type == "notes", file.path(datapath, "fra-template-n
                         file.path(datapath, "fra-template-caus-rebut.dotx")))
 
 background_facts_recon_file_name <- file.path(datapath, "sample_background_facts_analysis.docx")
-med_hx_file_name <- file.path(datapath, "sample_med_hx.docx")
+med_hx_file_name <- c(
+  file.path(datapath, "sample_med_hx.docx"), 
+  file.path(datapath, "sample_med_hx2.docx")
+  ) # can be multiple
 # only used for rebuttals, where background facts document needs to be split again
 background_facts_new_recon_file_name <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
 
