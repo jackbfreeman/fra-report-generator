@@ -181,7 +181,7 @@ if (doc_type == "causation") {
     purpose <- list(
       fps(
         ftext(
-          paste0("The purpose of this report is to provide an analysis of the causal relationship between the subject ", crash$pdof, " impact collision and ", Mr_Ms_Lastname(person = plaintiff), "’s subsequently diagnosed ", plaintiff$injury_location[1], " injuries and need for treatment.")
+          paste0("The purpose of this report is to provide an analysis of the causal relationship between the subject ", crash$pdof_text, " impact collision and ", Mr_Ms_Lastname(person = plaintiff), "’s subsequently diagnosed ", plaintiff$injury_location[1], " injuries and need for treatment.")
         )
       ),
       fps()
@@ -350,7 +350,7 @@ if (doc_type == "causation") {
     fps(
       ftext(
         "Injury Causation Analysis", 
-        prop = fp_text_lite(italic = TRUE, bold = TRUE))), 
+        prop = fp_text_bold_italic)), 
     fps(
       ftext(
         "A crash-related injury causation analysis for a specific individual is performed by assessing the risk of injury from the collision and comparing it to the probability that the injuries or conditions would have been present at the same point in time if the collision had not occurred. The process is referred to as a \"3-step\" injury causation method in which improbable alternative causes are ruled out and the single most likely cause is identified. The analysis is accomplished via the application of crash reconstruction, biomechanical, medical, and epidemiologic (risk assessment) principles."),
@@ -438,7 +438,7 @@ if (doc_type == "causation") {
         fps(
           ftext(
             paste0(
-              "The subject high speed frontal collision would have produced high loads in ", Mr_Ms_Lastname(person = plaintiff), "’s entire ", single_plural("body"), ", as they continued to travel forward inside the vehicle and into the deploying airbags, seatbelts, steering wheel, and dashboard at ", mdf_deltaV, " mph. The loads on ", Mr_Ms_Lastname(person = plaintiff), "’s ", single_plural("spine"), " and spinal ", single_plural("disk")," would have included high levels of compression, rotation, and shear, and would have had the potential to cause any level of injury severity to ", Mr_Ms_Lastname(person = plaintiff), ", including all of the injuries that ", he_she(person = plaintiff), " ", conjugate("was"), " ultimately diagnosed with. The US National Highway Traffic Safety Administration reports that at an approximately ", mdf_deltaV, " mph crash, nearly AMOUNT% of occupants will sustain some degree of injury that is immediately apparent and requires medical evaluation, around AMOUNT% will sustain a fracture or more significant injury, and around AMOUNT% will sustain a life-threatening injury (i.e., spinal cord injury, skull fracture, etc.)."
+              "The subject high speed frontal collision would have produced high loads in ", Mr_Ms_Lastname(person = plaintiff), "’s entire ", single_plural("body"), ", as ", he_she(person = "plaintiff"), " continued to travel forward inside the vehicle and into the deploying airbags, seatbelts, steering wheel, and dashboard at ", mdf_deltaV, " mph. The loads on ", Mr_Ms_Lastname(person = plaintiff), "’s ", single_plural("spine"), " and spinal ", single_plural("disk")," would have included high levels of compression, rotation, and shear, and would have had the potential to cause any level of injury severity to ", Mr_Ms_Lastname(person = plaintiff), ", including all of the injuries that ", he_she(person = plaintiff), " ", conjugate("was"), " ultimately diagnosed with. The US National Highway Traffic Safety Administration reports that at an approximately ", mdf_deltaV, " mph crash, nearly AMOUNT% of occupants will sustain some degree of injury that is immediately apparent and requires medical evaluation, around AMOUNT% will sustain a fracture or more significant injury, and around AMOUNT% will sustain a life-threatening injury (i.e., spinal cord injury, skull fracture, etc.)."
             )),
           run_footnote(x = footnotes_blocklist[10], prop = fp_text_refnote)),
         fps(
@@ -882,12 +882,12 @@ if (doc_type == "causation") {
       fps(),
       fps(
         ftext(
-          paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to their post-crash injuries is the ", convert_date_format(crash$date), " ", crash$pdof, " impact crash."))),
+          paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to their post-crash injuries is the ", convert_date_format(crash$date), " ", crash$pdof_text, " impact crash."))),
       fps(),
       fps(
         ftext(
           paste0(
-            "The second part of the analysis requires an assessment of the probability that ", Mr_Ms_Lastname(conjunction = "or"), " would have developed the symptoms and diagnoses of spine injury at the same point in time had they not been initially injured in the ", convert_date_format(crash$date), " ", crash$pdof, " impact crash. As a generally healthy 12-year-old man, ", Mr_Ms_Lastname(person = plaintiff), " was at a negligible annual risk of spontaneously developing chronically painful and potentially surgical cervical or lumbar spinal disk derangements; less than 1 in 2,000 is indicated by epidemiologic study and national hospital data.")),
+            "The second part of the analysis requires an assessment of the probability that ", Mr_Ms_Lastname(conjunction = "or"), " would have developed the symptoms and diagnoses of spine injury at the same point in time had they not been initially injured in the ", convert_date_format(crash$date), " ", crash$pdof_text, " impact crash. As a generally healthy 12-year-old man, ", Mr_Ms_Lastname(person = plaintiff), " was at a negligible annual risk of spontaneously developing chronically painful and potentially surgical cervical or lumbar spinal disk derangements; less than 1 in 2,000 is indicated by epidemiologic study and national hospital data.")),
         run_footnote(x = footnotes_blocklist[32], prop = fp_text_refnote),
         ftext(
           paste0(
@@ -923,7 +923,7 @@ if (doc_type == "causation") {
     fps(
       ftext(
         paste0(
-          Dr_Mr_Ms_Expert_Lastname, " cited to human volunteer crash testing for ", his_her(person = defense_biomech_expert), " opinion that ", Mr_Ms_Lastname(person = plaintiff), " could not have sustained any significant injury in the subject crash. The comparison between a real-world crash and the results of volunteer crash tests as a means of assessing injury causation is a practice that has been rejected by the relevant scientific and automotive engineering community as improper and unreliable. I have written and had published a number of peer-reviewed papers as well as a book on human volunteer crash testing and can state as a certainty that it is well established in the scientific literature that human volunteer testing (mostly crash testing) is not a valid basis for any determination of injury risk, probability, or cause in real world crashes. ")), ftext(paste0("There are no crash tests that have ever been structured like the subject crash ("), prop = fp_text_italic), ftext(paste0("", crash$pdof, " impact of SAMPLE-MDF-DV mph delta V"), prop = fp_text_bold_italic), ftext("), as it would be irresponsible to perform such a test.", prop = fp_text_italic)),
+          Dr_Mr_Ms_Expert_Lastname, " cited to human volunteer crash testing for ", his_her(person = defense_biomech_expert), " opinion that ", Mr_Ms_Lastname(person = plaintiff), " could not have sustained any significant injury in the subject crash. The comparison between a real-world crash and the results of volunteer crash tests as a means of assessing injury causation is a practice that has been rejected by the relevant scientific and automotive engineering community as improper and unreliable. I have written and had published a number of peer-reviewed papers as well as a book on human volunteer crash testing and can state as a certainty that it is well established in the scientific literature that human volunteer testing (mostly crash testing) is not a valid basis for any determination of injury risk, probability, or cause in real world crashes. ")), ftext(paste0("There are no crash tests that have ever been structured like the subject crash ("), prop = fp_text_italic), ftext(paste0("", crash$pdof_text, " impact of SAMPLE-MDF-DV mph delta V"), prop = fp_text_bold_italic), ftext("), as it would be irresponsible to perform such a test.", prop = fp_text_italic)),
     fps(),
     fps(
       ftext(
@@ -935,7 +935,7 @@ if (doc_type == "causation") {
     fps(),
     fps(
       ftext(
-        paste0("Despite the warning that \"true tolerance levels cannot be determined with volunteers\" from ")), ftext("the", prop = fp_text_bold), ftext(paste0(" authoritative publication on automotive testing and human tolerance, ", Dr_Mr_Ms_Expert_Lastname, " described and referred to studies primarily consisting of single ", crash$pdof, " impact collisions of less than 5 mph (with no secondary frontal crash) on healthy male volunteers, and from these papers drew the conclusion that it was essentially impossible for ", Mr_Ms_Lastname(person = plaintiff), " to have been injured in the subject collision."))),
+        paste0("Despite the warning that \"true tolerance levels cannot be determined with volunteers\" from ")), ftext("the", prop = fp_text_bold), ftext(paste0(" authoritative publication on automotive testing and human tolerance, ", Dr_Mr_Ms_Expert_Lastname, " described and referred to studies primarily consisting of single ", crash$pdof_text, " impact collisions of less than 5 mph (with no secondary frontal crash) on healthy male volunteers, and from these papers drew the conclusion that it was essentially impossible for ", Mr_Ms_Lastname(person = plaintiff), " to have been injured in the subject collision."))),
     fps(),
     fps(
       ftext(
@@ -999,7 +999,7 @@ if (doc_type == "causation") {
     fps(),
     fps(
       ftext(
-        paste0("The fact that ", Dr_Mr_Ms_Expert_Lastname, " compared an event (a less than 10 mph ", crash$pdof, " impact collision) that is irrefutably established by US national crash data to cause injury at least 1 out 4 times to ADLs which virtually ")), ftext("never cause injury", prop = fp_text_bold), ftext(" is a perfect illustration of how misleading and frankly dishonest the comparison is.")),
+        paste0("The fact that ", Dr_Mr_Ms_Expert_Lastname, " compared an event (a less than 10 mph ", crash$pdof_text, " impact collision) that is irrefutably established by US national crash data to cause injury at least 1 out 4 times to ADLs which virtually ")), ftext("never cause injury", prop = fp_text_bold), ftext(" is a perfect illustration of how misleading and frankly dishonest the comparison is.")),
     fps(),
     fps(
       ext_img(src = file.path(imgpath, "three_steps_alt_explan", "rebuttal2.png"), width = 6.3), style = "Subtitle"),

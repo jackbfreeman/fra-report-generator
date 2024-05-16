@@ -35,9 +35,22 @@ lawyer <- list(
 
 crash <- list(
   date = "01/01/2020",
-  pdof = "rear", # frontal, rear, near-side (driver-side if >1 plaintiff), far-side (passenger-side if >1 plaintiff), rollover
+  pdof = "near-side", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
+
+# pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
+if (length(plaintiff$first_name >1)) {
+  if (crash$pdof == "near-side") {
+    crash$pdof_text <- "driver-side"
+  } else if (crash$pdof == "far-side") {
+    crash$pdof_text <- "passenger-side"
+  } else {
+    crash$pdof_text <- crash$pdof
+  }
+} else {
+  crash$pdof_text <- crash$pdof
+}
 
 plaintiff <- list(
   first_name = c("Pl1FirstName", "Pl2FirstName", "ThirdOne"),
