@@ -39,12 +39,12 @@ block_add_fps_fun <- function(x, list) {
 ```
 
 ```{r final doc build}
-if (doc_type == "notes") {
+if (doc_info$type == "notes") {
   final_build <- list(
     heading, 
     background_facts
   )
-} else if (doc_type == "causation") {
+} else if (doc_info$type == "causation") {
   final_build <- list(
     heading,
     receipt,
@@ -60,7 +60,7 @@ if (doc_type == "notes") {
   if (plaintiff$injury_location == "disk") {
     final_build <- c(final_build, list(appendix))
   }
-} else if (doc_type == "rebuttal") {
+} else if (doc_info$type == "rebuttal") {
   final_build <- list(
     heading,
     receipt,
@@ -88,7 +88,7 @@ doc %>%
   print(target = paste0(final_doc_name, ".docx"))
 ```
 
-```{r long dataframe from variables}
+```{r long dataframe from variables, eval=FALSE}
 # Create Plaintiff DataFrame (Long Form)
 plaintiff_df <- data.frame(
   case_no = rep(case_no, length(plaintiff$first_name)),
@@ -106,7 +106,7 @@ plaintiff_df <- data.frame(
 # Create Case DataFrame (Shorter Form)
 case_df <- data.frame(
   case_no = case_no,
-  doc_type = doc_type,
+  doc_info$type = doc_info$type,
   short = short,
   court_name = court_name,
   case_defendant_name = case_defendant_name,

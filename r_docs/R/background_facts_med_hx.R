@@ -24,13 +24,13 @@ doc_split_recon <- read_docx(background_facts_recon_file_name) %>%
   cursor_begin()
 
 # create loop to delete objects before reconstruction segment
-for (i in 1:(ifelse(doc_type == "notes", recon_point-1, recon_point))) {
+for (i in 1:(ifelse(doc_info$type == "notes", recon_point-1, recon_point))) {
   body_remove(doc_split_recon)
 }
 
 
-# delete opinion section if doc_type is rebuttal
-if (doc_type == "rebuttal") {
+# delete opinion section if doc_info$type is rebuttal
+if (doc_info$type == "rebuttal") {
   doc_split_recon <- doc_split_recon %>%
     # Move cursor to beginning of Opinions section
     cursor_reach(keyword = "Opinions of")
@@ -53,7 +53,7 @@ print(doc_split_recon, target = file.path(datapath, "temp_import_docx", "reconst
 
 
 # if rebuttal, create document with opinions of defendant expert
-if (doc_type == "rebuttal") {
+if (doc_info$type == "rebuttal") {
   # make opinions document
   doc_split_opinions <- read_docx(background_facts_recon_file_name) %>%
     cursor_reach(keyword = "Opinions of")
@@ -71,6 +71,8 @@ if (doc_type == "rebuttal") {
   # Print remaining document to new opinion docx
   print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
 }
+
+doc_split_med_hx <- NULL
 
 for (x in 1:length(med_hx_file_name)) {
 # Load the existing Word document for Medical History
@@ -129,7 +131,7 @@ if (length(med_hx_file_name) > 1) {
 
 background_facts <- list()
 
-if (doc_type == "notes") {
+if (doc_info$type == "notes") {
   background_facts <- c(
     background_facts,
     list(
@@ -139,7 +141,7 @@ if (doc_type == "notes") {
     list(
       block_pour_docx(recon_new_path)
     ))
-} else if (doc_type == "causation") {
+} else if (doc_info$type == "causation") {
   background_facts <- c(
     background_facts,
     list(
@@ -147,7 +149,7 @@ if (doc_type == "notes") {
       fps()),
     med_hx_build_list
   )
-} else if (doc_type == "rebuttal") {
+} else if (doc_info$type == "rebuttal") {
   background_facts <- c(
     background_facts,
     list(

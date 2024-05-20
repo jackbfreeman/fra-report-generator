@@ -8,7 +8,7 @@ empty <- list(
 
 heading <- list()
 
-if (doc_type != "notes") {
+if (doc_info$type != "notes") {
   heading <- list(
     fps(
       ftext(
@@ -119,10 +119,10 @@ receipt <- list(
     ftext(
       ". I have reviewed the documentation accompanying your correspondence including medical records, information regarding the subject crash, litigation documents, and other materials"
     ),
-    if (doc_type == "causation")
+    if (doc_info$type == "causation")
       ftext(
         "."
-      ) else if (doc_type == "rebuttal") {
+      ) else if (doc_info$type == "rebuttal") {
         ftext(
           paste0(
             ", including the ",
@@ -146,7 +146,7 @@ receipt <- list(
 
 purpose <- list()
 
-if (doc_type == "causation") {
+if (doc_info$type == "causation") {
   if (crash$pdof == "rollover") {
     purpose <- list(
       fps(
@@ -191,7 +191,7 @@ if (doc_type == "causation") {
   
   
   
-} else if (doc_type == "rebuttal") {
+} else if (doc_info$type == "rebuttal") {
   purpose <- list(
     fps(
       ftext(
@@ -246,7 +246,7 @@ summary_opinions <- list(
 
 qualifications <- list()
 
-if (short == "yes") {
+if (doc_info$short$yes_no == "yes") {
   qualifications <- list(
     fps(ftext("As I have already outlined my qualifications in my prior report in this matter, I will not repeat them here, but rather refer the reader to my current CV, which is attached.")),
     fps()
@@ -344,7 +344,7 @@ opinions_general_comments <- list(
 inj_biomech <- list()
 
 # injury biomechanics intro
-if (doc_type == "causation") {
+if (doc_info$type == "causation") {
   inj_biomech$intro <- list(
     fps(),
     fps(
@@ -388,7 +388,7 @@ if (doc_type == "causation") {
   
   
   
-} else if (doc_type == "rebuttal") {
+} else if (doc_info$type == "rebuttal") {
   inj_biomech$intro <- list(
     fps(),
     fps(
@@ -431,7 +431,7 @@ if (doc_type == "causation") {
 
 # injury biomechanics meat
 # frontal disk
-if (doc_type == "causation") {
+if (doc_info$type == "causation") {
   if (crash$pdof == "frontal") {
     if (plaintiff$injury_location == "disk") {
       inj_biomech$meat <- list(
@@ -770,7 +770,7 @@ if (doc_type == "causation") {
   
   
   # rebuttal injury biomechanics
-} else if (doc_type == "rebuttal") {
+} else if (doc_info$type == "rebuttal") {
   if (defense_biomech_expert$firm == "BRC") {
     inj_biomech$meat <- list(
       fps(ftext("BRC injury biomechanics sample"))
@@ -845,7 +845,7 @@ three_steps <- list()
 
 
 # causation three steps
-if (doc_type == "causation") {
+if (doc_info$type == "causation") {
   if (plaintiff$injury_location == "disk") {
     three_steps <- list(
       fps(),
@@ -914,7 +914,7 @@ if (doc_type == "causation") {
   
     
   # rebuttal three steps
-} else if (doc_type == "rebuttal") {
+} else if (doc_info$type == "rebuttal") {
   three_steps <- list(
     fps(),
     fps(
@@ -1065,7 +1065,7 @@ if (doc_type == "causation") {
 
 
 
-if (doc_type != "notes") {
+if (doc_info$type != "notes") {
   conclusions <- list(
     fps(),
     fps(),

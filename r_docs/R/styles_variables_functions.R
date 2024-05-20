@@ -14,8 +14,14 @@ fp_text_bold_italic <- fp_text_lite(bold = TRUE, italic = TRUE)
 fp_text_normal <- fp_text_lite()
 
 
-doc_type <- "rebuttal"
-short <- "no" # yes/no, only shows if doc_type = rebut; for follow-up reports
+doc_info <- list(
+  type = "rebuttal",
+  short = list(
+    yes_no = "yes"
+  )
+)
+
+
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
 court_name <- "SampleCourtName"
@@ -39,18 +45,7 @@ crash <- list(
   fatality = "no"
 )
 
-# pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
-if (length(plaintiff$first_name >1)) {
-  if (crash$pdof == "near-side") {
-    crash$pdof_text <- "driver-side"
-  } else if (crash$pdof == "far-side") {
-    crash$pdof_text <- "passenger-side"
-  } else {
-    crash$pdof_text <- crash$pdof
-  }
-} else {
-  crash$pdof_text <- crash$pdof
-}
+
 
 plaintiff <- list(
   first_name = c("Pl1FirstName", "Pl2FirstName", "ThirdOne"),
@@ -108,15 +103,28 @@ final_doc_name <- paste0(
   if (crash$fatality == "no") {paste0(
     crash$pdof, " ", plaintiff$injury_location, " ")
     } else {"fatality "},
-  doc_type,
-  if (doc_type == "rebuttal") {
+  doc_info$type,
+  if (doc_info$type == "rebuttal") {
     paste0(" ", defense_biomech_expert$last_name)
   }
 )
 
+# pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
+if (length(plaintiff$first_name >1)) {
+  if (crash$pdof == "near-side") {
+    crash$pdof_text <- "driver-side"
+  } else if (crash$pdof == "far-side") {
+    crash$pdof_text <- "passenger-side"
+  } else {
+    crash$pdof_text <- crash$pdof
+  }
+} else {
+  crash$pdof_text <- crash$pdof
+}
+
 action_individual <- ifelse(case == "yes", "action", single_plural("individual"))
 
-doc <- read_docx(ifelse(doc_type == "notes", file.path(datapath, "fra-template-notes.dotx"),
+doc <- read_docx(ifelse(doc_info$type == "notes", file.path(datapath, "fra-template-notes.dotx"),
                         file.path(datapath, "fra-template-caus-rebut.dotx")))
 
 background_facts_recon_file_name <- file.path(datapath, "sample_background_facts_analysis.docx")
