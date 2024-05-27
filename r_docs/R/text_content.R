@@ -651,6 +651,7 @@ if (doc_info$type == "causation") {
           ext_img(src = file.path(imgpath, "biomech", "neardisk4.png"), width = 4.2), style = "Subtitle"),
         fps(ftext(paste("Figure 5: Inertial forces on the occupant’s head and torso continue to cause flexion to the right as the vehicle continues to rotate, with the impact to final frame above occurring over approximately 1/5th of a second. The subject experiences compression, rotation, and shear in the low back and neck.")), style = "caption"),
         fps(),
+        fps(),
         fps(
           ftext(
             "Discussion", prop = fp_text_italic)),
@@ -684,7 +685,7 @@ if (doc_info$type == "causation") {
           run_footnote(x = footnotes_blocklist[21], prop = fp_text_refnote),
           ftext(
             paste0(
-              " It is accurate to state, both from a biomechanical and epidemiological perspective, that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur, and that the load threshold at which individual’s disk may injured is only known after the injury has occurred, and the external load has been estimated. it is impossible to estimate the additional compression due to internal forces, however, and the precise load associated with a temporally proximate spinal disk injury is often impossible to accurately determine after the fact."))),
+              " It is accurate to state, both from a biomechanical and epidemiological perspective, that there is no established or generally accepted lower force threshold at which it can be said that an acute intervertebral disk injury in any part of the spine cannot occur, and that the load threshold at which individual’s disk may injured is only known after the injury has occurred, and the external load has been estimated. it is impossible to estimate the additional compression due to internal forces, however, and the precise load associated with a temporally proximate spinal disk injury is often impossible to accurately determine after the fact.")),
         fps(),
         fps(
           ftext(
@@ -882,16 +883,20 @@ if (doc_info$type == "causation") {
       fps(),
       fps(
         ftext(
-          paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to ", his_her(person = plaintiff), " post-crash injuries is the ", convert_date_format(crash$date), " ", crash$pdof_text, " impact crash."))),
+          paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to ", his_her(person = plaintiff), " post-crash injuries is the ", convert_date_format(crash$date), ", ", crash$pdof_text, ", impact crash."))),
       fps(),
       fps(
         ftext(
           paste0(
-            "The second part of the analysis requires an assessment of the probability that ", Mr_Ms_Lastname(conjunction = "or"), " would have developed the symptoms and diagnoses of spine injury at the same point in time had ", he_she(person = plaintiff), " not been initially injured in the ", convert_date_format(crash$date), " ", crash$pdof_text, " impact crash. As a generally healthy ", plaintiff$age, "-year-old ", if(plaintiff$gender[1] == "m") paste0("male") else if (plaintiff$gender[1] == "f") paste0("female") else (paste0("person")), ", ", Mr_Ms_Lastname(person = plaintiff), " was at a negligible annual risk of spontaneously developing chronically painful and potentially surgical cervical or lumbar spinal disk derangements; less than 1 in 2,000 is indicated by epidemiologic study and national hospital data.")),
-        run_footnote(x = footnotes_blocklist[32], prop = fp_text_refnote),
+            "The second part of the analysis requires an assessment of the probability that ", Mr_Ms_Lastname(conjunction = "or"), " would have developed the symptoms and diagnoses of spine injury at the same point in time had ", he_she(person = plaintiff), " not been initially injured in the ", convert_date_format(crash$date), ", ", crash$pdof_text, " impact crash. As a generally healthy ", plaintiff$age, "-year-old ", if(plaintiff$gender[1] == "m") paste0("male") else if (plaintiff$gender[1] == "f") paste0("female") else (paste0("person")), ", ", Mr_Ms_Lastname(person = plaintiff), " was at a negligible annual risk of spontaneously developing chronically painful and potentially surgical cervical or lumbar spinal disk derangements; less than 1 in 2,000 is indicated by epidemiologic study and national hospital data.")),
+        run_footnote(x = footnotes_blocklist[31], prop = fp_text_refnote),
         ftext(
           paste0(
-            " The chance that they were going to develop the onset of chronic neck or low back pain attributable to symptomatic disk derangements on the same day as the crash by pure coincidence is obviously much smaller; less than 1 in 730,000 (the annual risk divided by 365 days). In comparison the risk of acute spine injury in the subject crash was more than 50%, and the risk of a spinal disk injury was likely no less than 1 in 25 in the general population.  Based on this comparison of risk during the timeframe of interest, the crash is the most likely cause of ", Mr_Ms_Lastname(person = plaintiff), "’s chronic spinal injuries by >99%."))),
+            " The chance that they were going to develop the onset of chronic neck or low back pain attributable to symptomatic disk derangements on the same day as the crash by pure coincidence is obviously much smaller; less than 1 in 730,000 (the annual risk divided by 365 days). In comparison the risk of acute spine injury in the subject crash was more than 50%, and the risk of a spinal disk injury was likely no less than 1 in 25 in the general population.")),
+        run_footnote(x = footnotes_blocklist[24], prop = fp_text_refnote),
+        ftext(
+          paste0(
+            " Based on this comparison of risk during the timeframe of interest, the crash is the most likely cause of ", Mr_Ms_Lastname(person = plaintiff), "’s chronic spinal injuries by >99%."))),
       fps(),
       fps(
         ftext(
@@ -899,7 +904,17 @@ if (doc_info$type == "causation") {
       fps(),
       fps(
         ftext(
-          paste0("The answer to this question is now decided science. Along with my research colleagues, I have recently published 2 analyses and systematic reviews of nearly 10,000 articles regarding the long-term effects of traffic crash-related injury to the neck and low back and associated chronic pain. ,  Systematic reviews are considered the most reliable and strongest form of scientific evidence (i.e. Level I evidence), as they consist of a comprehensive synthesis of world literature on a topic.  The result of the analyses indicate that when ", men_women, " like ", Mr_Ms_Lastname(person = plaintiff), " have persisting neck or back pain after an acute crash-related injury, ")), ftext("more often than not", prop = fp_text_italic), ftext(" (>50% of the time) the symptoms are due to the crash, versus all other causes, regardless of pre-crash medical history."
+          paste0("The answer to this question is now decided science. Along with my research colleagues, I have recently published 2 analyses and systematic reviews of nearly 10,000 articles regarding the long-term effects of traffic crash-related injury to the neck and low back and associated chronic pain.")),
+        run_footnote(x = footnotes_blocklist[32], prop = fp_text_refnote),
+        ftext(",", prop = fp_text_refnote),
+        run_footnote(x = footnotes_blocklist[33], prop = fp_text_refnote),
+        ftext(
+          paste0(
+            " Systematic reviews are considered the most reliable and strongest form of scientific evidence (i.e. Level I evidence), as they consist of a comprehensive synthesis of world literature on a topic.")),
+        run_footnote(x = footnotes_blocklist[34], prop = fp_text_refnote),
+        ftext(
+          paste0(
+            " The result of the analyses indicate that when ", men_women, " like ", Mr_Ms_Lastname(person = plaintiff), " have persisting neck or back pain after an acute crash-related injury, ")), ftext("more often than not", prop = fp_text_italic), ftext(" (>50% of the time) the symptoms are due to the crash, versus all other causes, regardless of pre-crash medical history."
           )))
     
     
@@ -1081,7 +1096,7 @@ if (doc_info$type != "notes") {
     fps(
       ftext(
         paste0(
-          "Given the contiguous chain of causation from the day of the crash through ", Mr_Ms_Lastname(person = plaintiff), "’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in ", Mr_Ms_Lastname(person = plaintiff), "’s medical records and summarized in this report, including ", his_her(person = plaintiff), " symptomatic cervical and lumbar disk derangements, is the subject ", convert_date_format(crash$date), " ", crash$pdof_text, " impact crash."
+          "Given the contiguous chain of causation from the day of the crash through ", Mr_Ms_Lastname(person = plaintiff), "’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in ", Mr_Ms_Lastname(person = plaintiff), "’s medical records and summarized in this report, including ", his_her(person = plaintiff), " symptomatic cervical and lumbar disk derangements, is the subject ", convert_date_format(crash$date), ", ", crash$pdof_text, " impact crash."
         ))))}
 
 
@@ -1170,11 +1185,11 @@ appendix <- list(
   fps(),
   fps(
     ftext(
-      "The methodology set forth in my 2009 paper consists of 3 steps or elements that need to be satisfied in an injury causation analysis in order to conclude that an injury resulted from a particular event to a reasonable degree of medical/ scientific probability, which are as follows:")),
+      "The methodology set forth in my 2009 paper consists of 3 steps or elements that need to be satisfied in an injury causation analysis in order to conclude that an injury resulted from a particular event to a reasonable degree of medical/scientific probability, which are as follows:")),
   fps(),
   fps(
     ftext(
-      "1.\t"), ftext("Plausibility", prop = fp_text_underline), ftext(": This first step addresses whether it is biologically possible for the injury event to have caused the condition (a.k.a general causation). A finding of plausibility is unrelated to the frequency of the injury, because even if the injury occurs in only 1 in 100 or fewer cases of exposure to the event (e.g. a spinal disk injury following a car crash), it is still plausibly caused by the event. Plausibility is a relatively low hurdle to clear in a causal analysis and is largely satisfied by the lack of evidence of implausibility of the relationship. Although it is common in crash injury litigation for the defendant to assert minimal vehicle damage as a basis for disputing injury causation, the approach is unhelpful for evaluating plausibility, as such an analysis does not have a sufficiently low error rate to establish impossibility, and at best can only be used to suggest a low frequency of injury in the general population. An example of an impossible causal relationship is the discovery of leukemia the day after a crash, as it is well established that it is not biologically plausible for trauma to cause leukemia. Plausibility is often, but not necessarily, established with epidemiologic data or information."), style = "NumberList"),
+      "1.\t"), ftext("Plausibility", prop = fp_text_underline), ftext(": This first step addresses whether it is biologically "), ftext("possible", prop = fp_text_italic), ftext(" for the injury event to have caused the condition (a.k.a general causation). A finding of plausibility is unrelated to the "), ftext("frequency", prop = fp_text_italic), ftext(" of the injury, because even if the injury occurs in only 1 in 100 or fewer cases of exposure to the event (e.g. a spinal disk injury following a car crash), it is still "), ftext("plausibly", prop = fp_text_italic), ftext(" caused by the event. Plausibility is a relatively low hurdle to clear in a causal analysis and is largely satisfied by the lack of evidence of "), ftext("implausibility", prop = fp_text_italic), ftext(" of the relationship. Although it is common in crash injury litigation for the defendant to assert minimal vehicle damage as a basis for disputing injury causation, the approach is unhelpful for evaluating plausibility, as such an analysis does not have a sufficiently low error rate to establish impossibility, and at best can only be used to suggest a low frequency of injury in the general population. An example of an "), ftext("impossible", prop = fp_text_italic), ftext(" causal relationship is the discovery of leukemia the day after a crash, as it is well established that it is not biologically plausible for trauma to cause leukemia. Plausibility is often, but not necessarily, established with epidemiologic data or information."), style = "NumberList"),
   fps(),
   fps(
     ftext(
@@ -1190,7 +1205,7 @@ appendix <- list(
   fps(),
   fps(
     ftext(
-      "\"…his first step was to determine general causation… whether or not the type of injury that the plaintiff sustained could have been caused by the type of collision that the plaintiff was in… her second step was to consider whether there was a temporal relationship between plaintiff’s injury and the collision… her third step was to… rule out alternative causes of plaintiff’s injury. \"")),
+      "\"…his first step was to determine general causation… whether or not the type of injury that the plaintiff sustained could have been caused by the type of collision that the plaintiff was in… her second step was to consider whether there was a temporal relationship between plaintiff’s injury and the collision… her third step was to… rule out alternative causes of plaintiff’s injury.\""), style = "Quote"),
   fps(),
   fps(
     ftext(
@@ -1198,72 +1213,74 @@ appendix <- list(
   fps(),
   fps(
     ftext(
-      "The Defendant appealed the ruling from the District Court, and in July of 2016, the Tenth Circuit U.S. Court of Appeals unanimously affirmed the 3-step causal methodology described in my 2009 publication cited above as generally accepted and well established for assessing injury causation (see Etherton v. Owners Insurance Company, No. 14-1164, 10th Cir, entered on July 19, 2016). Using the 3-step methodology, the Court determined the expert’s methodology fit the specific facts in the case, and that the District Court properly applied Rule 702/Daubert standard to the expert’s testimony in finding his methodology reliable. The judicial panel included current Supreme Court Justice Neil Gorsuch.")),
+      "The Defendant appealed the ruling from the District Court, and in July of 2016, the Tenth Circuit U.S. Court of Appeals unanimously affirmed the 3-step causal methodology described in my 2009 publication cited above as generally accepted and well established for assessing injury causation (see "), 
+    ftext("Etherton v. Owners Insurance Company", prop = fp_text_italic), 
+    ftext(", No. 14-1164, 10th Cir, entered on July 19, 2016). Using the 3-step methodology, the Court determined the expert’s methodology fit the specific facts in the case, and that the District Court properly applied Rule 702/Daubert standard to the expert’s testimony in finding his methodology reliable. The judicial panel included current Supreme Court Justice Neil Gorsuch.")),
   fps(),
   fps(
     ftext(
-      "Below is a partial list of publications in scientific journals in which my descriptions of the 3-step methodology described in the Etherton decision and its various applications have been subjected to peer review. The foundation for the specific causation methodology described in all of these papers is the \"Hill criteria, \" a guideline for the assessment of general causation that has been universally relied on in medicine and science for more than 50 years.")),
+      "Below is a partial list of publications in scientific journals in which my descriptions of the 3-step methodology described in the "), ftext("Etherton", prop = fp_text_italic), ftext(" decision and its various applications have been subjected to peer review. The foundation for the specific causation methodology described in all of these papers is the \"Hill criteria,\" a guideline for the assessment of general causation that has been universally relied on in medicine and science for more than 50 years.")),
   fps(),
   fps(
     ftext(
-      "Dianita Ika Melia P, Zeegers MP, Herkutanto H, Freeman MD. Medicolegal causation investigation of bacterial endocarditis associated with an oral surgery practice using the INFERENCE approach. Int J Environ Res Public Health 2021:18,7530. https://doi.org/10.3390/ijerph18147530."), style = "Bibliography"),
+      "Dianita Ika Melia P, Zeegers MP, Herkutanto H, Freeman MD. Medicolegal causation investigation of bacterial endocarditis associated with an oral surgery practice using the INFERENCE approach. "), ftext("Int J Environ Res Public Health", prop = fp_text_italic), ftext(" 2021:18,7530. https://doi.org/10.3390/ijerph18147530."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Dianita Ika Melia P, Zeeger MP, Herkutanto H, Freeman MD. Development of the INFERENCE (INtegration of Forensic Epidemiology and the Rigorous EvaluatioN of Causation Elements) approach to causal inference in forensic medicine. Int J Environ Res Public Health 2020;17:8353; doi:10.3390/ijerph17228353"), style = "Bibliography"),
+      "Dianita Ika Melia P, Zeeger MP, Herkutanto H, Freeman MD. Development of the INFERENCE (INtegration of Forensic Epidemiology and the Rigorous EvaluatioN of Causation Elements) approach to causal inference in forensic medicine. "), ftext("Int J Environ Res Public Health", prop = fp_text_italic), ftext(" 2020;17:8353; doi:10.3390/ijerph17228353"), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Dianita Ika Melia P, Freeman MD, Herkutanto H, Zeeger MP. A review of causal inference in forensic medicine. For Sci Med Path 2020:doi.org/10.1007/s12024-020-00220-9."), style = "Bibliography"),
+      "Dianita Ika Melia P, Freeman MD, Herkutanto H, Zeeger MP. A review of causal inference in forensic medicine. "), ftext("For Sci Med Path", prop = fp_text_italic), ftext(" 2020:doi.org/10.1007/s12024-020-00220-9."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD. A practicable and systematic approach to medicolegal causation. Orthopedics 2018;41(2):70-2."), style = "Bibliography"),
+      "Freeman MD. A practicable and systematic approach to medicolegal causation. "), ftext("Orthopedics", prop = fp_text_italic), ftext(" 2018;41(2):70-2."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Zeegers M. Principles and applications of forensic epidemiology in the medicolegal setting. Law, Probability, & Risk 2015; doi:10.1093/lpr/mgv010."), style = "Bibliography"),
+      "Freeman MD, Zeegers M. Principles and applications of forensic epidemiology in the medicolegal setting. "), ftext("Law, Probability, & Risk", prop = fp_text_italic), ftext(" 2015; doi:10.1093/lpr/mgv010."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD. Medicolegal causation analysis of a lumbar spine fracture following a low speed rear impact traffic crash. J Case Rep Prac 2015; 3(2): 23-29."), style = "Bibliography"),
+      "Freeman MD. Medicolegal causation analysis of a lumbar spine fracture following a low speed rear impact traffic crash. "), ftext("J Case Rep Prac", prop = fp_text_italic), ftext(" 2015; 3(2): 23-29."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Cahn PJ, Franklin FA. Applied forensic epidemiology. Part 1: medical negligence. OA Epidemiology 2014;2(1):2."), style = "Bibliography"),
+      "Freeman MD, Cahn PJ, Franklin FA. Applied forensic epidemiology. Part 1: medical negligence. "), ftext("OA Epidemiology", prop = fp_text_italic), ftext(" 2014;2(1):2."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Koehler S, Freeman MD. Forensic epidemiology; a methodology for investigating and quantifying specific causation. Forens Sci Med Path 2014 Jun;10(2):217-22."), style = "Bibliography"),
+      "Koehler S, Freeman MD. Forensic epidemiology; a methodology for investigating and quantifying specific causation. "), ftext("Forens Sci Med Path", prop = fp_text_italic), ftext(" 2014 Jun;10(2):217-22."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Kohles SS. An examination of the threshold criteria for the evaluation of specific causation of mesothelioma following a history of significant exposure to chrysotile asbestos-containing brake dust, Int J Occ Env Hlth 2012;18(4):329-36."), style = "Bibliography"),
+      "Freeman MD, Kohles SS. An examination of the threshold criteria for the evaluation of specific causation of mesothelioma following a history of significant exposure to chrysotile asbestos-containing brake dust, "), ftext("Int J Occ Env Hlth", prop = fp_text_italic), ftext(" 2012;18(4):329-36."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Everson T, Kohles SS. Forensic epidemiologic and biomechanical analysis of a pelvic cavity blowout injury associated with ejection from a personal watercraft (jet-ski). J Forens Sci 2012 doi: 10.1111/j.1556-4029.2012.02250.x"), style = "Bibliography"),
+      "Freeman MD, Everson T, Kohles SS. Forensic epidemiologic and biomechanical analysis of a pelvic cavity blowout injury associated with ejection from a personal watercraft (jet-ski). "), ftext("J Forens Sci", prop = fp_text_italic), ftext(" 2012 doi: 10.1111/j.1556-4029.2012.02250.x"), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Kohles SS. Plasma levels of polychlorinated biphenyls, non-Hodgkin lymphoma, and causation. J Environ Public Health 2012;2012:258981. doi: 10.1155/2012/258981. Review."), style = "Bibliography"),
+      "Freeman MD, Kohles SS. Plasma levels of polychlorinated biphenyls, non-Hodgkin lymphoma, and causation. "), ftext("J Environ Public Health", prop = fp_text_italic), ftext(" 2012;2012:258981. doi: 10.1155/2012/258981. Review."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Kohles SS. Application of the Hill Criteria to the Causal Association of Post-Traumatic Headache and Assault. Egypt J Forensic Sci 2011;1:35-40."), style = "Bibliography"),
+      "Freeman MD, Kohles SS. Application of the Hill Criteria to the Causal Association of Post-Traumatic Headache and Assault. "), ftext("Egypt J Forensic Sci", prop = fp_text_italic), ftext(" 2011;1:35-40."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Kohles SS. Application of the Bradford-Hill Criteria for Assessing Specific Causation in Post-Traumatic Headache. Brain Inj Prof 2011;8(1):26-8."), style = "Bibliography"),
+      "Freeman MD, Kohles SS. Application of the Bradford-Hill Criteria for Assessing Specific Causation in Post-Traumatic Headache. "), ftext("Brain Inj Prof", prop = fp_text_italic), ftext(" 2011;8(1):26-8."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Kohles SS. An Evaluation of Applied Biomechanics as an adjunct to systematic specific causation in forensic medicine. Wien Med Wochenschr 2011;161:1-11."), style = "Bibliography"),
+      "Freeman MD, Kohles SS. An Evaluation of Applied Biomechanics as an adjunct to systematic specific causation in forensic medicine. "), ftext("Wien Med Wochenschr", prop = fp_text_italic), ftext(" 2011;161:1-11."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Centeno CJ, Kohles SS. A systematic approach to clinical determinations of causation in symptomatic spinal disc injury following motor vehicle crash trauma. PM R 2009;1(10):951-6."), style = "Bibliography"),
+      "Freeman MD, Centeno CJ, Kohles SS. A systematic approach to clinical determinations of causation in symptomatic spinal disc injury following motor vehicle crash trauma. "), ftext("PM R", prop = fp_text_italic), ftext(" 2009;1(10):951-6."), style = "Bibliography"),
   fps(),
   fps(
     ftext(
-      "Freeman MD, Rossignol AC, Hand M. Forensic Epidemiology: A systematic approach to probabilistic determinations in disputed matters. J Forensic Legal Med 2008;15(5):281-90."), style = "Bibliography"))
+      "Freeman MD, Rossignol AC, Hand M. Forensic Epidemiology: A systematic approach to probabilistic determinations in disputed matters. "), ftext("J Forensic Legal Med", prop = fp_text_italic), ftext(" 2008;15(5):281-90."), style = "Bibliography"))

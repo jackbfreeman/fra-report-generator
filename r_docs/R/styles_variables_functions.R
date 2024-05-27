@@ -17,30 +17,35 @@ fp_text_normal <- fp_text_lite()
 doc_info <- list(
   type = "causation",
   short = list(
-    yes_no = "yes",
+    yes_no = "no",
     original_report_date = "01/05/2023" # MM/DD/YYYY
   )
 )
 
 case <- "yes" # yes/no
-case_no <- "CaseNoSample" # hidden if no case
-court_name <- "SampleCourtName"
-case_defendant_name <- "SampleCaseDefendantName"
+case_no <- "2022-83820" # hidden if no case
+court_name <- "District Court, 234th Judicial District, Harris County, Texas"
+case_defendant_name <- "Luis Carlos Barillas, First Coast Intermodalogistics, LLC and First Coast Logistics of Texas, LLC"
+
+
+background_facts_recon_file_name <- "~/Downloads/Nicholson,B recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Benjamin Nicholson.docx") # can be multiple
+
 
 lawyer <- list(
-  first_name = "LawyerFirst",
-  last_name = "LawyerLast", # ignore postnominals (i.e., Jr. or II)
+  first_name = "John",
+  last_name = "Zaid", # ignore postnominals (i.e., Jr. or II)
   gender = "m",
-  firm_name = "SampleFirmName",
-  address = "123 Address St.",
-  city = "CityVille",
-  state = "StateLand",
-  zip = "12345",
-  phone = "0123456789"
+  firm_name = "John K. Zaid & Associates",
+  address = "16951 Feather Craft Lane",
+  city = "Houston",
+  state = "Texas",
+  zip = "77058",
+  phone = "2813338959"
 )
 
 crash <- list(
-  date = "01/01/2020", # MM/DD/YYYY
+  date = "03/03/2021", # MM/DD/YYYY
   pdof = "near-side", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
@@ -48,30 +53,30 @@ crash <- list(
 
 
 plaintiff <- list(
-  first_name = c("Pl1FirstName", "Pl2FirstName", "ThirdOne"),
-  last_name = c("Pl1LastName", "Pl1LastName", "ThirdName"),
-  et_al = "yes", # check box for yes, default to yes
-  gender = c("f", "m", "nb"),
-  dob = c("01/01/1999", "01/02/1990", "01/04/1994"), # MM/DD/YYYY
-  weight = "100", # pounds
-  injury_location = "shoulder", # disk, shoulder, spine (rollover), seatbelt efficacy
-  car_make = "PlCarMake",
-  car_model = "PlCarModel",
-  car_year = "1995",
-  seat_position = c("driver", "front passenger", "rear right passenger"), # driver, front passenger, rear left/right passenger
+  first_name = c("Benjamin"),
+  last_name = c("Nicholson"),
+  et_al = "no", # check box for yes, default to yes
+  gender = c("m"),
+  dob = c("10/18/1974"), # MM/DD/YYYY
+  weight = "180", # pounds
+  injury_location = "disk", # disk, shoulder, spine (rollover), seatbelt efficacy
+  car_make = "Dodge",
+  car_model = "Challenger",
+  car_year = "2016",
+  seat_position = c("driver"), # driver, front passenger, rear left/right passenger
   dx_dr = c("Dr. Doctor")
 )
 
 defendant <- list(
-  first_name = "DefFirstName",
-  last_name = "DefLastName",
+  first_name = "Luis",
+  last_name = "Barillas",
   gender = "m",
   car_make = "DefCarMake",
   car_model = "DefCarModel"
 )
 
-mdf_deltaV <- "10" # mph
-mdf_accel <- "8" # g
+mdf_deltaV <- "4.2" # mph
+mdf_accel <- "3.1" # g
 
 defense_biomech_expert <- list(
   first_name = "ExpertFirst",
@@ -88,6 +93,7 @@ defense_biomech_expert <- list(
   report_date = "01/01/2021",
   mdf_agree = "no"
 )
+
 
 final_doc_name <- paste0(
   lawyer$last_name, substr(lawyer$first_name, 1, 1), " ", 
@@ -109,7 +115,7 @@ final_doc_name <- paste0(
 )
 
 # pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
-if (length(plaintiff$first_name >1)) {
+if (length(plaintiff$first_name) > 1) {
   if (crash$pdof == "near-side") {
     crash$pdof_text <- "driver-side"
   } else if (crash$pdof == "far-side") {
@@ -126,11 +132,7 @@ action_individual <- ifelse(case == "yes", "action", single_plural("individual")
 doc <- read_docx(ifelse(doc_info$type == "notes", file.path(datapath, "fra-template-notes.dotx"),
                         file.path(datapath, "fra-template-caus-rebut.dotx")))
 
-background_facts_recon_file_name <- file.path(datapath, "sample_background_facts_analysis.docx")
-med_hx_file_name <- c(
-  file.path(datapath, "sample_med_hx.docx"), 
-  file.path(datapath, "sample_med_hx2.docx")
-  ) # can be multiple
+
 # only used for rebuttals, where background facts document needs to be split again
 background_facts_new_recon_file_name <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
 
