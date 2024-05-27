@@ -15,12 +15,12 @@ fp_text_normal <- fp_text_lite()
 
 
 doc_info <- list(
-  type = "rebuttal",
+  type = "causation",
   short = list(
-    yes_no = "yes"
+    yes_no = "yes",
+    original_report_date = "01/05/2023" # MM/DD/YYYY
   )
 )
-
 
 case <- "yes" # yes/no
 case_no <- "CaseNoSample" # hidden if no case
@@ -40,7 +40,7 @@ lawyer <- list(
 )
 
 crash <- list(
-  date = "01/01/2020",
+  date = "01/01/2020", # MM/DD/YYYY
   pdof = "near-side", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
@@ -52,7 +52,7 @@ plaintiff <- list(
   last_name = c("Pl1LastName", "Pl1LastName", "ThirdName"),
   et_al = "yes", # check box for yes, default to yes
   gender = c("f", "m", "nb"),
-  dob = c("01/01/1999", "01/02/1990", "01/04/1994"),
+  dob = c("01/01/1999", "01/02/1990", "01/04/1994"), # MM/DD/YYYY
   weight = "100", # pounds
   injury_location = "shoulder", # disk, shoulder, spine (rollover), seatbelt efficacy
   car_make = "PlCarMake",
@@ -65,7 +65,6 @@ plaintiff <- list(
 defendant <- list(
   first_name = "DefFirstName",
   last_name = "DefLastName",
-  et_al = "yes", # check box for yes, default to yes
   gender = "m",
   car_make = "DefCarMake",
   car_model = "DefCarModel"
@@ -81,7 +80,7 @@ defense_biomech_expert <- list(
   gender = "m",
   firm = "LMNOP", # multiple choice or Other
   depo_reviewed = "no",
-  depo_date = "01/01/2021",
+  depo_date = "01/01/2021", # MM/DD/YYYY
   deltaV = "8", # mph
   acceleration = "6", # g
   report_citations_number = "12",
