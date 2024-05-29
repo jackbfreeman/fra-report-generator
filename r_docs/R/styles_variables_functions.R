@@ -12,87 +12,154 @@ fp_text_italic_underline <- fp_text_lite(italic = TRUE, underline = TRUE)
 fp_text_bold_underline <- fp_text_lite(bold = TRUE, underline = TRUE)
 fp_text_bold_italic <- fp_text_lite(bold = TRUE, italic = TRUE)
 fp_text_normal <- fp_text_lite()
+# 
+# 
+# doc_info <- list(
+#   type = "causation",
+#   short = list(
+#     yes_no = "no",
+#     original_report_date = "01/05/2023" # MM/DD/YYYY
+#   )
+# )
+# 
+# case <- "yes" # yes/no
+# case_no <- "2022-83820" # hidden if no case
+# court_name <- "District Court, 234th Judicial District, Harris County, Texas"
+# case_defendant_name <- "Luis Carlos Barillas, First Coast Intermodalogistics, LLC and First Coast Logistics of Texas, LLC"
+# 
+
+background_facts_recon_file_name <- "~/Downloads/Vravis recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Thomas Vravis.docx", "~/Downloads/Barbara Vravis.docx") # can be multiple
+
+# 
+# lawyer <- list(
+#   first_name = "John",
+#   last_name = "Zaid", # ignore postnominals (i.e., Jr. or II)
+#   gender = "m",
+#   firm_name = "John K. Zaid & Associates",
+#   address = "16951 Feather Craft Lane",
+#   city = "Houston",
+#   state = "Texas",
+#   zip = "77058",
+#   phone = "2813338959"
+# )
+# 
+# crash <- list(
+#   date = "03/03/2021", # MM/DD/YYYY
+#   pdof = "near-side", # frontal, rear, near-side, far-side, rollover
+#   fatality = "no"
+# )
+# 
+# 
+# 
+# plaintiff <- list(
+#   first_name = c("Benjamin"),
+#   last_name = c("Nicholson"),
+#   et_al = "no", # check box for yes, default to yes
+#   gender = c("m"),
+#   dob = c("10/18/1974"), # MM/DD/YYYY
+#   weight = "180", # pounds
+#   injury_location = "disk", # disk, shoulder, spine (rollover), seatbelt efficacy
+#   car_make = "Dodge",
+#   car_model = "Challenger",
+#   car_year = "2016",
+#   seat_position = c("driver"), # driver, front passenger, rear left/right passenger
+#   dx_dr = c("Dr. Doctor")
+# )
+# 
+# defendant <- list(
+#   first_name = "Luis",
+#   last_name = "Barillas",
+#   gender = "m",
+#   car_make = "DefCarMake",
+#   car_model = "DefCarModel"
+# )
+# 
+# mdf_deltaV <- "4.2" # mph
+# mdf_accel <- "3.1" # g
+# 
+# defense_biomech_expert <- list(
+#   first_name = "ExpertFirst",
+#   last_name = "ExpertLast",
+#   title = "Dr.", # Dr. Mr. Ms.
+#   gender = "m",
+#   firm = "LMNOP", # multiple choice or Other
+#   depo_reviewed = "no",
+#   depo_date = "01/01/2021", # MM/DD/YYYY
+#   deltaV = "8", # mph
+#   acceleration = "6", # g
+#   report_citations_number = "12",
+#   report_pages_number = "15",
+#   report_date = "01/01/2021",
+#   mdf_agree = "no"
+# )
+# 
+# 
+# 
+# 
 
 
+
+
+# testing isolated variables for doc types
+# notes
 doc_info <- list(
-  type = "causation",
-  short = list(
-    yes_no = "no",
-    original_report_date = "01/05/2023" # MM/DD/YYYY
+    type = "notes",
+    short = list(
+      yes_no = "no",
+      original_report_date = "01/05/2023" # MM/DD/YYYY
+    )
   )
-)
 
 case <- "yes" # yes/no
-case_no <- "2022-83820" # hidden if no case
-court_name <- "District Court, 234th Judicial District, Harris County, Texas"
-case_defendant_name <- "Luis Carlos Barillas, First Coast Intermodalogistics, LLC and First Coast Logistics of Texas, LLC"
-
-
-background_facts_recon_file_name <- "~/Downloads/Nicholson,B recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Benjamin Nicholson.docx") # can be multiple
-
+case_no <- "2020-CA-006465-O" # hidden if no case
+court_name <- "Circuit Court of the Ninth Judicial Circuit in and for Orange County, Florida"
+case_defendant_name <- "Vicki Lynn Deer; Virginia Belle Deer and Owners Insurance Company, a Foreign Profit Corporation"
 
 lawyer <- list(
-  first_name = "John",
-  last_name = "Zaid", # ignore postnominals (i.e., Jr. or II)
-  gender = "m",
-  firm_name = "John K. Zaid & Associates",
-  address = "16951 Feather Craft Lane",
-  city = "Houston",
-  state = "Texas",
-  zip = "77058",
-  phone = "2813338959"
+  first_name = "Ryan",
+  last_name = "Rudd", # ignore postnominals (i.e., Jr. or II)
+  gender = "m"
 )
 
 crash <- list(
-  date = "03/03/2021", # MM/DD/YYYY
-  pdof = "near-side", # frontal, rear, near-side, far-side, rollover
+  date = "05/21/2019", # MM/DD/YYYY
+  pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
-
-
 plaintiff <- list(
-  first_name = c("Benjamin"),
-  last_name = c("Nicholson"),
+  first_name = c("Thomas", "Barbara"),
+  last_name = c("Vravis", "Vravis"),
   et_al = "no", # check box for yes, default to yes
-  gender = c("m"),
-  dob = c("10/18/1974"), # MM/DD/YYYY
-  weight = "180", # pounds
-  injury_location = "disk", # disk, shoulder, spine (rollover), seatbelt efficacy
-  car_make = "Dodge",
-  car_model = "Challenger",
-  car_year = "2016",
-  seat_position = c("driver"), # driver, front passenger, rear left/right passenger
-  dx_dr = c("Dr. Doctor")
+  gender = c("m", "f"),
+  dob = c("09/28/1949", "07/10/1950"), # MM/DD/YYYY
+  seat_position = c("driver", "front passenger"), # driver, front passenger, rear left/right passenger
+  injury_location = "shoulder" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
 defendant <- list(
-  first_name = "Luis",
-  last_name = "Barillas",
-  gender = "m",
-  car_make = "DefCarMake",
-  car_model = "DefCarModel"
+  first_name = "Virginia",
+  last_name = "Deer"
 )
-
-mdf_deltaV <- "4.2" # mph
-mdf_accel <- "3.1" # g
 
 defense_biomech_expert <- list(
   first_name = "ExpertFirst",
   last_name = "ExpertLast",
-  title = "Dr.", # Dr. Mr. Ms.
-  gender = "m",
-  firm = "LMNOP", # multiple choice or Other
-  depo_reviewed = "no",
-  depo_date = "01/01/2021", # MM/DD/YYYY
-  deltaV = "8", # mph
-  acceleration = "6", # g
-  report_citations_number = "12",
-  report_pages_number = "15",
-  report_date = "01/01/2021",
-  mdf_agree = "no"
+  gender = "m"
 )
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 final_doc_name <- paste0(

@@ -1,7 +1,7 @@
 # Load the existing Word document for Background Facts
 doc_split_bkgrd <- read_docx(background_facts_recon_file_name) %>%
   # Move cursor to beginning of Reconstruction section
-  cursor_reach(keyword = "Reconstruction")
+  cursor_reach(keyword = "Crash reconstruction")
 
 # Store reconstruction break point
 recon_point <- doc_split_bkgrd$officer_cursor$which
