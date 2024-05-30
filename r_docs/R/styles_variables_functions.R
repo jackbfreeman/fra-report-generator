@@ -15,75 +15,6 @@ fp_text_normal <- fp_text_lite()
 
 
 
-# 
-# lawyer <- list(
-#   first_name = "John",
-#   last_name = "Zaid", # ignore postnominals (i.e., Jr. or II)
-#   gender = "m",
-#   firm_name = "John K. Zaid & Associates",
-#   address = "16951 Feather Craft Lane",
-#   city = "Houston",
-#   state = "Texas",
-#   zip = "77058",
-#   phone = "2813338959"
-# )
-# 
-# crash <- list(
-#   date = "03/03/2021", # MM/DD/YYYY
-#   pdof = "near-side", # frontal, rear, near-side, far-side, rollover
-#   fatality = "no"
-# )
-# 
-# 
-# 
-# plaintiff <- list(
-#   first_name = c("Benjamin"),
-#   last_name = c("Nicholson"),
-#   et_al = "no", # check box for yes, default to yes
-#   gender = c("m"),
-#   dob = c("10/18/1974"), # MM/DD/YYYY
-#   weight = "180", # pounds
-#   injury_location = "disk", # disk, shoulder, spine (rollover), seatbelt efficacy
-#   car_make = "Dodge",
-#   car_model = "Challenger",
-#   car_year = "2016",
-#   seat_position = c("driver"), # driver, front passenger, rear left/right passenger
-#   dx_dr = c("Dr. Doctor")
-# )
-# 
-# defendant <- list(
-#   first_name = "Luis",
-#   last_name = "Barillas",
-#   gender = "m",
-#   car_make = "DefCarMake",
-#   car_model = "DefCarModel"
-# )
-# 
-# mdf_deltaV <- "4.2" # mph
-# mdf_accel <- "3.1" # g
-# 
-# defense_biomech_expert <- list(
-#   first_name = "ExpertFirst",
-#   last_name = "ExpertLast",
-#   title = "Dr.", # Dr. Mr. Ms.
-#   gender = "m",
-#   firm = "LMNOP", # multiple choice or Other
-#   depo_reviewed = "no",
-#   depo_date = "01/01/2021", # MM/DD/YYYY
-#   deltaV = "8", # mph
-#   acceleration = "6", # g
-#   report_citations_number = "12",
-#   report_pages_number = "15",
-#   report_date = "01/01/2021",
-#   mdf_agree = "no"
-# )
-# 
-# 
-# 
-# 
-
-
-
 
 # universal variables
 
@@ -91,16 +22,15 @@ background_facts_recon_file_name <- "~/Downloads/Vravis recon & crash summary.do
 med_hx_file_name <- c("~/Downloads/Thomas Vravis.docx", "~/Downloads/Barbara Vravis.docx") # can be multiple
 
 doc_info <- list(
-  type = "notes", # notes, report
+  type = "report", # notes, report
   rebuttal = list(
-    yes_no = "no"
+    yes_no = "yes"
   ),
   short = list(
     yes_no = "no",
     original_report_date = "01/05/2023" # MM/DD/YYYY
   )
 )
-
 
 case <- "yes" # yes/no
 case_no <- "2020-CA-006465-O" # hidden if no case
@@ -131,42 +61,71 @@ plaintiff <- list(
 
 # doc-specific vars
 # notes
-if (doc_info$type == "notes") {
-  # rebuttal notes vars
-  if (doc_info$rebuttal$yes_no == "yes") {
-    defense_biomech_expert <- list(
-      first_name = "ExpertFirst",
-      last_name = "ExpertLast"
-    )
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-} else if (doc_info$type == "report") {
-  # report vars
-  
-  if (doc_info$rebuttal$yes_no == "yes") {
-    # rebuttal-specific vars
-    
-  }
+
+# rebuttal notes vars
+if (doc_info$rebuttal$yes_no == "yes") {
+  defense_biomech_expert <- list(
+    first_name = "ExpertFirst",
+    last_name = "ExpertLast"
+  )
 }
 
 
-
-
-
-
-
+if (doc_info$type == "report") {
+  
+# report vars
+  lawyer <- c(
+    lawyer,
+    gender = "m",
+    firm_name = "SampleFirmName",
+    address = "123 Address St.",
+    city = "CityVille",
+    state = "StateLand",
+    zip = "12345",
+    phone = "0123456789"
+  )
+  
+  plaintiff <- c(
+    plaintiff,
+    weight = "100", # pounds
+    car_make = "PlCarMake",
+    car_model = "PlCarModel",
+    car_year = "1995",
+    if (plaintiff$injury_location == "shoulder") {
+      dx_dr = c("Dr. Doctor") # doctor who diagnosed SLAP lesion
+    }
+  )
+  
+  defendant <- list(
+    first_name = "DefFirstName",
+    last_name = "DefLastName"
+  )
+  
+  mdf_deltaV <- "10" # mph
+  mdf_accel <- "8" # g
+  
+  if (doc_info$rebuttal$yes_no == "yes") {
+    
+    # rebuttal-specific vars
+    defense_biomech_expert <- c(
+      defense_biomech_expert,
+      title = "Dr.", # Dr. Mr. Ms.
+      gender = "m",
+      firm = "LMNOP", # multiple choice or Other
+      depo_reviewed = "no",
+      depo_date = "01/01/2021", # MM/DD/YYYY
+      deltaV = "8", # mph
+      acceleration = "6", # g
+      report_citations_number = "12",
+      report_pages_number = "15",
+      report_date = "01/01/2021",
+      mdf_agree = "no"
+    )
+    
+    
+  }
+  
+}
 
 
 
@@ -201,30 +160,6 @@ final_doc_name <- paste0(
 
 
 
-
-#   
-#   if (crash$fatality == "no") {paste0(
-#     crash$pdof, " ", plaintiff$injury_location, " ")
-#   } else {"fatality "},
-#   if (doc_info$type == "report") {
-#     if (doc_info$rebuttal$yes_no == "no") {
-#       "causation"
-#     } else {
-#       paste(
-#         "rebuttal", defense_biomech_expert$last_name
-#       )
-#     }
-#   } else if (doc_info$type == "notes")
-#     if (doc_info$rebuttal$yes_no == "no") {
-#       "notes"
-#     } else {}
-#   
-# doc_info$type,
-# if (doc_info$type == "rebuttal") {
-#     paste0(" ", defense_biomech_expert$last_name)
-#   }
-# )
-
 # pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
 if (length(plaintiff$first_name) > 1) {
   if (crash$pdof == "near-side") {
@@ -237,8 +172,6 @@ if (length(plaintiff$first_name) > 1) {
 } else {
   crash$pdof_text <- crash$pdof
 }
-
-action_individual <- ifelse(case == "yes", "action", single_plural("individual"))
 
 doc <- read_docx(ifelse(doc_info$type == "notes", file.path(datapath, "fra-template-notes.dotx"),
                         file.path(datapath, "fra-template-caus-rebut.dotx")))
@@ -368,6 +301,10 @@ Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and", number = len
 
 
 if (doc_info$type == "report") {
+  
+  
+  action_individual <- ifelse(case == "yes", "action", single_plural("individual"))
+  
   
   phone_fun <- function(phone, invalid = NA)
   {
@@ -511,7 +448,7 @@ if (doc_info$type == "report") {
   Men_Women <- if (plaintiff$gender[1] == "m") "Men" else if (plaintiff$gender[1] == "f") "Women" else "People"
   men_women <- tolower(Men_Women)
   
-
+  
   
   
   
@@ -525,3 +462,4 @@ if (doc_info$type == "report") {
     Dr_Mr_Ms_Expert_Lastname <- paste(defense_biomech_expert$title, defense_biomech_expert$last_name)
   }
 }
+
