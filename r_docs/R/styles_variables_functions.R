@@ -135,7 +135,7 @@ plaintiff <- list(
   gender = c("m", "f"),
   dob = c("09/28/1949", "07/10/1950"), # MM/DD/YYYY
   seat_position = c("driver", "front passenger"), # driver, front passenger, rear left/right passenger
-  injury_location = "shoulder" # disk, shoulder, spine (rollover), seatbelt efficacy
+  injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
 defendant <- list(
@@ -145,8 +145,7 @@ defendant <- list(
 
 defense_biomech_expert <- list(
   first_name = "ExpertFirst",
-  last_name = "ExpertLast",
-  gender = "m"
+  last_name = "ExpertLast"
 )
 
 

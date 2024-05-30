@@ -84,7 +84,7 @@ defense_biomech_expert <- list(
 )
 ```
 
-```{r test notes prompt}
+```{r test notes prompt eval=FALSE}
 doc_info$type = readline(prompt = "Doc type (notes, causation, rebuttal)")
 case = readline(prompt = "Case? (yes/no)")
 
@@ -231,8 +231,8 @@ if (doc_info$type == "notes") {
 doc %>%
   cursor_begin() %>%
   body_remove() %>%
-  block_add_fps_fun(final_build) %>%
-  #block_add_fps_fun(list(appendix)) %>%
+  #block_add_fps_fun(final_build) %>%
+  block_add_fps_fun(heading) %>%
   print(target = paste0(final_doc_name, ".docx"))
 ```
 
