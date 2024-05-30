@@ -42,47 +42,6 @@ block_add_fps_fun <- function(x, list) {
 }
 ```
 
-```{r notes vars}
-doc_info <- list(
-  type = "notes"
-  )
-
-case <- "yes" # yes/no
-case_no <- "2020-CA-006465-O" # hidden if no case
-court_name <- "Circuit Court of the Ninth Judicial Circuit in and for Orange County, Florida"
-case_defendant_name <- "Vicki Lynn Deer; Virginia Belle Deer and Owners Insurance Company, a Foreign Profit Corporation"
-
-lawyer <- list(
-  first_name = "Ryan",
-  last_name = "Rudd" # ignore postnominals (i.e., Jr. or II)
-)
-
-crash <- list(
-  date = "05/21/2019", # MM/DD/YYYY
-  pdof = "rear", # frontal, rear, near-side, far-side, rollover
-  fatality = "no"
-)
-
-plaintiff <- list(
-  first_name = c("Thomas", "Barbara"),
-  last_name = c("Vravis"),
-  et_al = "no", # check box for yes, default to yes
-  gender = c("m", "f"),
-  dob = c("09/28/1949", "07/10/1950"), # MM/DD/YYYY
-  seat_position = c("driver", "front passenger"), # driver, front passenger, rear left/right passenger
-  injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
-)
-
-defendant <- list(
-  first_name = "Virginia",
-  last_name = "Deer"
-)
-
-defense_biomech_expert <- list(
-  first_name = "ExpertFirst",
-  last_name = "ExpertLast"
-)
-```
 
 ```{r test notes prompt eval=FALSE}
 doc_info$type = readline(prompt = "Doc type (notes, causation, rebuttal)")
@@ -192,37 +151,39 @@ if (doc_info$type == "notes") {
     heading, 
     background_facts
   )
-} else if (doc_info$type == "causation") {
-  final_build <- list(
-    heading,
-    receipt,
-    purpose,
-    qualifications,
-    background_facts,
-    inj_biomech$intro,
-    inj_biomech$meat,
-    three_steps,
-    conclusions,
-    signature_block
-  )
-  if (plaintiff$injury_location == "disk") {
-    final_build <- c(final_build, list(appendix))
+} else {
+  if (doc_info$rebuttal$yes_no == "no") {
+    final_build <- list(
+      heading,
+      receipt,
+      purpose,
+      qualifications,
+      background_facts,
+      inj_biomech$intro,
+      inj_biomech$meat,
+      three_steps,
+      conclusions,
+      signature_block
+    )
+    if (plaintiff$injury_location == "disk") {
+      final_build <- c(final_build, list(appendix))
+    }
+  } else {
+    final_build <- list(
+      heading,
+      receipt,
+      purpose,
+      summary_opinions,
+      qualifications,
+      background_facts,
+      opinions_general_comments,
+      inj_biomech$intro,
+      inj_biomech$meat,
+      three_steps,
+      conclusions,
+      signature_block
+    )
   }
-} else if (doc_info$type == "rebuttal") {
-  final_build <- list(
-    heading,
-    receipt,
-    purpose,
-    summary_opinions,
-    qualifications,
-    background_facts,
-    opinions_general_comments,
-    inj_biomech$intro,
-    inj_biomech$meat,
-    three_steps,
-    conclusions,
-    signature_block
-  )
 }
 ```
 

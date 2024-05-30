@@ -1,4 +1,5 @@
-footnotes_blocklist <- block_list(fpar(ftext("Melia P et al. Development of the INFERENCE (INtegration of Forensic Epidemiology and the Rigorous EvaluatioN of Causation Elements) approach to causal inference in forensic medicine. Int J Environ Res Public Health 2020;17:8353; doi:10.3390/ijerph17228353."), fp_p = fp_par_footnote), 
+if (doc_info$type == "report") {
+  footnotes_blocklist <- block_list(fpar(ftext("Melia P et al. Development of the INFERENCE (INtegration of Forensic Epidemiology and the Rigorous EvaluatioN of Causation Elements) approach to causal inference in forensic medicine. Int J Environ Res Public Health 2020;17:8353; doi:10.3390/ijerph17228353."), fp_p = fp_par_footnote), 
   fpar(ftext("Freeman MD. A practicable and systematic approach to medicolegal causation. Orthopedics 2018;41(2):70-2."), fp_p = fp_par_footnote),
   fpar(ftext("Freeman MD, Centeno CJ, Kohles SS. A systematic approach to clinical determinations of causation in symptomatic spinal disc injury following motor vehicle crash trauma. PM R 2009;1(10):951-6."), fp_p = fp_par_footnote),
   fpar(ftext("Etherton v. Owner Insurance Company. U.S. District Court of Appeals, 10th Circuit. Case No. 14-1164."), fp_p = fp_par_footnote),
@@ -49,3 +50,4 @@ footnote_fpar <- fpar(
   run_footnote(x = footnotes_blocklist[3], prop = fp_text_refnote),
   "."
 )
+}

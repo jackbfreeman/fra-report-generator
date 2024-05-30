@@ -30,20 +30,22 @@ for (i in 1:(ifelse(doc_info$type == "notes", recon_point-1, recon_point))) {
 
 
 # delete opinion section if doc_info$type is rebuttal
-if (doc_info$type == "rebuttal") {
-  doc_split_recon <- doc_split_recon %>%
-    # Move cursor to beginning of Opinions section
-    cursor_reach(keyword = "Opinions of")
-  
-  # save recon as rebuttal
-  doc_split_opinions <- doc_split_recon
-  
-  # move cursor backward to delete empty line before opinion section
-  doc_split_recon <- cursor_backward(doc_split_recon)
-  
-  # loop to delete opinion section
-  for (i in doc_split_recon$officer_cursor$which:(length(doc_split_recon$officer_cursor$nodes_names)-recon_point)) {
-    body_remove(doc_split_recon)
+if (doc_info$type == "report") {
+  if (doc_info$rebuttal$yes_no == "yes") {
+    doc_split_recon <- doc_split_recon %>%
+      # Move cursor to beginning of Opinions section
+      cursor_reach(keyword = "Opinions of")
+    
+    # save recon as rebuttal
+    doc_split_opinions <- doc_split_recon
+    
+    # move cursor backward to delete empty line before opinion section
+    doc_split_recon <- cursor_backward(doc_split_recon)
+    
+    # loop to delete opinion section
+    for (i in doc_split_recon$officer_cursor$which:(length(doc_split_recon$officer_cursor$nodes_names)-recon_point)) {
+      body_remove(doc_split_recon)
+    }
   }
 }
 
@@ -53,23 +55,25 @@ print(doc_split_recon, target = file.path(datapath, "temp_import_docx", "reconst
 
 
 # if rebuttal, create document with opinions of defendant expert
-if (doc_info$type == "rebuttal") {
-  # make opinions document
-  doc_split_opinions <- read_docx(background_facts_recon_file_name) %>%
-    cursor_reach(keyword = "Opinions of")
-  
-  # store reconstruction break point
-  opinion_point <- doc_split_opinions$officer_cursor$which
-  
-  # return cursor to beginning
-  doc_split_opinions <- cursor_begin(doc_split_opinions)
-  
-  for (i in 1:(opinion_point-1)) {
-    body_remove(doc_split_opinions)
+if (doc_info$type == "report") {
+  if (doc_info$rebuttal$yes_no == "yes") {
+    # make opinions document
+    doc_split_opinions <- read_docx(background_facts_recon_file_name) %>%
+      cursor_reach(keyword = "Opinions of")
+    
+    # store reconstruction break point
+    opinion_point <- doc_split_opinions$officer_cursor$which
+    
+    # return cursor to beginning
+    doc_split_opinions <- cursor_begin(doc_split_opinions)
+    
+    for (i in 1:(opinion_point-1)) {
+      body_remove(doc_split_opinions)
+    }
+    
+    # Print remaining document to new opinion docx
+    print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
   }
-  
-  # Print remaining document to new opinion docx
-  print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
 }
 
 doc_split_med_hx <- NULL
@@ -141,22 +145,24 @@ if (doc_info$type == "notes") {
     list(
       block_pour_docx(recon_new_path)
     ))
-} else if (doc_info$type == "causation") {
-  background_facts <- c(
-    background_facts,
-    list(
-      block_pour_docx(background_facts_new_path),
-      fps()),
-    med_hx_build_list
-  )
-} else if (doc_info$type == "rebuttal") {
-  background_facts <- c(
-    background_facts,
-    list(
-      block_pour_docx(background_facts_new_path),
-      fps()),
-    med_hx_build_list,
-    list(
-      block_pour_docx(opinions_new_path)
-    ))
+} else if (doc_info$type == "report") {
+  if (doc_info$rebuttal$yes_no == "no") {
+    background_facts <- c(
+      background_facts,
+      list(
+        block_pour_docx(background_facts_new_path),
+        fps()),
+      med_hx_build_list
+    )
+  } else {
+    background_facts <- c(
+      background_facts,
+      list(
+        block_pour_docx(background_facts_new_path),
+        fps()),
+      med_hx_build_list,
+      list(
+        block_pour_docx(opinions_new_path)
+      ))
+  }
 }
