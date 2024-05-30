@@ -231,8 +231,8 @@ if (doc_info$type == "notes") {
 doc %>%
   cursor_begin() %>%
   body_remove() %>%
-  #block_add_fps_fun(final_build) %>%
-  block_add_fps_fun(heading) %>%
+  block_add_fps_fun(final_build) %>%
+  #block_add_fps_fun(heading) %>%
   print(target = paste0(final_doc_name, ".docx"))
 ```
 
