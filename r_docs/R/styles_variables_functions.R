@@ -27,7 +27,7 @@ doc_info <- list(
     yes_no = "yes"
   ),
   short = list(
-    yes_no = "no",
+    yes_no = "yes",
     original_report_date = "01/05/2023" # MM/DD/YYYY
   )
 )

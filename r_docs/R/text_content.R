@@ -88,63 +88,77 @@ for(i in 1:length(heading)) {
 }
 
 
+
+# I am in receipt...
 if (doc_info$type == "report") {
-  receipt <- list(
+  if (doc_info$short$yes_no == "yes") {
     fps(
       ftext(
-        paste("Dear", Mr_Ms_Lastname(lawyer))
+        paste0(
+          "I have reviewed the documentation accompanying your correspondence, including the ", convert_date_format(defense_biomech_expert$report_date), ", report from the defendant's crash reconstruction and biomechanical engineering expert ", Dr_Mr_Ms_Expert_Lastname, "."
+        )
+      )
+    )
+  } else {
+    receipt <- list(
+      fps(
+        ftext(
+          paste("Dear", Mr_Ms_Lastname(lawyer))
+        ),
+        ftext(",")
       ),
-      ftext(",")
-    ),
-    fps(),
-    fps(
-      ftext(
-        "I am in receipt of your correspondence regarding the above-named "),
-      ftext(
-        if (case == "yes") {
-          "action"
-        } else if (length(plaintiff$first_name) > 1) {
-          "individuals"
-        } else {
-          "individual"
-        }),
-      ftext(
-        ". I have reviewed the documentation accompanying your correspondence including medical records, information regarding the subject crash, litigation documents, and other materials"
-      ),
-      if (doc_info$type == "report") {
-        if (doc_info$rebuttal$yes_no == "no") {
-          ftext(
-            "."
-          )
-        }
-        else {
-          ftext(
-            paste0(
-              ", including the ",
-              if(defense_biomech_expert$depo_reviewed == "yes")
-                paste0(
-                  convert_date_format(defense_biomech_expert$depo_date), 
-                  ", deposition transcript and the "),
-              convert_date_format(defense_biomech_expert$report_date), 
-              ", report from the defendant's crash reconstruction and biomechanical expert, ",
-              defense_biomech_expert$title,
-              " ",
-              defense_biomech_expert$first_name,
-              " ",
-              defense_biomech_expert$last_name,
+      fps(),
+      fps(
+        ftext(
+          "I am in receipt of your correspondence regarding the above-named "),
+        ftext(
+          if (case == "yes") {
+            "action"
+          } else if (length(plaintiff$first_name) > 1) {
+            "individuals"
+          } else {
+            "individual"
+          }),
+        ftext(
+          ". I have reviewed the documentation accompanying your correspondence including medical records, information regarding the subject crash, litigation documents, and other materials"
+        ),
+        if (doc_info$type == "report") {
+          if (doc_info$rebuttal$yes_no == "no") {
+            ftext(
               "."
             )
-          )
+          }
+          else {
+            ftext(
+              paste0(
+                ", including the ",
+                if(defense_biomech_expert$depo_reviewed == "yes")
+                  paste0(
+                    convert_date_format(defense_biomech_expert$depo_date), 
+                    ", deposition transcript and the "),
+                convert_date_format(defense_biomech_expert$report_date), 
+                ", report from the defendant's crash reconstruction and biomechanical expert, ",
+                defense_biomech_expert$title,
+                " ",
+                defense_biomech_expert$first_name,
+                " ",
+                defense_biomech_expert$last_name,
+                "."
+              )
+            )
+          }
         }
-      }
-    ),
-    fps())}
+      ),
+      fps()
+    )
+  }
+}
 
 
 
 
 
-
+# The purpose of this report....
 if (doc_info$type == "report") {
   purpose <- list()
   # causation report
@@ -179,41 +193,67 @@ if (doc_info$type == "report") {
       
       
       
-      
+      # non-rollover causation short    
     } else {
-      # non-rollover
-      purpose <- list(
-        fps(
-          ftext(
-            paste0("The purpose of this report is to provide an analysis of the causal relationship between the subject ", crash$pdof_text, " impact collision and ", Mr_Ms_Lastname(person = plaintiff), "’s subsequently diagnosed ", plaintiff$injury_location[1], " injuries and need for treatment.")
-          )
-        ),
-        fps()
-      )
+      if (doc_info$short$yes_no == "yes") {
+        purpose <- list(
+          fps(
+            ftext(
+              paste0(
+                "Placeholder non-rollover short causation 'The purpose of this report'"
+              )
+            )
+          ),
+          fps()
+        )
+      } else {
+        # non-rollover causation
+        purpose <- list(
+          fps(
+            ftext(
+              paste0("The purpose of this report is to provide an analysis of the causal relationship between the subject ", crash$pdof_text, " impact collision and ", Mr_Ms_Lastname(person = plaintiff), "’s subsequently diagnosed ", plaintiff$injury_location[1], " injuries and need for treatment.")
+            )
+          ),
+          fps()
+        )
+      }
     }
     
     
     
-    
+    # rebuttal causation short   
   } else {
-    # rebuttal report
-    purpose <- list(
-      fps(
-        ftext(
-          paste0("The purpose of this report is to assess the methods and conclusions of ", Dr_Mr_Ms_Expert_Lastname, " as they pertain to the injury potential of the subject collision, relative to ", Mr_Ms_Lastname(person = plaintiff), "’s post-crash diagnoses and treatment.)"
+    if (doc_info$short$yes_no == "yes") {
+      purpose <- list(
+        fps(
+          ftext(
+            paste0(
+              "The purpose of this report is primarily to provide an analysis of the opinions given by ", Dr_Mr_Ms_Expert_Lastname, ", particularly with regard to the potential of the crash to cause the injuries diagnosed in ", Mr_Ms_Lastname(person = plaintiff), ". I have also provided comments on some of the opinions provided by the defendant’s medical experts at the end of this report."
+            )
+          )
+        ),
+        fps()
+      )
+    } else {
+      # rebuttal report
+      purpose <- list(
+        fps(
+          ftext(
+            paste0(
+              "The purpose of this report is to assess the methods and conclusions of ", Dr_Mr_Ms_Expert_Lastname, " as they pertain to the injury potential of the subject collision, relative to ", Mr_Ms_Lastname(person = plaintiff), "’s post-crash diagnoses and treatment."
+            )
+          )
+        ),
+        fps(),
+        fps(
+          ftext(
+            "My summary opinions in this matter are as follows:", fp_text_lite(bold = TRUE) 
           )
         )
-      ),
-      fps(),
-      fps(
-        ftext(
-          "My summary opinions in this matter are as follows:", fp_text_lite(bold = TRUE) 
-        )
       )
-    )
+    }
   }
-}
-
+}  
 
 summary_opinions <- list()
 if (doc_info$type == "report") {
