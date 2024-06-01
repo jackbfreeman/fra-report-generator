@@ -169,20 +169,32 @@ if (doc_info$type == "notes") {
       final_build <- c(final_build, list(appendix))
     }
   } else {
-    final_build <- list(
-      heading,
-      receipt,
-      purpose,
-      summary_opinions,
-      qualifications,
-      background_facts,
-      opinions_general_comments,
-      inj_biomech$intro,
-      inj_biomech$meat,
-      three_steps,
-      conclusions,
-      signature_block
-    )
+    if (doc_info$short$yes_no == "yes") {
+      final_build <- list(
+        heading,
+        receipt,
+        purpose,
+        qualifications,
+        opinions_general_comments,
+        inj_biomech$intro,
+        inj_biomech$meat
+      )
+    } else {
+      final_build <- list(
+        heading,
+        receipt,
+        purpose,
+        summary_opinions,
+        qualifications,
+        background_facts,
+        opinions_general_comments,
+        inj_biomech$intro,
+        inj_biomech$meat,
+        three_steps,
+        conclusions,
+        signature_block
+      )
+    }
   }
 }
 ```

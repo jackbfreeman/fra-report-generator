@@ -61,41 +61,72 @@ if (doc_info$type == "report") {
     doc_split_opinions <- read_docx(background_facts_recon_file_name) %>%
       cursor_reach(keyword = "Opinions of")
     
-    # store reconstruction break point
+    # store opinions break point
     opinion_point <- doc_split_opinions$officer_cursor$which
+    
+    doc_split_opinions <- read_docx(background_facts_recon_file_name) %>%
+      cursor_reach(keyword = "Analysis")
+    
+    # store analysis break point
+    analysis_point <- doc_split_opinions$officer_cursor$which
+    
+    # move cursor backward to delete empty line before analysis section
+    doc_split_opinions <- cursor_backward(doc_split_opinions)
+    
+    for (i in (analysis_point-1):length(doc_split_opinions$officer_cursor$nodes_names)) {
+      body_remove(doc_split_opinions)
+    }
     
     # return cursor to beginning
     doc_split_opinions <- cursor_begin(doc_split_opinions)
     
-    for (i in 1:(opinion_point-1)) {
+    for (i in 1:opinion_point-1) {
       body_remove(doc_split_opinions)
     }
     
     # Print remaining document to new opinion docx
     print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
+    
+    
+    
+    
+    # split opinions and analysis sections of opinions document
+    
+    # make opinions document
+    doc_split_analysis <- read_docx(background_facts_recon_file_name) 
+    
+    # return cursor to beginning
+    doc_split_analysis <- cursor_begin(doc_split_analysis)
+    
+    for (i in 1:analysis_point) {
+      body_remove(doc_split_analysis)
+    }
+    
+    # Print remaining document to new opinion docx
+    print(doc_split_analysis, target = file.path(datapath, "temp_import_docx", "rebut-analysis.docx"))
   }
 }
 
 doc_split_med_hx <- NULL
 
 for (x in 1:length(med_hx_file_name)) {
-# Load the existing Word document for Medical History
-doc_split_med_hx[[x]] <- read_docx(med_hx_file_name[x]) %>%
-  cursor_reach("Post-crash medical history")
-
-# Store location of first line of useful med hx info
-med_hx_point <- doc_split_med_hx[[x]]$officer_cursor$which
-
-# Move cursor back to beginning
-doc_split_med_hx[[x]] <- cursor_begin(doc_split_med_hx[[x]])
-
-# Delete first lines
-for (i in 1:med_hx_point) {
-  body_remove(doc_split_med_hx[[x]])
-}
-
-# Print remaining document to new medical history docx
-print(doc_split_med_hx[[x]], target = file.path(datapath, "temp_import_docx", paste0("med_hx", x, ".docx")))
+  # Load the existing Word document for Medical History
+  doc_split_med_hx[[x]] <- read_docx(med_hx_file_name[x]) %>%
+    cursor_reach("Post-crash medical history")
+  
+  # Store location of first line of useful med hx info
+  med_hx_point <- doc_split_med_hx[[x]]$officer_cursor$which
+  
+  # Move cursor back to beginning
+  doc_split_med_hx[[x]] <- cursor_begin(doc_split_med_hx[[x]])
+  
+  # Delete first lines
+  for (i in 1:med_hx_point) {
+    body_remove(doc_split_med_hx[[x]])
+  }
+  
+  # Print remaining document to new medical history docx
+  print(doc_split_med_hx[[x]], target = file.path(datapath, "temp_import_docx", paste0("med_hx", x, ".docx")))
 }
 
 background_facts_new_path <- file.path(datapath, "temp_import_docx", "background_facts.docx")
@@ -106,7 +137,7 @@ for (x in 1:length(med_hx_file_name)) {
 }
 recon_new_path <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
 opinions_new_path <- file.path(datapath, "temp_import_docx", "opinions.docx")
-
+rebut_analysis_new_path <- file.path(datapath, "temp_import_docx", "rebut_analysis.docx")
 
 
 
@@ -135,34 +166,38 @@ if (length(med_hx_file_name) > 1) {
 
 background_facts <- list()
 
+# notes 
 if (doc_info$type == "notes") {
   background_facts <- c(
     background_facts,
     list(
       block_pour_docx(background_facts_new_path),
-      fps()),
+      fps()
+    ),
     med_hx_build_list,
     list(
       block_pour_docx(recon_new_path)
-    ))
+    )
+  )
 } else if (doc_info$type == "report") {
   if (doc_info$rebuttal$yes_no == "no") {
     background_facts <- c(
       background_facts,
       list(
         block_pour_docx(background_facts_new_path),
-        fps()),
+        fps()
+      ),
       med_hx_build_list
     )
-  } else {
+    # short rebuttal
+  }  else {
     background_facts <- c(
       background_facts,
       list(
         block_pour_docx(background_facts_new_path),
-        fps()),
-      med_hx_build_list,
-      list(
-        block_pour_docx(opinions_new_path)
-      ))
+        fps()
+      ),
+      med_hx_build_list
+    )
   }
 }

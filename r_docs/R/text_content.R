@@ -31,6 +31,7 @@ if (doc_info$type == "report") {
           " ",
           lawyer$zip
         ))),
+    fps(),
     fps(
       ftext(
         paste0(
@@ -92,13 +93,25 @@ for(i in 1:length(heading)) {
 # I am in receipt...
 if (doc_info$type == "report") {
   if (doc_info$short$yes_no == "yes") {
-    fps(
-      ftext(
-        paste0(
-          "I have reviewed the documentation accompanying your correspondence, including the ", convert_date_format(defense_biomech_expert$report_date), ", report from the defendant's crash reconstruction and biomechanical engineering expert ", Dr_Mr_Ms_Expert_Lastname, "."
-        )
+    if (doc_info$rebuttal$yes_no == "yes") {
+      receipt <- list(
+        fps(
+          ftext(
+            paste0("Dear ", Mr_Ms_Lastname(lawyer), ",")
+          )
+        ),
+        fps(),
+        fps(
+          ftext(
+            paste0(
+              "I have reviewed the documentation accompanying your correspondence, including the ", convert_date_format(defense_biomech_expert$report_date), ", report from the defendant's crash reconstruction and biomechanical engineering expert ", Dr_Mr_Ms_Expert_Lastname, "."
+            )
+          )
+        ),
+        fps()
       )
-    )
+      
+    }
   } else {
     receipt <- list(
       fps(
@@ -122,6 +135,8 @@ if (doc_info$type == "report") {
         ftext(
           ". I have reviewed the documentation accompanying your correspondence including medical records, information regarding the subject crash, litigation documents, and other materials"
         ),
+        
+        # 
         if (doc_info$type == "report") {
           if (doc_info$rebuttal$yes_no == "no") {
             ftext(
@@ -296,17 +311,25 @@ if (doc_info$type == "report") {
 
 if (doc_info$type == "report") {
   qualifications <- list()
+  # short rebuttal qualifications
   if (doc_info$short$yes_no == "yes") {
-    qualifications <- list(
-      fps(
-        ftext(
-          paste0(
-            "As I have already outlined my qualifications in my ", convert_date_format(doc_info$short$original_report_date), ", report in this matter, I will not repeat them here, but rather refer the reader to my current CV, which is attached."
+    if (doc_info$rebuttal$yes_no == "yes") {
+      qualifications <- list(
+        fps(
+          ftext(
+            "In brief (as they are described at greater length in previous report in this matter and in my CV), my qualifications to provide the opinions in this report are as follows: I am Professor and Chair of Forensic and Legal Medicine with the Faculty of Forensic and Legal Medicine of the Royal College of Physicians (UK) and a consultant in the fields of forensic medicine and forensic epidemiology. I am credentialed as a Fellow of the Royal College of Pathologists (UK), Fellow of the Faculty of Forensic and Legal Medicine (FFLM) of the Royal College of Physicians (UK), and member of the British Association in Forensic Medicine, "), 
+          ftext(
+            "i.a.", prop = fp_text_italic)),
+        fps(),
+        fps(
+          ftext(
+            "In addition to my academic credentials, publications, etc. which are described in the attached CV, I have been a crash reconstructionist since 1996 and have had ACTAR accreditation (the Accreditation Commission on Traffic Accident Reconstruction) since 2005. I am a member of the American Society of Biomechanics and have more than 60 scientific publications pertaining to injury biomechanics and have served as a consultant on injury biomechanics to state and federal government."
           )
-        )
-      ),
-      run_pagebreak()
-    )
+        ),
+        run_pagebreak()
+      )
+    }  
+    
     
     
     
@@ -361,8 +384,9 @@ if (doc_info$type == "report") {
 
 
 
-# background facts and medical history are imported from other documents here in final product
 
+
+# background facts and medical history are imported from other documents here in final product
 
 
 
@@ -384,6 +408,7 @@ if (doc_info$type == "report") {
 if (doc_info$type == "report") {
   if (doc_info$rebuttal$yes_no == "yes") {
     opinions_general_comments <- list(
+      block_pour_docx(opinions_new_path),
       fps(),
       fps(
         ftext(
@@ -469,12 +494,14 @@ if (doc_info$type == "report") {
     
     
   } else {
-    # rebuttal
+    # rebuttal short/long intro
     inj_biomech$intro <- list(
       fps(),
       fps(
         ftext(
-          "The generally accepted and peer-reviewed method of crash-related injury causation analysis for a specific individual is performed by assessing the risk of injury from the collision and comparing it to the probability that the injuries or conditions would have been present at the same point in time if the collision had not occurred. The process is referred to as a \"3-step\" injury causation method in which improbable alternative causes are ruled out and the single most likely cause is identified. The analysis is accomplished via the application of crash reconstruction, biomechanical, medical, and epidemiologic (risk assessment) principles."),
+          paste0(
+            ifelse(doc_info$short$yes_no == "yes", "As I noted in my original report in this matter, t", "T"),
+            "he generally accepted and peer-reviewed method of crash-related injury causation analysis for a specific individual is performed by assessing the risk of injury from the collision and comparing it to the probability that the injuries or conditions would have been present at the same point in time if the collision had not occurred. The process is referred to as a \"3-step\" injury causation method in which improbable alternative causes are ruled out and the single most likely cause is identified. The analysis is accomplished via the application of crash reconstruction, biomechanical, medical, and epidemiologic (risk assessment) principles.")),
         run_footnote(x = footnotes_blocklist[1], prop = fp_text_refnote),
         ftext("-", prop = fp_text_refnote),
         run_footnote(x = footnotes_blocklist[5], prop = fp_text_refnote),
@@ -489,24 +516,32 @@ if (doc_info$type == "report") {
         run_footnote(x = footnotes_blocklist[9], prop = fp_text_refnote),
         run_footnote(x = footnotes_blocklist[4], prop = fp_text_refnote)),
       # must be rendered with style "Body Text 3" for inverted indentation
-      fps(),
-      fps(
-        ftext(
-          "The three fundamental elements or steps of an injury causation analysis are as follows:"
-        )),
-      fps(
-        ftext(
-          "Whether the injury mechanism had the potential to cause the injury in question (aka general causation);"
-        ), style = "Body Text 3"),
-      fps(
-        ftext(
-          "The degree of temporal proximity between the injury mechanism and the onset of the symptoms reasonably indicating the presence of the injury;"
-        ), style = "Body Text 3"),
-      fps(
-        ftext(
-          "Whether there is a more likely alternative explanation for the occurrence of the symptoms at the same point in time (aka differential etiology)."
-        ), style = "Body Text 3"),
-      fps())
+      fps()
+    )
+    if (doc_info$short$yes_no == "no") {
+      inj_biomech$intro <- c(
+        inj_biomech$intro,
+        list(
+          fps(
+            ftext(
+              "The three fundamental elements or steps of an injury causation analysis are as follows:"
+            )),
+          fps(
+            ftext(
+              "Whether the injury mechanism had the potential to cause the injury in question (aka general causation);"
+            ), style = "Body Text 3"),
+          fps(
+            ftext(
+              "The degree of temporal proximity between the injury mechanism and the onset of the symptoms reasonably indicating the presence of the injury;"
+            ), style = "Body Text 3"),
+          fps(
+            ftext(
+              "Whether there is a more likely alternative explanation for the occurrence of the symptoms at the same point in time (aka differential etiology)."
+            ), style = "Body Text 3"),
+          fps()
+        )
+      )
+    }
   }
 }
 
