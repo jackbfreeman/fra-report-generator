@@ -486,7 +486,20 @@ if (doc_info$type == "report") {
       fps(),
       fps(
         ftext("Injury mechanism: reconstruction of the crash, injury biomechanics", prop = fp_text_lite(italic = TRUE))),
+      
+      fps(
+        ftext(
+          "Reconstruction:",
+          prop = fp_text_italic_underline
+        )),
       block_pour_docx(recon_new_path),
+      fps(),
+      fps(
+        ftext(
+          "Analysis:",
+          prop = fp_text_italic_underline
+        )),
+      block_pour_docx(analysis_new_path),
       fps(),
       fps(ftext("Injury biomechanics", prop = fp_text_lite(italic = TRUE))))
     
@@ -946,7 +959,14 @@ if (doc_info$type == "report") {
             "Reconstruction:",
             prop = fp_text_italic_underline
           )),
-        block_pour_docx(recon_new_path)
+        block_pour_docx(recon_new_path),
+        fps(),
+        fps(
+          ftext(
+            "Analysis:",
+            prop = fp_text_italic_underline
+          )),
+        block_pour_docx(analysis_new_path)
       )
     }
   }}

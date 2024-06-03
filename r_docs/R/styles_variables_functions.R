@@ -18,11 +18,11 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Vravis recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Thomas Vravis.docx", "~/Downloads/Barbara Vravis.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Suber recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Robert Suber.docx") # can be multiple
 
 doc_info <- list(
-  type = "report", # notes, report
+  type = "notes", # notes, report
   rebuttal = list(
     yes_no = "yes"
   ),
@@ -33,47 +33,47 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "2020-CA-006465-O" # hidden if no case
-court_name <- "Circuit Court of the Ninth Judicial Circuit in and for Orange County, Florida"
-case_defendant_name <- "Vicki Lynn Deer; Virginia Belle Deer and Owners Insurance Company, a Foreign Profit Corporation"
+case_no <- "01-2023-CA-001544" # hidden if no case
+court_name <- "Circuit Court of the Eighth Judicial Circuit in and for Alachua County, Florida"
+case_defendant_name <- "Jacob Rine"
 
 lawyer <- list(
-  first_name = "Ryan",
-  last_name = "Rudd" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Cherie",
+  last_name = "Fine" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "05/21/2019", # MM/DD/YYYY
-  pdof = "rear", # frontal, rear, near-side, far-side, rollover
+  date = "10/20/2022", # MM/DD/YYYY
+  pdof = "near-side", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 plaintiff <- list(
-  first_name = c("Thomas", "Barbara"),
-  last_name = c("Vravis", "Vravis"),
+  first_name = c("Robert"),
+  last_name = c("Suber"),
   et_al = "no", # check box for yes, default to yes
-  gender = c("m", "f"),
-  dob = c("09/28/1949", "07/10/1950"), # MM/DD/YYYY
-  seat_position = c("driver", "front passenger"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
+  gender = c("m"),
+  dob = c("06/11/1982"), # MM/DD/YYYY
+  seat_position = c("driver"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
 
-# doc-specific vars
+# doc-specific vars (successive sections build on previous sections)
 # notes
 
 # rebuttal notes vars
 if (doc_info$rebuttal$yes_no == "yes") {
   defense_biomech_expert <- list(
-    first_name = "ExpertFirst",
-    last_name = "ExpertLast"
+    first_name = c("Erin"),
+    last_name = c("Potma")
   )
 }
 
-
+# causation report vars
 if (doc_info$type == "report") {
   
-# report vars
+  # report vars
   lawyer <- c(
     lawyer,
     gender = "m",
@@ -104,6 +104,7 @@ if (doc_info$type == "report") {
   mdf_deltaV <- "10" # mph
   mdf_accel <- "8" # g
   
+  # rebuttal report specific vars
   if (doc_info$rebuttal$yes_no == "yes") {
     
     # rebuttal-specific vars
@@ -128,39 +129,7 @@ if (doc_info$type == "report") {
 }
 
 
-
-
-
-
-
-final_doc_name <- paste0(
-  lawyer$last_name, substr(lawyer$first_name, 1, 1), " ", 
-  format(Sys.Date(), "%y%m%d"), " ",
-  paste0(
-    sapply(1:length(plaintiff$first_name), function(i) {
-      paste0(plaintiff$last_name[[i]],  substr(plaintiff$first_name[[i]], 1, 1), " ")
-    }),
-    collapse = ""  # Adding space as separator
-  ),
-  if (doc_info$type == "notes") {
-    "notes"
-  } else if (doc_info$type == "report") {
-    if (doc_info$rebuttal$yes_no == "no"){
-      "causation"
-    } else {
-      "rebuttal"
-    }
-  },
-  if (doc_info$rebuttal$yes_no == "yes") {
-    paste0(
-      " ", defense_biomech_expert$last_name
-    )
-  }
-)  
-
-
-
-# pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
+# rename "near-side" to "driver-side" and "far-side" to "passenger-side" if >1 plaintiff
 if (length(plaintiff$first_name) > 1) {
   if (crash$pdof == "near-side") {
     crash$pdof_text <- "driver-side"
@@ -173,6 +142,52 @@ if (length(plaintiff$first_name) > 1) {
   crash$pdof_text <- crash$pdof
 }
 
+
+
+
+final_doc_name <- 
+  if (doc_info$type == "notes") {
+    paste(
+      "FR+A notes", 
+      paste(
+        sapply(1:length(plaintiff$first_name), function(i) {
+          paste0(plaintiff$last_name[[i]],  substr(plaintiff$first_name[[i]], 1, 1))
+        }),
+        collapse = " "  # Adding space as separator
+      ), 
+      crash$pdof_text,
+      plaintiff$injury_location,
+      if (doc_info$rebuttal$yes_no == "yes") paste("rebut", defense_biomech_expert$last_name)
+      
+    )
+  } else {
+    paste0(
+      lawyer$last_name, substr(lawyer$first_name, 1, 1), " ", 
+      format(Sys.Date(), "%y%m%d"), " ",
+      paste0(
+        sapply(1:length(plaintiff$first_name), function(i) {
+          paste0(plaintiff$last_name[[i]],  substr(plaintiff$first_name[[i]], 1, 1), " ")
+        }),
+        collapse = ""  # Adding space as separator
+      ),
+      plaintiff$injury_location, " ",
+      if (doc_info$rebuttal$yes_no == "no"){
+        "causation"
+      } else {
+        "rebuttal"
+      },
+      if (doc_info$rebuttal$yes_no == "yes") {
+        paste0(
+          " ", defense_biomech_expert$last_name
+        )
+      }
+    )  
+  }
+
+
+
+# pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
+
 doc <- read_docx(ifelse(doc_info$type == "notes", file.path(datapath, "fra-template-notes.dotx"),
                         file.path(datapath, "fra-template-caus-rebut.dotx")))
 
@@ -183,7 +198,7 @@ background_facts_new_recon_file_name <- file.path(datapath, "temp_import_docx", 
 # case name is only plaintiff name(s) if case is "no"
 case_name <- paste(plaintiff$first_name, plaintiff$last_name) %>% paste(collapse = "; ")
 if(case == "yes") case_name <- paste(case_name,
-                                     paste0(ifelse(plaintiff$et_al == "yes", "et al. ", ""), "v ", case_defendant_name, " et al.,", " Case No: ", case_no, ", ", court_name))
+                                     paste0(ifelse(plaintiff$et_al == "yes", "et al. ", ""), "v ", case_defendant_name, ",", " Case No: ", case_no, ", ", court_name))
 
 ext_img <- function(src, width) {
   get_height_fun <- function(img, width) {

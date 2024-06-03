@@ -1,17 +1,14 @@
+# Isolate and save Background Facts section
 # Load the existing Word document for Background Facts
 doc_split_bkgrd <- read_docx(background_facts_recon_file_name) %>%
-  # Move cursor to beginning of Reconstruction section
-  cursor_reach(keyword = "Crash reconstruction")
-
-# Store reconstruction break point
-recon_point <- doc_split_bkgrd$officer_cursor$which
+  cursor_reach(keyword = "Reconstruction")
 
 # Move cursor backward to delete empty line in recon document
 doc_split_bkgrd <- cursor_backward(doc_split_bkgrd)
 
-# create loop to delete amount of objects after background facts segment
-for (i in recon_point:(length(doc_split_bkgrd$officer_cursor$nodes_names)+1)) {
-  body_remove(doc_split_bkgrd)
+# Create loop to delete amount of objects after background facts segment
+for (i in recon_point:length(doc_split_bkgrd$officer_cursor$nodes_names)) {
+  doc_split_bkgrd <- body_remove(doc_split_bkgrd)
 }
 
 # print remaining document to new background facts docx
@@ -19,93 +16,100 @@ print(doc_split_bkgrd, target = file.path(datapath, "temp_import_docx", "backgro
 
 
 
+
+# Isolate and save Reconstruction section
 # Load the existing Word document for Reconstruction
 doc_split_recon <- read_docx(background_facts_recon_file_name) %>%
   cursor_begin()
 
-# create loop to delete objects before reconstruction segment
-for (i in 1:(ifelse(doc_info$type == "notes", recon_point-1, recon_point))) {
-  body_remove(doc_split_recon)
+# create loop to delete background facts section (before)
+for (i in 1:recon_point) {
+  doc_split_recon <- body_remove(doc_split_recon)
 }
 
+# set cursor at point after reconstruction (before analysis)
+doc_split_recon <- doc_split_recon %>%
+  cursor_reach(keyword = "Opinions of defendant’s")
 
-# delete opinion section if doc_info$type is rebuttal
-if (doc_info$type == "report") {
-  if (doc_info$rebuttal$yes_no == "yes") {
-    doc_split_recon <- doc_split_recon %>%
-      # Move cursor to beginning of Opinions section
-      cursor_reach(keyword = "Opinions of")
-    
-    # save recon as rebuttal
-    doc_split_opinions <- doc_split_recon
-    
-    # move cursor backward to delete empty line before opinion section
-    doc_split_recon <- cursor_backward(doc_split_recon)
-    
-    # loop to delete opinion section
-    for (i in doc_split_recon$officer_cursor$which:(length(doc_split_recon$officer_cursor$nodes_names)-recon_point)) {
-      body_remove(doc_split_recon)
-    }
-  }
+opinions_point <- doc_split_recon$officer_cursor$which
+
+# Move cursor backward to delete empty line in reconstruction document
+doc_split_recon <- cursor_backward(doc_split_recon)
+
+# Create loop to delete amount of objects after reconstruction section
+for (i in opinions_point:length(doc_split_recon$officer_cursor$nodes_names) + 1) {
+  doc_split_recon <- body_remove(doc_split_recon)
 }
 
-
-# Print remaining document to new reconstruction docx
+# print remaining document to new background facts docx
 print(doc_split_recon, target = file.path(datapath, "temp_import_docx", "reconstruction.docx"))
 
 
-# if rebuttal, create document with opinions of defendant expert
-if (doc_info$type == "report") {
-  if (doc_info$rebuttal$yes_no == "yes") {
-    # make opinions document
-    doc_split_opinions <- read_docx(background_facts_recon_file_name) %>%
-      cursor_reach(keyword = "Opinions of")
-    
-    # store opinions break point
-    opinion_point <- doc_split_opinions$officer_cursor$which
-    
-    doc_split_opinions <- read_docx(background_facts_recon_file_name) %>%
-      cursor_reach(keyword = "Analysis")
-    
-    # store analysis break point
-    analysis_point <- doc_split_opinions$officer_cursor$which
-    
-    # move cursor backward to delete empty line before analysis section
-    doc_split_opinions <- cursor_backward(doc_split_opinions)
-    
-    for (i in (analysis_point-1):length(doc_split_opinions$officer_cursor$nodes_names)) {
-      body_remove(doc_split_opinions)
-    }
-    
-    # return cursor to beginning
-    doc_split_opinions <- cursor_begin(doc_split_opinions)
-    
-    for (i in 1:opinion_point-1) {
-      body_remove(doc_split_opinions)
-    }
-    
-    # Print remaining document to new opinion docx
-    print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
-    
-    
-    
-    
-    # split opinions and analysis sections of opinions document
-    
-    # make opinions document
-    doc_split_analysis <- read_docx(background_facts_recon_file_name) 
-    
-    # return cursor to beginning
-    doc_split_analysis <- cursor_begin(doc_split_analysis)
-    
-    for (i in 1:analysis_point) {
-      body_remove(doc_split_analysis)
-    }
-    
-    # Print remaining document to new opinion docx
-    print(doc_split_analysis, target = file.path(datapath, "temp_import_docx", "rebut-analysis.docx"))
+
+
+
+
+
+
+
+
+# isolate opinions section if doc_info$type is rebuttal
+if (doc_info$rebuttal$yes_no == "yes") {
+  # Load the existing Word document for Reconstruction
+  doc_split_opinions <- read_docx(background_facts_recon_file_name) %>%
+    cursor_reach(keyword = "Opinions of defendant’s")
+  
+  # Store opinions break point
+  opinions_point <- doc_split_opinions$officer_cursor$which
+  
+  # return cursor to beginning
+  doc_split_opinions <- cursor_begin(doc_split_opinions)
+  
+  # create loop to delete background facts section (before)
+  for (i in 1:(opinions_point - 1)) {
+    doc_split_opinions <- body_remove(doc_split_opinions)
   }
+  
+  # set cursor at point after reconstruction (before analysis)
+  doc_split_opinions <- doc_split_opinions %>%
+    cursor_reach(keyword = "Crash Analysis")
+  
+  # Store analysis break point
+  analysis_point <- doc_split_opinions$officer_cursor$which
+  
+  # Move cursor backward to delete empty line in recon document
+  doc_split_opinions <- cursor_backward(doc_split_opinions)
+  
+  # Create loop to delete amount of objects after reconstruction section
+  for (i in analysis_point:length(doc_split_opinions$officer_cursor$nodes_names) + 1) {
+    doc_split_opinions <- body_remove(doc_split_opinions)
+  }
+  
+  # print remaining document to new background facts docx
+  print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
 }
+
+
+
+# Isolate and save Analysis section
+# Load the existing Word document for Reconstruction
+doc_split_analysis <- read_docx(background_facts_recon_file_name) %>%
+  cursor_reach(keyword = "Crash Analysis")
+
+analysis_point <- doc_split_analysis$officer_cursor$which
+
+doc_split_analysis <- cursor_begin(doc_split_analysis)
+
+# create loop to delete background facts section (before)
+for (i in 1:analysis_point) {
+  doc_split_analysis <- body_remove(doc_split_analysis)
+}
+
+# print remaining document to new background facts docx
+print(doc_split_analysis, target = file.path(datapath, "temp_import_docx", "analysis.docx"))
+
+
+
 
 doc_split_med_hx <- NULL
 
@@ -122,12 +126,13 @@ for (x in 1:length(med_hx_file_name)) {
   
   # Delete first lines
   for (i in 1:med_hx_point) {
-    body_remove(doc_split_med_hx[[x]])
+    doc_split_med_hx[[x]] <- body_remove(doc_split_med_hx[[x]])
   }
   
   # Print remaining document to new medical history docx
   print(doc_split_med_hx[[x]], target = file.path(datapath, "temp_import_docx", paste0("med_hx", x, ".docx")))
 }
+
 
 background_facts_new_path <- file.path(datapath, "temp_import_docx", "background_facts.docx")
 # create object
@@ -137,8 +142,7 @@ for (x in 1:length(med_hx_file_name)) {
 }
 recon_new_path <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
 opinions_new_path <- file.path(datapath, "temp_import_docx", "opinions.docx")
-rebut_analysis_new_path <- file.path(datapath, "temp_import_docx", "rebut_analysis.docx")
-
+analysis_new_path <- file.path(datapath, "temp_import_docx", "analysis.docx")
 
 
 med_hx_build_list <- list()
@@ -172,13 +176,38 @@ if (doc_info$type == "notes") {
     background_facts,
     list(
       block_pour_docx(background_facts_new_path),
-      fps()
+      fps(),
+      fps(
+        ftext(
+          "Post-crash history",
+          prop = fp_text_italic_underline))
     ),
     med_hx_build_list,
     list(
+      fps(
+        ftext(
+          "Reconstruction:",
+          prop = fp_text_italic_underline
+        )),
       block_pour_docx(recon_new_path)
     )
   )
+  if (doc_info$rebuttal$yes_no == "yes") {
+    background_facts <- c(
+      background_facts,
+      list(
+        block_pour_docx(opinions_new_path),
+        fps(),
+        fps(
+          ftext(
+            "Crash Analysis:",
+            prop = fp_text_italic_underline
+          )),
+        block_pour_docx(analysis_new_path),
+        fps()
+      )
+    )
+  }
 } else if (doc_info$type == "report") {
   if (doc_info$rebuttal$yes_no == "no") {
     background_facts <- c(
@@ -190,7 +219,7 @@ if (doc_info$type == "notes") {
       med_hx_build_list
     )
     # short rebuttal
-  }  else {
+  } else {
     background_facts <- c(
       background_facts,
       list(
