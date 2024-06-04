@@ -18,42 +18,42 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Suber recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Robert Suber.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Bond recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Riley Bond.docx") # can be multiple
 
 doc_info <- list(
-  type = "notes", # notes, report
+  type = "report", # notes, report
   rebuttal = list(
-    yes_no = "yes"
+    yes_no = "no"
   ),
   short = list(
-    yes_no = "yes",
-    original_report_date = "01/05/2023" # MM/DD/YYYY
+    yes_no = "no",
+    original_report_date = "01/05/2023" # MM/DD/YYYY, only if short
   )
 )
 
 case <- "yes" # yes/no
-case_no <- "01-2023-CA-001544" # hidden if no case
-court_name <- "Circuit Court of the Eighth Judicial Circuit in and for Alachua County, Florida"
-case_defendant_name <- "Jacob Rine"
+case_no <- "2023CV31074" # hidden if no case
+court_name <- "District Court Jefferson County, Colorado"
+case_defendant_name <- "Ava Davis"
 
 lawyer <- list(
-  first_name = "Cherie",
-  last_name = "Fine" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Tim",
+  last_name = "Galuzzi" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
   date = "10/20/2022", # MM/DD/YYYY
-  pdof = "near-side", # frontal, rear, near-side, far-side, rollover
+  pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 plaintiff <- list(
-  first_name = c("Robert"),
-  last_name = c("Suber"),
+  first_name = c("Riley"),
+  last_name = c("Bond"),
   et_al = "no", # check box for yes, default to yes
   gender = c("m"),
-  dob = c("06/11/1982"), # MM/DD/YYYY
+  dob = c("11/13/1991"), # MM/DD/YYYY
   seat_position = c("driver"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
@@ -64,9 +64,10 @@ plaintiff <- list(
 
 # rebuttal notes vars
 if (doc_info$rebuttal$yes_no == "yes") {
-  defense_biomech_expert <- list(
-    first_name = c("Erin"),
-    last_name = c("Potma")
+  defense_expert <- list(
+    first_name = c("Barry"),
+    last_name = c("Ogin"),
+    expert_field = c("medical") # biomechanical, medical
   )
 }
 
@@ -77,50 +78,50 @@ if (doc_info$type == "report") {
   lawyer <- c(
     lawyer,
     gender = "m",
-    firm_name = "SampleFirmName",
-    address = "123 Address St.",
-    city = "CityVille",
-    state = "StateLand",
-    zip = "12345",
-    phone = "0123456789"
+    firm_name = "Cheney Galluzzi & Howard, LLC",
+    address = "2701 Lawrence Street, Ste 201",
+    city = "Denver",
+    state = "Colorado",
+    zip = "80205",
+    phone = "3032099395"
   )
   
   plaintiff <- c(
     plaintiff,
-    weight = "100", # pounds
-    car_make = "PlCarMake",
-    car_model = "PlCarModel",
-    car_year = "1995",
+    weight = "170", # pounds
+    car_make = "Ford",
+    car_model = "Focus",
+    car_year = "2007",
     if (plaintiff$injury_location == "shoulder") {
       dx_dr = c("Dr. Doctor") # doctor who diagnosed SLAP lesion
     }
   )
   
   defendant <- list(
-    first_name = "DefFirstName",
-    last_name = "DefLastName"
+    first_name = "Ava",
+    last_name = "Davis"
   )
   
-  mdf_deltaV <- "10" # mph
-  mdf_accel <- "8" # g
+  mdf_deltaV <- "12.9" # mph
+  mdf_accel <- "9.4" # g
   
   # rebuttal report specific vars
   if (doc_info$rebuttal$yes_no == "yes") {
     
     # rebuttal-specific vars
-    defense_biomech_expert <- c(
-      defense_biomech_expert,
-      title = "Dr.", # Dr. Mr. Ms.
-      gender = "m",
-      firm = "LMNOP", # multiple choice or Other
-      depo_reviewed = "no",
-      depo_date = "01/01/2021", # MM/DD/YYYY
-      deltaV = "8", # mph
-      acceleration = "6", # g
-      report_citations_number = "12",
-      report_pages_number = "15",
-      report_date = "01/01/2021",
-      mdf_agree = "no"
+    defense_expert <- c(
+      defense_expert,
+      title = c("Dr."), # Dr. Mr. Ms.
+      gender = c("m"),
+      firm = c("Colorado Rehabilitation & Occupational Medicine"), # multiple choice or Other
+      depo_reviewed = "no", # default no
+      depo_date = c("01/01/2021"), # MM/DD/YYYY
+      deltaV = "XXX", # mph
+      acceleration = "XXX", # g
+      report_citations_number = "",
+      report_pages_number = c("XXX"),
+      report_date = c("05/03/2024"),
+      mdf_agree = c("no") # default no
     )
     
     
@@ -157,7 +158,7 @@ final_doc_name <-
       ), 
       crash$pdof_text,
       plaintiff$injury_location,
-      if (doc_info$rebuttal$yes_no == "yes") paste("rebut", defense_biomech_expert$last_name)
+      if (doc_info$rebuttal$yes_no == "yes") paste("rebut", defense_expert$last_name)
       
     )
   } else {
@@ -170,6 +171,7 @@ final_doc_name <-
         }),
         collapse = ""  # Adding space as separator
       ),
+      crash$pdof_text, " ",
       plaintiff$injury_location, " ",
       if (doc_info$rebuttal$yes_no == "no"){
         "causation"
@@ -178,7 +180,7 @@ final_doc_name <-
       },
       if (doc_info$rebuttal$yes_no == "yes") {
         paste0(
-          " ", defense_biomech_expert$last_name
+          " ", defense_expert$last_name
         )
       }
     )  
@@ -474,7 +476,7 @@ if (doc_info$type == "report") {
   asymptomatic_moderate <- if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate")
   
   if (doc_info$rebuttal$yes_no == "yes") {
-    Dr_Mr_Ms_Expert_Lastname <- paste(defense_biomech_expert$title, defense_biomech_expert$last_name)
+    Dr_Mr_Ms_Expert_Lastname <- paste(defense_expert$title, defense_expert$last_name)
   }
 }
 

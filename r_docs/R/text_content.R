@@ -104,7 +104,7 @@ if (doc_info$type == "report") {
         fps(
           ftext(
             paste0(
-              "I have reviewed the documentation accompanying your correspondence, including the ", convert_date_format(defense_biomech_expert$report_date), ", report from the defendant's crash reconstruction and biomechanical engineering expert ", Dr_Mr_Ms_Expert_Lastname, "."
+              "I have reviewed the documentation accompanying your correspondence, including the ", convert_date_format(defense_expert$report_date), ", report from the defendant's crash reconstruction and biomechanical engineering expert ", Dr_Mr_Ms_Expert_Lastname, "."
             )
           )
         ),
@@ -147,17 +147,17 @@ if (doc_info$type == "report") {
             ftext(
               paste0(
                 ", including the ",
-                if(defense_biomech_expert$depo_reviewed == "yes")
+                if(defense_expert$depo_reviewed == "yes")
                   paste0(
-                    convert_date_format(defense_biomech_expert$depo_date), 
+                    convert_date_format(defense_expert$depo_date), 
                     ", deposition transcript and the "),
-                convert_date_format(defense_biomech_expert$report_date), 
+                convert_date_format(defense_expert$report_date), 
                 ", report from the defendant's crash reconstruction and biomechanical expert, ",
-                defense_biomech_expert$title,
+                defense_expert$title,
                 " ",
-                defense_biomech_expert$first_name,
+                defense_expert$first_name,
                 " ",
-                defense_biomech_expert$last_name,
+                defense_expert$last_name,
                 "."
               )
             )
@@ -277,26 +277,26 @@ if (doc_info$type == "report") {
       fps(
         ftext(
           paste0(
-            Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject collision did not have the capacity to cause or exacerbate any of the injuries indisputably diagnosed in ", Mr_Ms_Lastname(person = plaintiff), "is lacking a foundation in science, medicine, or the facts in this case. ", Dr_Mr_Ms_Expert_Lastname, "'s opinions are based on a confusing and disingenuous presentation of a novel and distorted approach to causality and a misrepresentation and misuse of published literature."
+            Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject collision did not have the capacity to cause or exacerbate any of the injuries indisputably diagnosed in ", Mr_Ms_Lastname(person = plaintiff), " is lacking a foundation in science, medicine, or the facts in this case. ", Dr_Mr_Ms_Expert_Lastname, "'s opinions are based on a confusing and disingenuous presentation of a novel and distorted approach to causality and a misrepresentation and misuse of published literature."
           ), fp_text_lite(bold = TRUE)),
         run_linebreak(), style =  "Definition"),
       fps(
         ftext(
           paste0(
-            Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject crash only produced minimal and benign forces that could not have cause ", Mr_Ms_Lastname(person = plaintiff), "'s diagnosed spinal disk and other injuries because the forces in the collision were supposedly equal to those of ordinary and benign forces is not a reliable, relevant, or validated method of assessing injury cause. Using ", Dr_Mr_Ms_Expert_Lastname, "'s claimed delta V of ", defense_biomech_expert$deltaV, " mph for the subject collision indicates significant occupant motion and forces that in no way resemble any of the absurdly innocuous comparisons claimed by ", Dr_Mr_Ms_Expert_Lastname, ". Such comparisons are demonstrably unscientific and highly misleading, and irrelevant to any disputed issues in ", Mr_Ms_Lastname(person = plaintiff), "'s case."
+            Dr_Mr_Ms_Expert_Lastname, "'s assertion that the subject crash only produced minimal and benign forces that could not have cause ", Mr_Ms_Lastname(person = plaintiff), "'s diagnosed spinal disk and other injuries because the forces in the collision were supposedly equal to those of ordinary and benign forces is not a reliable, relevant, or validated method of assessing injury cause. Using ", Dr_Mr_Ms_Expert_Lastname, "'s claimed delta V of ", defense_expert$deltaV, " mph for the subject collision indicates significant occupant motion and forces that in no way resemble any of the absurdly innocuous comparisons claimed by ", Dr_Mr_Ms_Expert_Lastname, ". Such comparisons are demonstrably unscientific and highly misleading, and irrelevant to any disputed issues in ", Mr_Ms_Lastname(person = plaintiff), "'s case."
           ), fp_text_lite(bold = TRUE)),
         run_linebreak(), style =  "Definition"),
       fps(
         ftext(
           paste0(
-            "There is no scientific or factual basis for ", Dr_Mr_Ms_Expert_Lastname, "'s claim that ", Mr_Ms_Lastname(person = plaintiff), "'s previous spinal injuries could not or should not have been \"exacerbated\" by the subject crash. Indeed, ", Dr_Mr_Ms_Expert_Lastname, "'s use of the term is both meaningless and misleading, and neither ", he_she(person = defense_biomech_expert), " nor anyone else has the faintest idea of what forces would have been required to have caused ", Mr_Ms_Lastname(person = plaintiff), "'s previously diagnosed spinal disk and other injuries to become symptomatic, or to worsen. To suggest otherwise is frankly dishonest."
+            "There is no scientific or factual basis for ", Dr_Mr_Ms_Expert_Lastname, "'s claim that ", Mr_Ms_Lastname(person = plaintiff), "'s previous spinal injuries could not or should not have been \"exacerbated\" by the subject crash. Indeed, ", Dr_Mr_Ms_Expert_Lastname, "'s use of the term is both meaningless and misleading, and neither ", he_she(person = defense_expert), " nor anyone else has the faintest idea of what forces would have been required to have caused ", Mr_Ms_Lastname(person = plaintiff), "'s previously diagnosed spinal disk and other injuries to become symptomatic, or to worsen. To suggest otherwise is frankly dishonest."
           ), fp_text_lite(bold = TRUE)
         ),
         run_linebreak(), style =  "Definition"),
       fps(
         ftext(
           paste0(
-            "The methodology and principles used by ", Dr_Mr_Ms_Expert_Lastname, " to arrive at ", his_her(person = defense_biomech_expert), " opinions regarding the risk of injury from the crash to ", Mr_Ms_Lastname(person = plaintiff), " are not scientifically reliable, either in general or as they were applied to the facts of this case. Despite a superficial appearance of scientific validity, ", Dr_Mr_Ms_Expert_Lastname, "'s methods are speculative, unscientific, and unreliable, and ", his_her(person = defense_biomech_expert), " conclusions are meaningless."
+            "The methodology and principles used by ", Dr_Mr_Ms_Expert_Lastname, " to arrive at ", his_her(person = defense_expert), " opinions regarding the risk of injury from the crash to ", Mr_Ms_Lastname(person = plaintiff), " are not scientifically reliable, either in general or as they were applied to the facts of this case. Despite a superficial appearance of scientific validity, ", Dr_Mr_Ms_Expert_Lastname, "'s methods are speculative, unscientific, and unreliable, and ", his_her(person = defense_expert), " conclusions are meaningless."
           ), fp_text_lite(bold = TRUE)
         ),
         run_linebreak(), style =  "Definition")
@@ -418,12 +418,12 @@ if (doc_info$type == "report") {
       fps(
         ftext(
           paste0(
-            "The purpose of ", Dr_Mr_Ms_Expert_Lastname, "'s opinion is to provide a backdoor medical causation opinion that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " not injured in the subject collision because ", he_she(person = defense_biomech_expert), " (", Dr_Mr_Ms_Expert_Lastname, ") deemed any injury to be ")), 
+            "The purpose of ", Dr_Mr_Ms_Expert_Lastname, "'s opinion is to provide a backdoor medical causation opinion that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " not injured in the subject collision because ", he_she(person = defense_expert), " (", Dr_Mr_Ms_Expert_Lastname, ") deemed any injury to be ")), 
         ftext(
           "impossible", prop = fp_text_lite(italic = TRUE)), 
         ftext(
           paste0(
-            " in the crash. ", Dr_Mr_Ms_Expert_Lastname, " made no attempt to assess the actual probability of injury from any real-world crash like the subject collision, information which can only come from observational (epidemiologic) study of injuries associated with real world crashes, not from intellectually dishonest comparisons between one of the most common causes of injury in the US to innocuous activities of daily living. ", Dr_Mr_Ms_Expert_Lastname, " cites to multiple (", paste0(defense_biomech_expert$report_citations_number, ifelse(defense_biomech_expert$report_citations_number >39, "!", "")), ") publications in ", his_her(person = defense_biomech_expert), " ", defense_biomech_expert$report_pages_number, "-page report, yet none of them provide valid or reliable evidence that the injuries diagnosed in ", Mr_Ms_Lastname(person = plaintiff), " cannot, or did not, result from the collision that ", he_she(person = plaintiff), " ", conjugate("was"), " exposed to."
+            " in the crash. ", Dr_Mr_Ms_Expert_Lastname, " made no attempt to assess the actual probability of injury from any real-world crash like the subject collision, information which can only come from observational (epidemiologic) study of injuries associated with real world crashes, not from intellectually dishonest comparisons between one of the most common causes of injury in the US to innocuous activities of daily living. ", Dr_Mr_Ms_Expert_Lastname, " cites to multiple (", paste0(defense_expert$report_citations_number, ifelse(defense_expert$report_citations_number >39, "!", "")), ") publications in ", his_her(person = defense_expert), " ", defense_expert$report_pages_number, "-page report, yet none of them provide valid or reliable evidence that the injuries diagnosed in ", Mr_Ms_Lastname(person = plaintiff), " cannot, or did not, result from the collision that ", he_she(person = plaintiff), " ", conjugate("was"), " exposed to."
           )
         )
       )
@@ -911,7 +911,7 @@ if (doc_info$type == "report") {
     
     # rebuttal injury biomechanics
   } else {
-    if (defense_biomech_expert$firm == "BRC") {
+    if (defense_expert$firm == "BRC") {
       inj_biomech$meat <- list(
         fps(ftext("BRC injury biomechanics sample"))
       )
@@ -929,15 +929,15 @@ if (doc_info$type == "report") {
         fps(
           ftext(
             paste0(
-              Dr_Mr_Ms_Expert_Lastname, " has no information on the pre-crash condition of ", Mr_Ms_Lastname(person = plaintiff), "’s ", single_plural("spine"), ", or any other part of ", his_her(person = plaintiff), " ", single_plural("body"), ". ", He_She(person = defense_biomech_expert), " couldn’t pick ", him_her(person = plaintiff), " out of a lineup and hasn’t the faintest idea of ", his_her(person = plaintiff), " tolerance to any type of trauma, including the subject crash. ")), ftext("The tolerance of an individual to forceful external loads is only defined once it has been exceeded,", prop = fp_text_bold), ftext(paste0(" not based on comparisons to studies of dissimilar forces applied to bits and pieces of dead bodies (part of the basis for ", Dr_Mr_Ms_Expert_Lastname, "’s opinion). A review of all of the evidence in the subject case clearly established the fact that ", Mr_Ms_Lastname(person = plaintiff), "’s tolerance was exceeded by the forces of the subject crash."))),
+              Dr_Mr_Ms_Expert_Lastname, " has no information on the pre-crash condition of ", Mr_Ms_Lastname(person = plaintiff), "’s ", single_plural("spine"), ", or any other part of ", his_her(person = plaintiff), " ", single_plural("body"), ". ", He_She(person = defense_expert), " couldn’t pick ", him_her(person = plaintiff), " out of a lineup and hasn’t the faintest idea of ", his_her(person = plaintiff), " tolerance to any type of trauma, including the subject crash. ")), ftext("The tolerance of an individual to forceful external loads is only defined once it has been exceeded,", prop = fp_text_bold), ftext(paste0(" not based on comparisons to studies of dissimilar forces applied to bits and pieces of dead bodies (part of the basis for ", Dr_Mr_Ms_Expert_Lastname, "’s opinion). A review of all of the evidence in the subject case clearly established the fact that ", Mr_Ms_Lastname(person = plaintiff), "’s tolerance was exceeded by the forces of the subject crash."))),
         fps(),
         fps(
           ftext(
-            paste0("As ", Dr_Mr_Ms_Expert_Lastname, " does not (and cannot) dispute any of ", Mr_Ms_Lastname(person = plaintiff), "’s diagnoses, and ", he_she(person = defense_biomech_expert), " does not provide an alternative explanation for how ", his_her(person = plaintiff), " diagnosed injuries would have occurred at the same time as the collision, ", his_her(person = defense_biomech_expert), " analysis is incomplete, and fails to account for the undeniable evidence of injury following the crash."))),
+            paste0("As ", Dr_Mr_Ms_Expert_Lastname, " does not (and cannot) dispute any of ", Mr_Ms_Lastname(person = plaintiff), "’s diagnoses, and ", he_she(person = defense_expert), " does not provide an alternative explanation for how ", his_her(person = plaintiff), " diagnosed injuries would have occurred at the same time as the collision, ", his_her(person = defense_expert), " analysis is incomplete, and fails to account for the undeniable evidence of injury following the crash."))),
         fps(),
         fps(
           ftext(
-            paste0("The generally accepted 3-step approach to causation described above dictates that if there are no other contemporaneous competing causes for the injury that are more likely than an investigated plausible cause of the injury, then it is the investigated cause that is the most likely cause. ", Dr_Mr_Ms_Expert_Lastname, " simply ignored ", Mr_Ms_Lastname(person = plaintiff), "’s medical history like it never happened; ", his_her(person = defense_biomech_expert), " approach to \"assessing\" the cause of ", his_her(person = plaintiff), " injuries was to reject any evidence that ", he_she(person = plaintiff), " ", single_plural("was"), " injured in the first place. ", Dr_Mr_Ms_Expert_Lastname, " doesn’t consider, much less mention the fact, that there are no plausible competing causes of ", Mr_Ms_Lastname(person = plaintiff), "’s injuries occurring at the same time as the crash."))),
+            paste0("The generally accepted 3-step approach to causation described above dictates that if there are no other contemporaneous competing causes for the injury that are more likely than an investigated plausible cause of the injury, then it is the investigated cause that is the most likely cause. ", Dr_Mr_Ms_Expert_Lastname, " simply ignored ", Mr_Ms_Lastname(person = plaintiff), "’s medical history like it never happened; ", his_her(person = defense_expert), " approach to \"assessing\" the cause of ", his_her(person = plaintiff), " injuries was to reject any evidence that ", he_she(person = plaintiff), " ", single_plural("was"), " injured in the first place. ", Dr_Mr_Ms_Expert_Lastname, " doesn’t consider, much less mention the fact, that there are no plausible competing causes of ", Mr_Ms_Lastname(person = plaintiff), "’s injuries occurring at the same time as the crash."))),
         fps(),
         fps(
           ftext(
@@ -1032,7 +1032,7 @@ if (doc_info$type == "report") {
         fps(),
         fps(
           ftext(
-            paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to ", his_her(person = plaintiff), " post-crash injuries is the ", convert_date_format(crash$date), ", ", crash$pdof_text, ", impact crash."))),
+            paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to ", his_her(person = plaintiff), " post-crash injuries is the ", convert_date_format(crash$date), ", ", crash$pdof_text, " impact crash."))),
         fps(),
         fps(
           ftext(
@@ -1087,7 +1087,7 @@ if (doc_info$type == "report") {
       fps(
         ftext(
           paste0(
-            Dr_Mr_Ms_Expert_Lastname, " cited to human volunteer crash testing for ", his_her(person = defense_biomech_expert), " opinion that ", Mr_Ms_Lastname(person = plaintiff), " could not have sustained any significant injury in the subject crash. The comparison between a real-world crash and the results of volunteer crash tests as a means of assessing injury causation is a practice that has been rejected by the relevant scientific and automotive engineering community as improper and unreliable. I have written and had published a number of peer-reviewed papers as well as a book on human volunteer crash testing and can state as a certainty that it is well established in the scientific literature that human volunteer testing (mostly crash testing) is not a valid basis for any determination of injury risk, probability, or cause in real world crashes. ")), ftext(paste0("There are no crash tests that have ever been structured like the subject crash ("), prop = fp_text_italic), ftext(paste0("", crash$pdof_text, " impact of ", mdf_deltaV, " mph delta V"), prop = fp_text_bold_italic), ftext("), as it would be irresponsible to perform such a test.", prop = fp_text_italic)),
+            Dr_Mr_Ms_Expert_Lastname, " cited to human volunteer crash testing for ", his_her(person = defense_expert), " opinion that ", Mr_Ms_Lastname(person = plaintiff), " could not have sustained any significant injury in the subject crash. The comparison between a real-world crash and the results of volunteer crash tests as a means of assessing injury causation is a practice that has been rejected by the relevant scientific and automotive engineering community as improper and unreliable. I have written and had published a number of peer-reviewed papers as well as a book on human volunteer crash testing and can state as a certainty that it is well established in the scientific literature that human volunteer testing (mostly crash testing) is not a valid basis for any determination of injury risk, probability, or cause in real world crashes. ")), ftext(paste0("There are no crash tests that have ever been structured like the subject crash ("), prop = fp_text_italic), ftext(paste0("", crash$pdof_text, " impact of ", mdf_deltaV, " mph delta V"), prop = fp_text_bold_italic), ftext("), as it would be irresponsible to perform such a test.", prop = fp_text_italic)),
       fps(),
       fps(
         ftext(
@@ -1107,11 +1107,11 @@ if (doc_info$type == "report") {
       fps(),
       fps(
         ftext(
-          paste0("As mentioned earlier, the peer-reviewed authoritative automotive engineering and biomechanical literature specifically states that crash tests are not an appropriate basis for any determination of real-world injury thresholds. In 1999 I published a peer-reviewed paper in the premier journal in the world on Spine surgery at that time (")), ftext("Spine", prop = fp_text_italic), ftext(paste0("), which specifically criticized some of the volunteer crash test publications cited by ", Dr_Mr_Ms_Expert_Lastname, " in ", his_her(person = defense_biomech_expert), " report for erroneously claiming an injury threshold from such testing.")),
+          paste0("As mentioned earlier, the peer-reviewed authoritative automotive engineering and biomechanical literature specifically states that crash tests are not an appropriate basis for any determination of real-world injury thresholds. In 1999 I published a peer-reviewed paper in the premier journal in the world on Spine surgery at that time (")), ftext("Spine", prop = fp_text_italic), ftext(paste0("), which specifically criticized some of the volunteer crash test publications cited by ", Dr_Mr_Ms_Expert_Lastname, " in ", his_her(person = defense_expert), " report for erroneously claiming an injury threshold from such testing.")),
         run_footnote(x = footnotes_blocklist[35], prop = fp_text_refnote),
         ftext(
           paste0(
-            Dr_Mr_Ms_Expert_Lastname, " presents no evidence to demonstrate that the basic scientific principles described in this 23-year old publication should be violated for ", his_her(person = defense_biomech_expert), " assertions regarding the cause of ", Mr_Ms_Lastname(person = plaintiff), "’s post-collision diagnoses and need for treatment."))),
+            " ", Dr_Mr_Ms_Expert_Lastname, " presents no evidence to demonstrate that the basic scientific principles described in this 23-year old publication should be violated for ", his_her(person = defense_expert), " assertions regarding the cause of ", Mr_Ms_Lastname(person = plaintiff), "’s post-collision diagnoses and need for treatment."))),
       fps(),
       fps(
         ftext(
@@ -1200,7 +1200,7 @@ if (doc_info$type == "report") {
       fps(
         ftext(
           paste0(
-            "In ", his_her(person = defense_biomech_expert), " report, ", Dr_Mr_Ms_Expert_Lastname, " twice cited to publications on spinal disk biomechanics by a leading authority on the topic, Prof. Michael Adams. This very same author (Michael Adams PhD), in a 2012 textbook called \"The Biomechanics of Back Pain,\"")),
+            "In ", his_her(person = defense_expert), " report, ", Dr_Mr_Ms_Expert_Lastname, " twice cited to publications on spinal disk biomechanics by a leading authority on the topic, Prof. Michael Adams. This very same author (Michael Adams PhD), in a 2012 textbook called \"The Biomechanics of Back Pain,\"")),
         run_footnote(x = footnotes_blocklist[28], prop = fp_text_refnote),
         ftext(
           paste0(
@@ -1226,7 +1226,7 @@ if (doc_info$type == "report") {
       fps(),
       fps(
         ftext(
-          paste0("It is clear that ", Dr_Mr_Ms_Expert_Lastname, "’s approach to providing ", his_her(person = defense_biomech_expert), " opinions regarding ", Mr_Ms_Lastname(person = plaintiff), "’s injuries is characterized by experts that ", he_she(person = defense_biomech_expert), " deems to be authorities in the field of spinal biomechanics as a \"serious mistake.\""))))
+          paste0("It is clear that ", Dr_Mr_Ms_Expert_Lastname, "’s approach to providing ", his_her(person = defense_expert), " opinions regarding ", Mr_Ms_Lastname(person = plaintiff), "’s injuries is characterized by experts that ", he_she(person = defense_expert), " deems to be authorities in the field of spinal biomechanics as a \"serious mistake.\""))))
   }
 }
 
