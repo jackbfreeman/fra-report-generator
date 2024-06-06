@@ -952,7 +952,7 @@ if (doc_info$type == "report") {
         fps(),
         fps(
           ftext(
-            paste0("Crash severity analysis"), prop = fp_text_underline)),
+            paste0("Crash severity analysis"), prop = fp_text_italic_underline)),
         fps(),
         fps(
           ftext(

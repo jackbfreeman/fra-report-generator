@@ -1,7 +1,7 @@
 # Names of document sections
 recon_heading <- "Reconstruction"
-opinions_heading <- "Defense’s medical"
-analysis_heading <- "Crash analysis"
+opinions_heading <- "Opinions of"
+analysis_heading <- "Analysis"
 
 
 # Isolate and save Background Facts section

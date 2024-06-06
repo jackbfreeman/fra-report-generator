@@ -18,13 +18,13 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Bond recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Riley Bond.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Tucker recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Neal Tucker.docx") # can be multiple
 
 doc_info <- list(
   type = "report", # notes, report
   rebuttal = list(
-    yes_no = "no"
+    yes_no = "yes"
   ),
   short = list(
     yes_no = "no",
@@ -33,27 +33,27 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "2023CV31074" # hidden if no case
-court_name <- "District Court Jefferson County, Colorado"
-case_defendant_name <- "Ava Davis"
+case_no <- "CI 22-535" # hidden if no case
+court_name <- "District Court of Lincoln County, Nebraska"
+case_defendant_name <- "Samuel H. Perry"
 
 lawyer <- list(
-  first_name = "Tim",
-  last_name = "Galuzzi" # ignore postnominals (i.e., Jr. or II)
+  first_name = "James",
+  last_name = "Bocott" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "10/20/2022", # MM/DD/YYYY
+  date = "02/25/2021", # MM/DD/YYYY
   pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 plaintiff <- list(
-  first_name = c("Riley"),
-  last_name = c("Bond"),
+  first_name = c("Neal"),
+  last_name = c("Tucker"),
   et_al = "no", # check box for yes, default to yes
   gender = c("m"),
-  dob = c("11/13/1991"), # MM/DD/YYYY
+  dob = c("05/18/1965"), # MM/DD/YYYY
   seat_position = c("driver"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
@@ -65,9 +65,9 @@ plaintiff <- list(
 # rebuttal notes vars
 if (doc_info$rebuttal$yes_no == "yes") {
   defense_expert <- list(
-    first_name = c("Barry"),
-    last_name = c("Ogin"),
-    expert_field = c("medical") # biomechanical, medical
+    first_name = c("Joseph"),
+    last_name = c("Tremblay"),
+    expert_field = c("crash reconstruction") # biomechanical, medical, reconstruction
   )
 }
 
@@ -78,32 +78,32 @@ if (doc_info$type == "report") {
   lawyer <- c(
     lawyer,
     gender = "m",
-    firm_name = "Cheney Galluzzi & Howard, LLC",
-    address = "2701 Lawrence Street, Ste 201",
-    city = "Denver",
-    state = "Colorado",
-    zip = "80205",
-    phone = "3032099395"
+    firm_name = "Law Office of James C. Bocott",
+    address = "315 N. Dewey St., Suite 213",
+    city = "North Platte",
+    state = "Nebraska",
+    zip = "69101",
+    phone = "3086963118"
   )
   
   plaintiff <- c(
     plaintiff,
-    weight = "170", # pounds
-    car_make = "Ford",
-    car_model = "Focus",
-    car_year = "2007",
+    weight = "280", # pounds
+    car_make = "Kenworth",
+    car_model = "T600",
+    car_year = "2006",
     if (plaintiff$injury_location == "shoulder") {
       dx_dr = c("Dr. Doctor") # doctor who diagnosed SLAP lesion
     }
   )
   
   defendant <- list(
-    first_name = "Ava",
-    last_name = "Davis"
+    first_name = "Samuel",
+    last_name = "Perry"
   )
   
-  mdf_deltaV <- "12.9" # mph
-  mdf_accel <- "9.4" # g
+  mdf_deltaV <- "5.6" # mph
+  mdf_accel <- "2.3" # g
   
   # rebuttal report specific vars
   if (doc_info$rebuttal$yes_no == "yes") {
@@ -111,16 +111,16 @@ if (doc_info$type == "report") {
     # rebuttal-specific vars
     defense_expert <- c(
       defense_expert,
-      title = c("Dr."), # Dr. Mr. Ms.
+      title = c("Mr."), # Dr. Mr. Ms.
       gender = c("m"),
-      firm = c("Colorado Rehabilitation & Occupational Medicine"), # multiple choice or Other
+      firm = c("Veritech Consulting Engineering"), # multiple choice or Other
       depo_reviewed = "no", # default no
       depo_date = c("01/01/2021"), # MM/DD/YYYY
-      deltaV = "XXX", # mph
+      deltaV = "3", # mph
       acceleration = "XXX", # g
-      report_citations_number = "",
-      report_pages_number = c("XXX"),
-      report_date = c("05/03/2024"),
+      report_citations_number = c("XXX"),
+      report_pages_number = c("9"),
+      report_date = c("09/25/2023"),
       mdf_agree = c("no") # default no
     )
     
