@@ -18,13 +18,13 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Tucker recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Neal Tucker.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/De Leon recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Steven De Leon.docx") # can be multiple
 
 doc_info <- list(
-  type = "report", # notes, report
+  type = "notes", # notes, report
   rebuttal = list(
-    yes_no = "yes"
+    yes_no = "no"
   ),
   short = list(
     yes_no = "no",
@@ -33,29 +33,29 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "CI 22-535" # hidden if no case
-court_name <- "District Court of Lincoln County, Nebraska"
-case_defendant_name <- "Samuel H. Perry"
+case_no <- "22-CA-010277" # hidden if no case
+court_name <- "Circuit Court of the Thirteenth Judicial Circuit in and for Hillsborough County, Florida"
+case_defendant_name <- "Edward Diaz and Suncoast Millwork, LLC"
 
 lawyer <- list(
-  first_name = "James",
-  last_name = "Bocott" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Stephen",
+  last_name = "Barnes" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "02/25/2021", # MM/DD/YYYY
-  pdof = "rear", # frontal, rear, near-side, far-side, rollover
+  date = "03/02/2022", # MM/DD/YYYY
+  pdof = "side", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 plaintiff <- list(
-  first_name = c("Neal"),
-  last_name = c("Tucker"),
+  first_name = c("Steven"),
+  last_name = c("De Leon"),
   et_al = "no", # check box for yes, default to yes
   gender = c("m"),
-  dob = c("05/18/1965"), # MM/DD/YYYY
+  dob = c("06/04/1980"), # MM/DD/YYYY
   seat_position = c("driver"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
-  injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
+  injury_location = "amputation disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
 
