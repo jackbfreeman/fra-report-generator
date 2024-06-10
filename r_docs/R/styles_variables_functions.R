@@ -18,13 +18,13 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/De Leon recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Steven De Leon.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Lema recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Luz Lema.docx") # can be multiple
 
 doc_info <- list(
   type = "notes", # notes, report
   rebuttal = list(
-    yes_no = "no"
+    yes_no = "yes"
   ),
   short = list(
     yes_no = "no",
@@ -33,29 +33,29 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "22-CA-010277" # hidden if no case
+case_no <- "23-CA-001727" # hidden if no case
 court_name <- "Circuit Court of the Thirteenth Judicial Circuit in and for Hillsborough County, Florida"
-case_defendant_name <- "Edward Diaz and Suncoast Millwork, LLC"
+case_defendant_name <- "Yezen N. Karadsheh and Geico Casualty Company"
 
 lawyer <- list(
-  first_name = "Stephen",
-  last_name = "Barnes" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Adam",
+  last_name = "Rieth" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "03/02/2022", # MM/DD/YYYY
-  pdof = "side", # frontal, rear, near-side, far-side, rollover
+  date = "01/15/2022", # MM/DD/YYYY
+  pdof = "near-side", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 plaintiff <- list(
-  first_name = c("Steven"),
-  last_name = c("De Leon"),
+  first_name = c("Luz"),
+  last_name = c("Lema"),
   et_al = "no", # check box for yes, default to yes
-  gender = c("m"),
-  dob = c("06/04/1980"), # MM/DD/YYYY
+  gender = c("f"),
+  dob = c("03/17/1962"), # MM/DD/YYYY
   seat_position = c("driver"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
-  injury_location = "amputation disk" # disk, shoulder, spine (rollover), seatbelt efficacy
+  injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
 
@@ -65,9 +65,9 @@ plaintiff <- list(
 # rebuttal notes vars
 if (doc_info$rebuttal$yes_no == "yes") {
   defense_expert <- list(
-    first_name = c("Joseph"),
-    last_name = c("Tremblay"),
-    expert_field = c("crash reconstruction") # biomechanical, medical, reconstruction
+    first_name = c("Ashvin"),
+    last_name = c("Patel"),
+    expert_field = c("medical") # biomechanical, medical, reconstruction
   )
 }
 
@@ -186,7 +186,10 @@ final_doc_name <-
     )  
   }
 
-
+final_doc_path <- file.path("reports", paste0(final_doc_name))
+if (file.exists(paste0(final_doc_path, ".docx")) == TRUE) {
+  final_doc_path <- paste(final_doc_path, format(Sys.time(), "%H:%M:%S"))
+}
 
 # pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
 
@@ -473,10 +476,37 @@ if (doc_info$type == "report") {
   
   nth_decade <- paste0(ifelse(plaintiff$age[1]%%10 >5, "late ", "early "), toOrdinal(floor((plaintiff$age[1]/10)+1)), " decade")
   
-  asymptomatic_moderate <- if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate")
+  degeneration_level <- if (plaintiff$age[1] < 30) paste0("asymptomatic") else if (plaintiff$age[1] > 50) paste0("moderate to advanced") else paste0("at least moderate")
   
   if (doc_info$rebuttal$yes_no == "yes") {
     Dr_Mr_Ms_Expert_Lastname <- paste(defense_expert$title, defense_expert$last_name)
   }
+  
+  
+  
+  mais1_probability_all <- function(mais_deltaV) {
+    (exp(- 1.8199+0.0671 * mais_deltaV)) / (1+exp(- 1.8199+0.0671 * mais_deltaV))
+  }
+  
+  mais2_probability_all <- function(mais_deltaV) {
+    (exp(- 6.1818+0.1482 * mais_deltaV)) / (1+exp(- 6.1818+0.1482 * mais_deltaV))
+  }
+  
+  mais3_probability_all <- function(mais_deltaV) {
+    (exp(- 8.0329+0.1793 * mais_deltaV)) / (1+exp(- 8.0329+0.1793 * mais_deltaV))
+  }
+  
+  mais4_probability_all <- function(mais_deltaV) {
+    (exp(- 11.8787+0.2210 * mais_deltaV)) / (1+exp(- 11.8787+0.2210 * mais_deltaV))
+  }
+  
+  mais5_probability_all <- function(mais_deltaV) {
+    (exp(- 12.1944+0.2276 * mais_deltaV)) / (1+exp(- 12.1944+0.2276 * mais_deltaV))
+  }
+  
+  mais_fatality_probability_all <- function(mais_deltaV) {
+    (exp(- 12.1982+0.2255 * mais_deltaV)) / (1+exp(- 12.1982+0.2255 * mais_deltaV))
+  }
+  
 }
 

@@ -359,12 +359,12 @@ if (doc_info$type == "report") {
       fps(),
       fps(
         ftext(
-          "I am an associate editor of the Journal of Forensic and Legal Medicine and serve or have served as an associate editor or editorial board member of 14 additional scientific peer-reviewed journals. I have published approximately 230 scientific papers, abstracts, book chapters and books on topics that include traffic crash injuries, crash reconstruction, injury causation and injury biomechanics, including the text for Elsevier, Forensic Epidemiology: Principles and Practice (2016). My publications have been cited by other authors more than 4,700 times."
+          "I am an associate editor of the Journal of Forensic and Legal Medicine and serve or have served as an associate editor or editorial board member of 14 additional scientific peer-reviewed journals. I have published approximately 230 scientific papers, abstracts, book chapters and books on topics that include traffic crash injuries, crash reconstruction, injury causation and injury biomechanics, including the text for Elsevier, Forensic Epidemiology: Principles and Practice (2016). My publications have been cited by other authors more than 4,900 times."
         )),
       fps(),
       fps(
         ftext(
-          "I have provided testimony in more than 400 civil and criminal trials in state and Federal courts throughout the United States, Canada, and Australia. Please see my CV for further details."
+          "I have provided testimony in more than 450 civil and criminal trials in state and Federal courts throughout the United States, Canada, and Australia. Please see my CV for further details."
         ),
         run_pagebreak()
       )
@@ -600,15 +600,16 @@ if (doc_info$type == "report") {
           fps(),
           fps(
             ftext(
-              paste0("The most reliable and largest set of published data on occupant forces in rear impacts indicate that, for a ", plaintiff$age[1], "-year-old ", if(plaintiff$gender[1] == "m") paste0("male") else if (plaintiff$gender[1] == "f") paste0("female") else (paste0("person")), " the average peak head acceleration of a ", mdf_deltaV, "-mph rear impact delta V would be around ", mdf_accel, " g, which would translate to a peak cervical spinal disk load of around ")),
-            # change, see where this number comes from
-            ftext("100", prop = fp_text_lite(bold = TRUE)),
-            ftext(
-              paste0(" lbs. on ", his_her(person = plaintiff), " ", single_plural("neck"), ".  The same data indicate a load of around ", mdf_accel, " g on ", his_her(person = plaintiff), " low ", single_plural("back"), ", which would translate to a peak load of around ")),
-            # change, see where this number comes from
-            ftext("360", prop = fp_text_lite(bold = TRUE)),
-            ftext(
-              paste0(" lbs. on ", his_her(person = plaintiff), " lumbar spinal ", single_plural("disk"), ". These loads are more than sufficient to cause a wide range of musculoligamentous and skeletal injuries, including injuries to the intervertebral disks of the low back and neck. In the general population, the risk of a symptomatic cervical disk in a rear impact crash like the subject collision is represented in the chart below:"))),
+              paste0("The National Highway Traffic Safety Administration (NHTSA) has published injury risk curves for rear impact crashes, demonstrating a rate of minor or greater “MAIS 1+” (Maximum Abbreviated Injury Scale injury severity grade of 1 or more) injuries, nearly all requiring an emergency department visit, of ", round(
+                mais1_probability_all(mdf_deltaV)*100, 
+                digits = ifelse(
+                  mais1_probability_all(mdf_deltaV) < .1, 1, 0)), 
+                "% for a ", mdf_deltaV, " mph delta V rear impact collision (see the blue arrow in the chart below).  Approximately 94% of spinal disk injuries would be included in this category of injuries, as this is the rate at which disk injuries are initially diagnosed as strains (i.e., MAIS 1 [minor injuries]) in the emergency department in the first day or 2 after a crash, which is the source of the NHTSA data.  There is also an approximately ", 
+                round(
+                  mais2_probability_all(mdf_deltaV)*100, 
+                  digits = ifelse(
+                    mais2_probability_all(mdf_deltaV) < .1, 1, 0)), 
+                "% chance of an immediately apparent more serious injury, including fracture, organ injury, or intracranial bleeding, etc. in a moderate speed rear impact crash of the same severity (see the red arrow in the chart below)."))),
           fps(),
           fps(
             ext_img(src = file.path(imgpath, "biomech", "delta_V_binomial.png"), width = 4.2), style = "Subtitle"),
@@ -620,7 +621,15 @@ if (doc_info$type == "report") {
           fps(
             ftext(
               paste0(
-                "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(person = plaintiff, number = 1), " (who was ", plaintiff$age[1], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(person = plaintiff), "’s imaging more likely to be a combination of post-traumatic overlaying degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
+                "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " diagnosed with (primarily chronically symptomatic disk derangements) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(person = plaintiff, number = 1), " (who was ", plaintiff$age[1], " at the time of the crash) ",
+              ifelse(plaintiff$age[1] < 30,
+                     paste0("may or may not have mild"),
+                     paste0("typically have ", degeneration_level, " age-related")),
+              " degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(person = plaintiff), "’s imaging reasonably a combination of post-traumatic overlaying ", 
+              ifelse(plaintiff$age[1] < 30,
+                     paste0("some degree of mild "),
+                     paste0("")),
+              "degeneration, as opposed to solely due to either trauma or pre-existing degeneration."))),
           fps(),
           fps(
             ftext(
@@ -726,7 +735,7 @@ if (doc_info$type == "report") {
           fps(
             ftext(
               paste0(
-                "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " diagnosed with (primarily symptomatic disk derangements in the neck and middle back) are highly consistent with the injury mechanism of the crash as well. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, " like ", Mr_Ms_Lastname(person = plaintiff, number = 1), " typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a factor that increases the risk of injury in the event of the crash like the subject rear impact. "
+                "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " diagnosed with (primarily symptomatic disk derangements in the neck and middle back) are highly consistent with the injury mechanism of the crash as well. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, " like ", Mr_Ms_Lastname(person = plaintiff, number = 1), " typically have ", degeneration_level, " age-related degenerative changes of the disks of the spine, a factor that increases the risk of injury in the event of the crash like the subject rear impact. "
               ))),
           fps(),
           fps(
@@ -796,7 +805,7 @@ if (doc_info$type == "report") {
           fps(
             ftext(
               paste0(
-                "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " diagnosed with (primarily symptomatic disk derangements and associated sequelae) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(person = plaintiff), " (who was ", plaintiff$age[[1]], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the collision more likely to have \"converted\" at least some asymptomatic disk degeneration to a symptomatic state, rather than being the sole cause of all of the pathology identified in the post-crash imaging."))),
+                "The types of spinal injuries that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " diagnosed with (primarily symptomatic disk derangements and associated sequelae) are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(person = plaintiff), " (who was ", plaintiff$age[[1]], " at the time of the crash) typically have ", degeneration_level, " age-related degenerative changes of the disks of the spine, a fact that makes the collision more likely to have \"converted\" at least some asymptomatic disk degeneration to a symptomatic state, rather than being the sole cause of all of the pathology identified in the post-crash imaging."))),
           fps(),
           fps(
             ftext(
@@ -851,7 +860,7 @@ if (doc_info$type == "report") {
           fps(
             ftext(
               paste0(
-                "The types of spine and extremity injuries that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " diagnosed with are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(person = plaintiff, number = 1), " (who was ", plaintiff$age[[1]], " at the time of the crash) typically have ", asymptomatic_moderate, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(person = plaintiff), "’s imaging more likely due to a combination of the trauma of the crash, and some degree of pre-existing degeneration. The same principles apply to ", Mr_Ms_Lastname(person = plaintiff), "’s left shoulder injury; ", plaintiff$age[[1]], "-year-old ", men_women, " typically have some degenerative changes in the joints and rotator cuff of the shoulder, but the frank tear and other injuries observed in ", Mr_Ms_Lastname(person = plaintiff), "’s MRI and during the arthroscopic procedure performed on ", his_her(person = plaintiff), " left shoulder are likely a result of the acute trauma of the subject collision, rather than purely a pre-existing asymptomatic condition that was converted to symptomatic by the crash."))),
+                "The types of spine and extremity injuries that ", Mr_Ms_Lastname(person = plaintiff), " ", conjugate("was"), " diagnosed with are highly consistent with the injury mechanism of the crash. Traumatic loading of the spine that results in axial (up and down) compression, particularly in combination with the other load types occurring with the subject collision, has the potential to damage the peripheral disk annulus, which surrounds and holds in the disk nucleus. ", Men_Women, " in their ", nth_decade, ", like ", Mr_Ms_Lastname(person = plaintiff, number = 1), " (who was ", plaintiff$age[[1]], " at the time of the crash) typically have ", degeneration_level, " age-related degenerative changes of the disks of the spine, a fact that makes the post-crash findings in ", Mr_Ms_Lastname(person = plaintiff), "’s imaging more likely due to a combination of the trauma of the crash, and some degree of pre-existing degeneration. The same principles apply to ", Mr_Ms_Lastname(person = plaintiff), "’s left shoulder injury; ", plaintiff$age[[1]], "-year-old ", men_women, " typically have some degenerative changes in the joints and rotator cuff of the shoulder, but the frank tear and other injuries observed in ", Mr_Ms_Lastname(person = plaintiff), "’s MRI and during the arthroscopic procedure performed on ", his_her(person = plaintiff), " left shoulder are likely a result of the acute trauma of the subject collision, rather than purely a pre-existing asymptomatic condition that was converted to symptomatic by the crash."))),
           fps(
             ftext(
               paste0("It is well established in science and medicine that an excessive level of force is not required to cause symptomatic injury to a degenerated disk, and that in most cases, the diagnostic imaging of the disk will not reveal whether related symptoms are of a traumatic origin or not, in the absence of fracture.  Traumatic disk injuries have been described in the peer-reviewed literature as resulting from low to moderate force events, including minimal or no damage traffic crashes, roller coaster rides, and even more mild forces such as sneezing.")),
@@ -1014,7 +1023,7 @@ if (doc_info$type == "report") {
         fps(
           ftext(
             paste0(
-              Mr_Ms_Lastname(person = plaintiff, number = 1), " experienced the onset of symptoms indicative of acute spinal injury immediately after the crash, and ", he_she(person = plaintiff), " ", conjugate("was"), " diagnosed with neck and back injuries directly by 3 days following the crash, including the presentation of lower extremity radicular symptoms, an ominous early sign of injury to the intervertebral disks in the spine. The symptoms and diagnoses progressively evolved and worsened over the weeks and months following the crash and demonstrate a well-documented contiguous chain of causation linking the subject crash and their low back and cervical spinal injuries, and associated need for treatment."))),
+              Mr_Ms_Lastname(person = plaintiff, number = 1), " experienced the onset of symptoms indicative of acute spinal injury immediately after the crash, and ", he_she(person = plaintiff), " ", conjugate("was"), " diagnosed with neck and back injuries directly by 3 days following the crash, including the presentation of lower extremity radicular symptoms, an ominous early sign of injury to the intervertebral disks in the spine. The symptoms and diagnoses progressively evolved and worsened over the weeks and months following the crash and demonstrate a well-documented contiguous chain of causation linking the subject crash and ", Mr_Ms_Lastname(person = plaintiff), "'s diagnosed low back and cervical spinal injuries, and associated need for treatment."))),
         fps(),
         fps(
           ftext(
@@ -1032,7 +1041,7 @@ if (doc_info$type == "report") {
         fps(),
         fps(
           ftext(
-            paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to ", his_her(person = plaintiff), " post-crash injuries is the ", convert_date_format(crash$date), ", ", crash$pdof_text, " impact crash."))),
+            paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to ", his_her(person = plaintiff), " post-crash injuries is the ", convert_date_format(crash$date), ", ", moder, " ", crash$pdof_text, " impact crash."))),
         fps(),
         fps(
           ftext(
@@ -1041,7 +1050,7 @@ if (doc_info$type == "report") {
           run_footnote(x = footnotes_blocklist[31], prop = fp_text_refnote),
           ftext(
             paste0(
-              " The chance that they were going to develop the onset of chronic neck or low back pain attributable to symptomatic disk derangements on the same day as the crash by pure coincidence is obviously much smaller; less than 1 in 730,000 (the annual risk divided by 365 days). In comparison the risk of acute spine injury in the subject crash was more than 50%, and the risk of a spinal disk injury was likely no less than 1 in 25 in the general population.")),
+              " The chance that ", he_she(person = plaintiff), conjugate("was"), " going to develop the onset of chronic neck or low back pain attributable to symptomatic disk derangements on the same day as the crash by pure coincidence is obviously much smaller; less than 1 in 730,000 (the annual risk divided by 365 days). In comparison the risk of any acute spine injury in the subject crash was likely more than 50%, and the risk of a spinal disk injury was likely no less than 1 in 25 in the general population.")),
           run_footnote(x = footnotes_blocklist[24], prop = fp_text_refnote),
           ftext(
             paste0(

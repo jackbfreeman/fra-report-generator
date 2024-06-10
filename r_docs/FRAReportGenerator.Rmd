@@ -104,11 +104,14 @@ doc %>%
   body_remove() %>%
   block_add_fps_fun(final_build) %>%
   #block_add_fps_fun(heading) %>%
-  print(target = paste0(final_doc_name, ".docx"))
+  print(target = paste0(final_doc_path, ".docx"))
+
+# open newly created document
+system(paste0("open \"", as.character(final_doc_path), ".docx", "\""))
 ```
 
 ```{r long dataframe from variables, eval=FALSE}
-# Create Plaintiff DataFrame (Long Form)
+# Create Plaintiff Dataframe (Long Form)
 plaintiff_df <- data.frame(
   case_no = rep(case_no, length(plaintiff$first_name)),
   first_name = plaintiff$first_name,

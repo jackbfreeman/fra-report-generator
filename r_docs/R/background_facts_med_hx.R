@@ -1,7 +1,7 @@
 # Names of document sections
 recon_heading <- "Reconstruction"
 opinions_heading <- "Opinions of"
-analysis_heading <- "Analysis"
+analysis_heading <- "Crash Analysis"
 
 
 # Isolate and save Background Facts section
@@ -16,7 +16,7 @@ after_bkgrd_point <- doc_split_bkgrd$officer_cursor$which
 doc_split_bkgrd <- cursor_backward(doc_split_bkgrd)
 
 # Create loop to delete amount of objects after background facts segment
-for (i in after_bkgrd_point:length(doc_split_bkgrd$officer_cursor$nodes_names)) {
+for (i in after_bkgrd_point:(length(doc_split_bkgrd$officer_cursor$nodes_names) + 1)) {
   doc_split_bkgrd <- body_remove(doc_split_bkgrd)
 }
 
@@ -49,7 +49,7 @@ after_recon_point <- doc_split_recon$officer_cursor$which
 doc_split_recon <- cursor_backward(doc_split_recon)
 
 # Create loop to delete amount of objects after reconstruction section
-for (i in after_recon_point:length(doc_split_recon$officer_cursor$nodes_names) + 1) {
+for (i in after_recon_point:(length(doc_split_recon$officer_cursor$nodes_names) + 1)) {
   doc_split_recon <- body_remove(doc_split_recon)
 }
 
@@ -93,7 +93,7 @@ if (doc_info$rebuttal$yes_no == "yes") {
   doc_split_opinions <- cursor_backward(doc_split_opinions)
   
   # Create loop to delete amount of objects after reconstruction section
-  for (i in analysis_point:length(doc_split_opinions$officer_cursor$nodes_names) + 1) {
+  for (i in analysis_point:(length(doc_split_opinions$officer_cursor$nodes_names) + 1)) {
     doc_split_opinions <- body_remove(doc_split_opinions)
   }
   
@@ -208,6 +208,7 @@ if (doc_info$type == "notes") {
     background_facts <- c(
       background_facts,
       list(
+        fps(),
         block_pour_docx(opinions_new_path),
         fps(),
         fps(
@@ -228,6 +229,12 @@ if (doc_info$type == "notes") {
         block_pour_docx(background_facts_new_path),
         fps()
       ),
+      list(
+        fps(
+          ftext(
+            "At the time of the crash, "
+          )
+        )),
       med_hx_build_list
     )
     # short rebuttal
@@ -238,6 +245,12 @@ if (doc_info$type == "notes") {
         block_pour_docx(background_facts_new_path),
         fps()
       ),
+      list(
+        fps(
+          ftext(
+            "At the time of the crash, "
+          )
+        )),
       med_hx_build_list
     )
   }
