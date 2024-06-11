@@ -484,28 +484,36 @@ if (doc_info$type == "report") {
   
   
   
-  mais1_probability_all <- function(mais_deltaV) {
+  mais1_probability_rear <- function(mais_deltaV) {
     (exp(- 1.8199+0.0671 * mais_deltaV)) / (1+exp(- 1.8199+0.0671 * mais_deltaV))
   }
   
-  mais2_probability_all <- function(mais_deltaV) {
+  mais2_probability_rear <- function(mais_deltaV) {
     (exp(- 6.1818+0.1482 * mais_deltaV)) / (1+exp(- 6.1818+0.1482 * mais_deltaV))
   }
   
-  mais3_probability_all <- function(mais_deltaV) {
+  mais3_probability_rear <- function(mais_deltaV) {
     (exp(- 8.0329+0.1793 * mais_deltaV)) / (1+exp(- 8.0329+0.1793 * mais_deltaV))
   }
   
-  mais4_probability_all <- function(mais_deltaV) {
+  mais4_probability_rear <- function(mais_deltaV) {
     (exp(- 11.8787+0.2210 * mais_deltaV)) / (1+exp(- 11.8787+0.2210 * mais_deltaV))
   }
   
-  mais5_probability_all <- function(mais_deltaV) {
+  mais5_probability_rear <- function(mais_deltaV) {
     (exp(- 12.1944+0.2276 * mais_deltaV)) / (1+exp(- 12.1944+0.2276 * mais_deltaV))
   }
   
-  mais_fatality_probability_all <- function(mais_deltaV) {
+  mais_fatality_probability_rear <- function(mais_deltaV) {
     (exp(- 12.1982+0.2255 * mais_deltaV)) / (1+exp(- 12.1982+0.2255 * mais_deltaV))
+  }
+  
+  if (mdf_deltaV < 7) {
+    crash_speed_low_moderate_high <- "low"
+  } else if (mdf_deltaV > 25) {
+    crash_speed_low_moderate_high <- "high"
+  } else {
+    crash_speed_low_moderate_high <- "moderate"
   }
   
 }

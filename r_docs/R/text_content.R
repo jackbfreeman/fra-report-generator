@@ -601,15 +601,15 @@ if (doc_info$type == "report") {
           fps(
             ftext(
               paste0("The National Highway Traffic Safety Administration (NHTSA) has published injury risk curves for rear impact crashes, demonstrating a rate of minor or greater “MAIS 1+” (Maximum Abbreviated Injury Scale injury severity grade of 1 or more) injuries, nearly all requiring an emergency department visit, of ", round(
-                mais1_probability_all(mdf_deltaV)*100, 
+                mais1_probability_rear(mdf_deltaV)*100, 
                 digits = ifelse(
-                  mais1_probability_all(mdf_deltaV) < .1, 1, 0)), 
+                  mais1_probability_rear(mdf_deltaV) < .1, 1, 0)), 
                 "% for a ", mdf_deltaV, " mph delta V rear impact collision (see the blue arrow in the chart below).  Approximately 94% of spinal disk injuries would be included in this category of injuries, as this is the rate at which disk injuries are initially diagnosed as strains (i.e., MAIS 1 [minor injuries]) in the emergency department in the first day or 2 after a crash, which is the source of the NHTSA data.  There is also an approximately ", 
                 round(
                   mais2_probability_all(mdf_deltaV)*100, 
                   digits = ifelse(
                     mais2_probability_all(mdf_deltaV) < .1, 1, 0)), 
-                "% chance of an immediately apparent more serious injury, including fracture, organ injury, or intracranial bleeding, etc. in a moderate speed rear impact crash of the same severity (see the red arrow in the chart below)."))),
+                "% chance of an immediately apparent more serious injury, including fracture, organ injury, or intracranial bleeding, etc. in a ", crash_speed_low_moderate_high, " speed rear impact crash of the same severity (see the red arrow in the chart below)."))),
           fps(),
           fps(
             ext_img(src = file.path(imgpath, "biomech", "delta_V_binomial.png"), width = 4.2), style = "Subtitle"),
@@ -1041,7 +1041,7 @@ if (doc_info$type == "report") {
         fps(),
         fps(
           ftext(
-            paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to ", his_her(person = plaintiff), " post-crash injuries is the ", convert_date_format(crash$date), ", ", moder, " ", crash$pdof_text, " impact crash."))),
+            paste0("This part of the analysis is accomplished in 2 ways; first and most obviously, any competing contemporaneous traumatic cause of injury must be ruled out. There is, however, no such history for ", Mr_Ms_Lastname(conjunction = "or"), ", and the only source of trauma apparent in my review of materials that is temporally proximate to ", his_her(person = plaintiff), " post-crash injuries is the ", convert_date_format(crash$date), ", ", crash_speed_low_moderate_high, " speed ", crash$pdof_text, " impact crash."))),
         fps(),
         fps(
           ftext(
@@ -1254,7 +1254,7 @@ if (doc_info$type == "report") {
     fps(
       ftext(
         paste0(
-          "Given the contiguous chain of causation from the day of the crash through ", Mr_Ms_Lastname(person = plaintiff), "’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in ", Mr_Ms_Lastname(person = plaintiff), "’s medical records and summarized in this report, including ", his_her(person = plaintiff), " symptomatic cervical and lumbar disk derangements, is the subject ", convert_date_format(crash$date), ", ", crash$pdof_text, " impact crash."
+          "Given the contiguous chain of causation from the day of the crash through ", Mr_Ms_Lastname(person = plaintiff), "’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in ", Mr_Ms_Lastname(person = plaintiff), "’s medical records and summarized in this report, including ", his_her(person = plaintiff), " symptomatic cervical and lumbar disk derangements, is the subject ", convert_date_format(crash$date), ", ", crash_speed_low_moderate_high, " speed ", crash$pdof_text, " impact crash."
         ))))
 }
 
