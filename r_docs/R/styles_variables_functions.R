@@ -18,13 +18,13 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Lema recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Luz Lema.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Gonzalez,E recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Egda Gonzalez.docx") # can be multiple
 
 doc_info <- list(
   type = "notes", # notes, report
   rebuttal = list(
-    yes_no = "yes"
+    yes_no = "no"
   ),
   short = list(
     yes_no = "no",
@@ -33,28 +33,28 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "23-CA-001727" # hidden if no case
-court_name <- "Circuit Court of the Thirteenth Judicial Circuit in and for Hillsborough County, Florida"
-case_defendant_name <- "Yezen N. Karadsheh and Geico Casualty Company"
+case_no <- "2022CA001906" # hidden if no case
+court_name <- "Circuit Court of the 18th Judicial Circuit in and for Seminole County, Florida"
+case_defendant_name <- "Joshua Saulgozis and State Farm Mutual Automobile Insurance Company"
 
 lawyer <- list(
-  first_name = "Adam",
-  last_name = "Rieth" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Jeremy",
+  last_name = "Skinner" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "01/15/2022", # MM/DD/YYYY
-  pdof = "near-side", # frontal, rear, near-side, far-side, rollover
+  date = "06/26/2021", # MM/DD/YYYY
+  pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 plaintiff <- list(
-  first_name = c("Luz"),
-  last_name = c("Lema"),
+  first_name = c("Edga"),
+  last_name = c("Gonzalez"),
   et_al = "no", # check box for yes, default to yes
   gender = c("f"),
-  dob = c("03/17/1962"), # MM/DD/YYYY
-  seat_position = c("driver"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
+  dob = c("02/06/1956"), # MM/DD/YYYY
+  seat_position = c("front passenger"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
@@ -65,9 +65,9 @@ plaintiff <- list(
 # rebuttal notes vars
 if (doc_info$rebuttal$yes_no == "yes") {
   defense_expert <- list(
-    first_name = c("Ashvin"),
-    last_name = c("Patel"),
-    expert_field = c("medical") # biomechanical, medical, reconstruction
+    first_name = c("Ying"),
+    last_name = c("Lu"),
+    expert_field = c("biomechanical") # biomechanical, medical, reconstruction
   )
 }
 
@@ -78,32 +78,32 @@ if (doc_info$type == "report") {
   lawyer <- c(
     lawyer,
     gender = "m",
-    firm_name = "Law Office of James C. Bocott",
-    address = "315 N. Dewey St., Suite 213",
-    city = "North Platte",
-    state = "Nebraska",
-    zip = "69101",
-    phone = "3086963118"
+    firm_name = "Barnes Trial Group",
+    address = "1104 N Howard Ave.",
+    city = "Tampa",
+    state = "Florida",
+    zip = "33607",
+    phone = "8132510777"
   )
   
   plaintiff <- c(
     plaintiff,
     weight = "280", # pounds
-    car_make = "Kenworth",
-    car_model = "T600",
-    car_year = "2006",
+    car_make = "Harley Davidson",
+    car_model = "FLTRX",
+    car_year = "2012",
     if (plaintiff$injury_location == "shoulder") {
       dx_dr = c("Dr. Doctor") # doctor who diagnosed SLAP lesion
     }
   )
   
   defendant <- list(
-    first_name = "Samuel",
-    last_name = "Perry"
+    first_name = "Richard",
+    last_name = "Jacoby"
   )
   
-  mdf_deltaV <- "5.6" # mph
-  mdf_accel <- "2.3" # g
+  mdf_deltaV <- "5.8" # mph
+  mdf_accel <- "4.3" # g
   
   # rebuttal report specific vars
   if (doc_info$rebuttal$yes_no == "yes") {
@@ -111,16 +111,16 @@ if (doc_info$type == "report") {
     # rebuttal-specific vars
     defense_expert <- c(
       defense_expert,
-      title = c("Mr."), # Dr. Mr. Ms.
-      gender = c("m"),
-      firm = c("Veritech Consulting Engineering"), # multiple choice or Other
-      depo_reviewed = "no", # default no
-      depo_date = c("01/01/2021"), # MM/DD/YYYY
-      deltaV = "3", # mph
-      acceleration = "XXX", # g
-      report_citations_number = c("XXX"),
-      report_pages_number = c("9"),
-      report_date = c("09/25/2023"),
+      title = c("Dr."), # Dr. Mr. Ms.
+      gender = c("f"),
+      firm = c("J.S. Held"), # multiple choice or Other
+      depo_reviewed = "yes", # default no
+      depo_date = c("04/17/2024"), # MM/DD/YYYY
+      deltaV = "2.8", # mph
+      acceleration = "3.8", # g
+      report_citations_number = c("deposition"),
+      report_pages_number = c("deposition"),
+      report_date = c("deposition"),
       mdf_agree = c("no") # default no
     )
     

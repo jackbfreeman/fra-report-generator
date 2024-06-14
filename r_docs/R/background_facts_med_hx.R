@@ -1,7 +1,7 @@
 # Names of document sections
 recon_heading <- "Reconstruction"
 opinions_heading <- "Opinions of"
-analysis_heading <- "Crash Analysis"
+analysis_heading <- "Analysis"
 
 
 # Isolate and save Background Facts section
@@ -210,13 +210,6 @@ if (doc_info$type == "notes") {
       list(
         fps(),
         block_pour_docx(opinions_new_path),
-        fps(),
-        fps(
-          ftext(
-            "Crash Analysis:",
-            prop = fp_text_italic_underline
-          )),
-        block_pour_docx(analysis_new_path),
         fps()
       )
     )
@@ -254,4 +247,19 @@ if (doc_info$type == "notes") {
       med_hx_build_list
     )
   }
+}
+
+# add analysis to end of notes
+if (doc_info$type == "notes") {
+  background_facts <- c(
+    background_facts,
+    list(
+      fps(),
+      fps(
+        ftext(
+          "Crash Analysis:",
+          prop = fp_text_italic_underline
+        )),
+      block_pour_docx(analysis_new_path))
+  )
 }
