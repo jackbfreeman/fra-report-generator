@@ -18,11 +18,11 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Gonzalez,E recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Egda Gonzalez.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Brown,A recon & crash summary +rebuttal_Manuel depo added_240605.docx"
+med_hx_file_name <- c("~/Downloads/Anthony Brown.docx", "~/Downloads/Denise Jones.docx") # can be multiple
 
 doc_info <- list(
-  type = "notes", # notes, report
+  type = "report", # notes, report
   rebuttal = list(
     yes_no = "no"
   ),
@@ -33,28 +33,28 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "2022CA001906" # hidden if no case
-court_name <- "Circuit Court of the 18th Judicial Circuit in and for Seminole County, Florida"
-case_defendant_name <- "Joshua Saulgozis and State Farm Mutual Automobile Insurance Company"
+case_no <- "2002 L 005325" # hidden if no case
+court_name <- "Circuit Court of Cook County, Illinois"
+case_defendant_name <- "NIRCRC d/b/a METRA"
 
 lawyer <- list(
-  first_name = "Jeremy",
-  last_name = "Skinner" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Bradley",
+  last_name = "Barker" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "06/26/2021", # MM/DD/YYYY
-  pdof = "rear", # frontal, rear, near-side, far-side, rollover
+  date = "10/12/2020", # MM/DD/YYYY
+  pdof = "side train", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 plaintiff <- list(
-  first_name = c("Edga"),
-  last_name = c("Gonzalez"),
+  first_name = c("Anthony"),
+  last_name = c("Brown"),
   et_al = "no", # check box for yes, default to yes
-  gender = c("f"),
-  dob = c("02/06/1956"), # MM/DD/YYYY
-  seat_position = c("front passenger"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
+  gender = c("m"),
+  dob = c("06/03/1969"), # MM/DD/YYYY
+  seat_position = c("engineer"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
@@ -66,7 +66,7 @@ plaintiff <- list(
 if (doc_info$rebuttal$yes_no == "yes") {
   defense_expert <- list(
     first_name = c("Ying"),
-    last_name = c("Lu"),
+    last_name = c("Manuel"),
     expert_field = c("biomechanical") # biomechanical, medical, reconstruction
   )
 }
@@ -186,7 +186,7 @@ final_doc_name <-
     )  
   }
 
-final_doc_path <- file.path("reports", paste0(final_doc_name))
+final_doc_path <- file.path("/Users/jbf/Documents/FR+A Reports", paste0(final_doc_name))
 if (file.exists(paste0(final_doc_path, ".docx")) == TRUE) {
   final_doc_path <- paste(final_doc_path, format(Sys.time(), "%H:%M:%S"))
 }
