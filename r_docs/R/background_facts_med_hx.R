@@ -4,6 +4,8 @@ opinions_heading <- "Opinions of"
 analysis_heading <- "Crash Analysis"
 
 
+# Save all these items to local memory so there are fewer issues with broken image links in import during doc build
+
 # Isolate and save Background Facts section
 # Load the existing Word document for Background Facts
 doc_split_bkgrd <- read_docx(background_facts_recon_file_name) %>%
