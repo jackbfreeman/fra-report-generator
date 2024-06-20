@@ -18,11 +18,11 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Brown,A recon & crash summary +rebuttal_Manuel depo added_240605.docx"
-med_hx_file_name <- c("~/Downloads/Anthony Brown.docx", "~/Downloads/Denise Jones.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Mangual recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Johanna Vega Mangual.docx") # can be multiple
 
 doc_info <- list(
-  type = "report", # notes, report
+  type = "notes", # notes, report
   rebuttal = list(
     yes_no = "no"
   ),
@@ -33,30 +33,34 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "2002 L 005325" # hidden if no case
-court_name <- "Circuit Court of Cook County, Illinois"
-case_defendant_name <- "NIRCRC d/b/a METRA"
+case_no <- "2023-CA-002016" # hidden if no case
+court_name <- "Circuit Court of the Eighteenth Judicial Circuit, in and for Seminole County, Florida"
+case_defendant_name <- "Liliana C. Leider et al."
 
 lawyer <- list(
-  first_name = "Bradley",
-  last_name = "Barker" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Ethan",
+  last_name = "Kim" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "10/12/2020", # MM/DD/YYYY
-  pdof = "side train", # frontal, rear, near-side, far-side, rollover
+  date = "03/01/2023", # MM/DD/YYYY
+  pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
+
 plaintiff <- list(
-  first_name = c("Anthony"),
-  last_name = c("Brown"),
+  first_name = c("Johanna"),
+  last_name = c("Mangual"),
   et_al = "no", # check box for yes, default to yes
-  gender = c("m"),
-  dob = c("06/03/1969"), # MM/DD/YYYY
-  seat_position = c("engineer"), # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
+  gender = c("f"),
+  dob = c("03/13/1982"), # MM/DD/YYYY
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
+
+if (length(plaintiff$first_name > 1)) {
+  plaintiff$seat_position = c("driver") # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
+}
 
 
 # doc-specific vars (successive sections build on previous sections)
@@ -65,9 +69,9 @@ plaintiff <- list(
 # rebuttal notes vars
 if (doc_info$rebuttal$yes_no == "yes") {
   defense_expert <- list(
-    first_name = c("Ying"),
-    last_name = c("Manuel"),
-    expert_field = c("biomechanical") # biomechanical, medical, reconstruction
+    first_name = c("John"),
+    last_name = c("Cambareri"),
+    expert_field = c("medical") # biomechanical, reconstruction, medical, biomechanical and reconstruction
   )
 }
 
@@ -78,32 +82,33 @@ if (doc_info$type == "report") {
   lawyer <- c(
     lawyer,
     gender = "m",
-    firm_name = "Barnes Trial Group",
-    address = "1104 N Howard Ave.",
-    city = "Tampa",
-    state = "Florida",
-    zip = "33607",
-    phone = "8132510777"
+    firm_name = "Cogan & Power, P.C.",
+    address = "1 East Wacker Drive, 38th Floor",
+    city = "Chicago",
+    state = "Illinois",
+    zip = "60601",
+    phone = "3124772504"
   )
   
   plaintiff <- c(
     plaintiff,
-    weight = "280", # pounds
-    car_make = "Harley Davidson",
-    car_model = "FLTRX",
-    car_year = "2012",
+    weight = "332", # pounds
+    car_make = "Nippon",
+    car_model = "Sharyo Highliner 2",
+    car_year = "NoYear",
     if (plaintiff$injury_location == "shoulder") {
       dx_dr = c("Dr. Doctor") # doctor who diagnosed SLAP lesion
     }
   )
   
-  defendant <- list(
-    first_name = "Richard",
-    last_name = "Jacoby"
-  )
+  # Currently not needed for any text - keeping for future texts that might use it
+  # defendant <- list(
+  #   first_name = "Richard",
+  #   last_name = "Jacoby"
+  # )
   
-  mdf_deltaV <- "5.8" # mph
-  mdf_accel <- "4.3" # g
+  mdf_deltaV <- "5.5" # mph
+  mdf_accel <- "4.0" # g
   
   # rebuttal report specific vars
   if (doc_info$rebuttal$yes_no == "yes") {
@@ -111,11 +116,11 @@ if (doc_info$type == "report") {
     # rebuttal-specific vars
     defense_expert <- c(
       defense_expert,
-      title = c("Dr."), # Dr. Mr. Ms.
-      gender = c("f"),
-      firm = c("J.S. Held"), # multiple choice or Other
+      title = c("Mr."), # Dr. Mr. Ms.
+      gender = c("m"),
+      firm = c("ESi"), # multiple choice or Other
       depo_reviewed = "yes", # default no
-      depo_date = c("04/17/2024"), # MM/DD/YYYY
+      depo_date = c("05/31/2024"), # MM/DD/YYYY
       deltaV = "2.8", # mph
       acceleration = "3.8", # g
       report_citations_number = c("deposition"),
@@ -186,9 +191,16 @@ final_doc_name <-
     )  
   }
 
-final_doc_path <- file.path("/Users/jbf/Documents/FR+A Reports", paste0(final_doc_name))
+datapath <- "data/"
+temp_files_path <- "/Users/jbf/Documents/FR+A Reports/temp_docs"
+imgpath <- "images/"
+final_doc_path <- file.path("reports", final_doc_name)
+
+# if there already is a file with the same name, include the time of creation after the name
 if (file.exists(paste0(final_doc_path, ".docx")) == TRUE) {
   final_doc_path <- paste(final_doc_path, format(Sys.time(), "%H:%M:%S"))
+} else {
+  final_doc_path <- file.path("reports", paste0(final_doc_name))
 }
 
 # pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
@@ -198,7 +210,7 @@ doc <- read_docx(ifelse(doc_info$type == "notes", file.path(datapath, "fra-templ
 
 
 # only used for rebuttals, where background facts document needs to be split again
-background_facts_new_recon_file_name <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
+background_facts_new_recon_file_name <- file.path(temp_files_path, "reconstruction.docx")
 
 # case name is only plaintiff name(s) if case is "no"
 case_name <- paste(plaintiff$first_name, plaintiff$last_name) %>% paste(collapse = "; ")

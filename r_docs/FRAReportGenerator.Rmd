@@ -14,8 +14,6 @@ editor_options:
 rm(list = ls())
 
 # define and import data
-datapath <- "data/"
-imgpath <- "images/"
 knitr::opts_chunk$set(echo = FALSE)
 library(magrittr)
 library(officer)

@@ -1,7 +1,7 @@
 # Names of document sections
 recon_heading <- "Reconstruction"
 opinions_heading <- "Opinions of"
-analysis_heading <- "Analysis"
+analysis_heading <- "Crash Analysis"
 
 
 # Isolate and save Background Facts section
@@ -21,7 +21,7 @@ for (i in after_bkgrd_point:(length(doc_split_bkgrd$officer_cursor$nodes_names) 
 }
 
 # print remaining document to new background facts docx
-print(doc_split_bkgrd, target = file.path(datapath, "temp_import_docx", "background_facts.docx"))
+print(doc_split_bkgrd, target = file.path(temp_files_path, "background_facts.docx"))
 
 
 
@@ -54,7 +54,7 @@ for (i in after_recon_point:(length(doc_split_recon$officer_cursor$nodes_names) 
 }
 
 # print remaining document to new background facts docx
-print(doc_split_recon, target = file.path(datapath, "temp_import_docx", "reconstruction.docx"))
+print(doc_split_recon, target = file.path(temp_files_path, "reconstruction.docx"))
 
 
 
@@ -98,7 +98,7 @@ if (doc_info$rebuttal$yes_no == "yes") {
   }
   
   # print remaining document to new background facts docx
-  print(doc_split_opinions, target = file.path(datapath, "temp_import_docx", "opinions.docx"))
+  print(doc_split_opinions, target = file.path(temp_files_path, "opinions.docx"))
 }
 
 
@@ -118,7 +118,7 @@ for (i in 1:analysis_point) {
 }
 
 # print remaining document to new background facts docx
-print(doc_split_analysis, target = file.path(datapath, "temp_import_docx", "analysis.docx"))
+print(doc_split_analysis, target = file.path(temp_files_path, "analysis.docx"))
 
 
 
@@ -142,19 +142,19 @@ for (x in 1:length(med_hx_file_name)) {
   }
   
   # Print remaining document to new medical history docx
-  print(doc_split_med_hx[[x]], target = file.path(datapath, "temp_import_docx", paste0("med_hx", x, ".docx")))
+  print(doc_split_med_hx[[x]], target = file.path(temp_files_path, paste0("med_hx", x, ".docx")))
 }
 
 
-background_facts_new_path <- file.path(datapath, "temp_import_docx", "background_facts.docx")
+background_facts_new_path <- file.path(temp_files_path, "background_facts.docx")
 # create object
 med_hx_new_path <- NULL
 for (x in 1:length(med_hx_file_name)) {
-  med_hx_new_path[x] <- file.path(datapath, "temp_import_docx", paste0("med_hx", x, ".docx"))
+  med_hx_new_path[x] <- file.path(temp_files_path, paste0("med_hx", x, ".docx"))
 }
-recon_new_path <- file.path(datapath, "temp_import_docx", "reconstruction.docx")
-opinions_new_path <- file.path(datapath, "temp_import_docx", "opinions.docx")
-analysis_new_path <- file.path(datapath, "temp_import_docx", "analysis.docx")
+recon_new_path <- file.path(temp_files_path, "reconstruction.docx")
+opinions_new_path <- file.path(temp_files_path, "opinions.docx")
+analysis_new_path <- file.path(temp_files_path, "analysis.docx")
 
 
 med_hx_build_list <- list()
