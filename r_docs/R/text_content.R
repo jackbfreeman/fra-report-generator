@@ -606,9 +606,9 @@ if (doc_info$type == "report") {
                   mais1_probability_rear(mdf_deltaV) < .1, 1, 0)), 
                 "% for a ", mdf_deltaV, " mph delta V rear impact collision (see the blue arrow in the chart below).  Approximately 94% of spinal disk injuries would be included in this category of injuries, as this is the rate at which disk injuries are initially diagnosed as strains (i.e., MAIS 1 [minor injuries]) in the emergency department in the first day or 2 after a crash, which is the source of the NHTSA data.  There is also an approximately ", 
                 round(
-                  mais2_probability_all(mdf_deltaV)*100, 
+                  mais2_probability_rear(mdf_deltaV)*100, 
                   digits = ifelse(
-                    mais2_probability_all(mdf_deltaV) < .1, 1, 0)), 
+                    mais2_probability_rear(mdf_deltaV) < .1, 1, 0)), 
                 "% chance of an immediately apparent more serious injury, including fracture, organ injury, or intracranial bleeding, etc. in a ", crash_speed_low_moderate_high, " speed rear impact crash of the same severity (see the red arrow in the chart below)."))),
           fps(),
           fps(

@@ -18,48 +18,48 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Morris, K v Goulet supplemental report 6-9-24.docx"
-med_hx_file_name <- c("~/Downloads/Morris medical expert supplementary report 062424.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Teschendorf,C recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Cory Teschendorf.docx", "~/Downloads/Sarah Teschendorf.docx") # can be multiple
 
 doc_info <- list(
   type = "report", # notes, report
   rebuttal = list(
-    yes_no = "yes"
+    yes_no = "no"
   ),
   short = list(
-    yes_no = "yes",
+    yes_no = "no",
     original_report_date = "05/23/2024" # MM/DD/YYYY, only if short
   )
 )
 
 case <- "yes" # yes/no
-case_no <- "A-22-860747-C" # hidden if no case
-court_name <- "District Court, Clark County, Nevada"
-case_defendant_name <- "Denise Goulet et al."
+case_no <- "DC-23-17383" # hidden if no case
+court_name <- "District Court of Dallas County, Texas, 14th Judicial District"
+case_defendant_name <- "Eric Watkins et al."
 
 lawyer <- list(
-  first_name = "Elizabeth",
-  last_name = "Coats" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Devon",
+  last_name = "DuPoy" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "03/01/2023", # MM/DD/YYYY
+  date = "01/23/2023", # MM/DD/YYYY
   pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 
 plaintiff <- list(
-  first_name = c("Keith"),
-  last_name = c("Morris"),
-  et_al = "no", # check box for yes, default to yes
-  gender = c("m"),
-  dob = c("12/4/1981"), # MM/DD/YYYY
+  first_name = c("Cory", "Sarah"),
+  last_name = c("Teschendorf", "Teschendorf"),
+  et_al = "yes", # check box for yes, default to yes
+  gender = c("m", "f"),
+  dob = c("09/16/1985", "09/11/1986"), # MM/DD/YYYY
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
 if (length(plaintiff$first_name > 1)) {
-  plaintiff$seat_position = c("driver") # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
+  plaintiff$seat_position = c("driver", "front passenger") # driver, front passenger, rear left/right passenger, only needed when >1 plaintiff
 }
 
 
@@ -81,21 +81,21 @@ if (doc_info$type == "report") {
   # report vars
   lawyer <- c(
     lawyer,
-    gender = "f",
-    firm_name = "Naqvi Injury Law",
-    address = "9500 W Flamingo Road, Suite 104",
-    city = "Las Vegas",
-    state = "Nevada",
-    zip = "89147",
-    phone = "7025531002"
+    gender = "m",
+    firm_name = "Witherite Law Group",
+    address = "901 West Vickery Blvd. Suite 900",
+    city = "Fort Worth",
+    state = "Texas",
+    zip = "76104",
+    phone = "2143786665"
   )
   
   plaintiff <- c(
     plaintiff,
-    weight = "332", # pounds
-    car_make = "Nippon",
-    car_model = "Sharyo Highliner 2",
-    car_year = "NoYear",
+    weight = "219", # pounds
+    car_make = "Chevrolet",
+    car_model = "Silverado 1500",
+    car_year = "2019",
     if (plaintiff$injury_location == "shoulder") {
       dx_dr = c("Dr. Doctor") # doctor who diagnosed SLAP lesion
     }
@@ -107,8 +107,8 @@ if (doc_info$type == "report") {
   #   last_name = "Jacoby"
   # )
   
-  mdf_deltaV <- "5.5" # mph
-  mdf_accel <- "4.0" # g
+  mdf_deltaV <- 3.2 # mph
+  mdf_accel <- 1.9 # g
   
   # rebuttal report specific vars
   if (doc_info$rebuttal$yes_no == "yes") {
