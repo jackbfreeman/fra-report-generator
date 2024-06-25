@@ -18,28 +18,28 @@ fp_text_normal <- fp_text_lite()
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Mangual recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Johanna Vega Mangual.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Morris, K v Goulet supplemental report 6-9-24.docx"
+med_hx_file_name <- c("~/Downloads/Morris medical expert supplementary report 062424.docx") # can be multiple
 
 doc_info <- list(
-  type = "notes", # notes, report
+  type = "report", # notes, report
   rebuttal = list(
-    yes_no = "no"
+    yes_no = "yes"
   ),
   short = list(
-    yes_no = "no",
-    original_report_date = "01/05/2023" # MM/DD/YYYY, only if short
+    yes_no = "yes",
+    original_report_date = "05/23/2024" # MM/DD/YYYY, only if short
   )
 )
 
 case <- "yes" # yes/no
-case_no <- "2023-CA-002016" # hidden if no case
-court_name <- "Circuit Court of the Eighteenth Judicial Circuit, in and for Seminole County, Florida"
-case_defendant_name <- "Liliana C. Leider et al."
+case_no <- "A-22-860747-C" # hidden if no case
+court_name <- "District Court, Clark County, Nevada"
+case_defendant_name <- "Denise Goulet et al."
 
 lawyer <- list(
-  first_name = "Ethan",
-  last_name = "Kim" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Elizabeth",
+  last_name = "Coats" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
@@ -50,11 +50,11 @@ crash <- list(
 
 
 plaintiff <- list(
-  first_name = c("Johanna"),
-  last_name = c("Mangual"),
+  first_name = c("Keith"),
+  last_name = c("Morris"),
   et_al = "no", # check box for yes, default to yes
-  gender = c("f"),
-  dob = c("03/13/1982"), # MM/DD/YYYY
+  gender = c("m"),
+  dob = c("12/4/1981"), # MM/DD/YYYY
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
@@ -69,8 +69,8 @@ if (length(plaintiff$first_name > 1)) {
 # rebuttal notes vars
 if (doc_info$rebuttal$yes_no == "yes") {
   defense_expert <- list(
-    first_name = c("John"),
-    last_name = c("Cambareri"),
+    first_name = c("David"),
+    last_name = c("Oliveri"),
     expert_field = c("medical") # biomechanical, reconstruction, medical, biomechanical and reconstruction
   )
 }
@@ -81,13 +81,13 @@ if (doc_info$type == "report") {
   # report vars
   lawyer <- c(
     lawyer,
-    gender = "m",
-    firm_name = "Cogan & Power, P.C.",
-    address = "1 East Wacker Drive, 38th Floor",
-    city = "Chicago",
-    state = "Illinois",
-    zip = "60601",
-    phone = "3124772504"
+    gender = "f",
+    firm_name = "Naqvi Injury Law",
+    address = "9500 W Flamingo Road, Suite 104",
+    city = "Las Vegas",
+    state = "Nevada",
+    zip = "89147",
+    phone = "7025531002"
   )
   
   plaintiff <- c(

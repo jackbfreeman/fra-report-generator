@@ -1,7 +1,7 @@
 # Names of document sections
-recon_heading <- "Reconstruction"
-opinions_heading <- "Opinions of"
-analysis_heading <- "Crash Analysis"
+recon_heading <- "Opinions of plaintiff’s expert"
+opinions_heading <- "Opinions of defendant’s"
+analysis_heading <- "Dr. Freeman"
 
 
 # Save all these items to local memory so there are fewer issues with broken image links in import during doc build
