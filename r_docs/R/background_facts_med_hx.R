@@ -1,9 +1,3 @@
-# Names of document sections
-recon_heading <- "Reconstruction"
-opinions_heading <- "Opinions of"
-analysis_heading <- "Crash Analysis"
-
-
 # Save all these items to local memory so there are fewer issues with broken image links in import during doc build
 
 # Isolate and save Background Facts section
@@ -119,13 +113,48 @@ for (i in 1:analysis_point) {
   doc_split_analysis <- body_remove(doc_split_analysis)
 }
 
-# print remaining document to new background facts docx
+# set cursor at point after analysis (before Documents Reviewed)
+doc_split_analysis <- doc_split_analysis %>%
+  cursor_reach(keyword = docs_reviewed_heading)
+
+# Store analysis break point
+docs_reviewed_point <- doc_split_analysis$officer_cursor$which
+
+# Move cursor backward to delete empty line in analysis document
+doc_split_analysis <- cursor_backward(doc_split_analysis)
+
+# Create loop to delete amount of objects after analysis section
+for (i in docs_reviewed_point:(length(doc_split_analysis$officer_cursor$nodes_names) + 1)) {
+  doc_split_analysis <- body_remove(doc_split_analysis)
+}
+
+# print remaining document to new analysis docx
 print(doc_split_analysis, target = file.path(temp_files_path, "analysis.docx"))
+
+
+
+# Isolate and save Documents reviewed section of background facts
+# Load the existing Word document for Documents reviewed
+doc_split_docs_reviewed <- read_docx(background_facts_recon_file_name) %>%
+  cursor_reach(keyword = docs_reviewed_heading)
+
+docs_reviewed_point <- doc_split_docs_reviewed$officer_cursor$which
+
+doc_split_docs_reviewed <- cursor_begin(doc_split_docs_reviewed)
+
+# create loop to delete background facts section (before)
+for (i in 1:docs_reviewed_point) {
+  doc_split_docs_reviewed <- body_remove(doc_split_docs_reviewed)
+}
+
+# print remaining document to new analysis docx
+print(doc_split_docs_reviewed, target = file.path(temp_files_path, "docs_reviewed.docx"))
 
 
 
 
 doc_split_med_hx <- NULL
+doc_split_med_hx_docs_reviewed <- NULL
 
 for (x in 1:length(med_hx_file_name)) {
   # Load the existing Word document for Medical History
@@ -143,16 +172,50 @@ for (x in 1:length(med_hx_file_name)) {
     doc_split_med_hx[[x]] <- body_remove(doc_split_med_hx[[x]])
   }
   
+  # Find location of "Documents reviewed" section
+  doc_split_med_hx[[x]] <- doc_split_med_hx[[x]] %>%
+    cursor_reach(med_hx_docs_reviewed)
+  
+  # Store location of "Documents reviewed" section
+  med_hx_docs_reviewed_point <- doc_split_med_hx[[x]]$officer_cursor$which
+  
+  # Delete "Documents reviewed" section
+  for (i in med_hx_docs_reviewed_point:(length(doc_split_med_hx[[x]]$officer_cursor$nodes_names))) {
+    doc_split_med_hx[[x]] <- body_remove(doc_split_med_hx[[x]])
+  }
+  
   # Print remaining document to new medical history docx
   print(doc_split_med_hx[[x]], target = file.path(temp_files_path, paste0("med_hx", x, ".docx")))
+  
+  
+  
+  # Load the existing Word document for Medical History
+  doc_split_med_hx_docs_reviewed[[x]] <- read_docx(med_hx_file_name[x]) %>%
+    cursor_reach(med_hx_docs_reviewed)
+  
+  # Store location of "Documents reviewed" section
+  med_hx_docs_reviewed_point <- doc_split_med_hx_docs_reviewed[[x]]$officer_cursor$which
+  
+  # Move cursor back to beginning
+  doc_split_med_hx_docs_reviewed[[x]] <- cursor_begin(doc_split_med_hx_docs_reviewed[[x]])
+  
+  # Delete everything until "Documents reviewed" section
+  for (i in 1:med_hx_docs_reviewed_point) {
+    doc_split_med_hx_docs_reviewed[[x]] <- body_remove(doc_split_med_hx_docs_reviewed[[x]])
+  }
+  
+  # Print remaining document to new medical history docx
+  print(doc_split_med_hx_docs_reviewed[[x]], target = file.path(temp_files_path, paste0("med_hx_docs_reviewed", x, ".docx")))
 }
 
 
 background_facts_new_path <- file.path(temp_files_path, "background_facts.docx")
-# create object
+docs_reviewed_new_path <- file.path(temp_files_path, "docs_reviewed.docx")
 med_hx_new_path <- NULL
+med_hx_docs_reviewed_new_path <- NULL
 for (x in 1:length(med_hx_file_name)) {
   med_hx_new_path[x] <- file.path(temp_files_path, paste0("med_hx", x, ".docx"))
+  med_hx_docs_reviewed_new_path[x] <- file.path(temp_files_path, paste0("med_hx_docs_reviewed", x, ".docx"))
 }
 recon_new_path <- file.path(temp_files_path, "reconstruction.docx")
 opinions_new_path <- file.path(temp_files_path, "opinions.docx")
@@ -163,23 +226,57 @@ med_hx_build_list <- list()
 
 if (length(med_hx_file_name) > 1) {
   for (x in 1:length(med_hx_file_name)) {
-    med_hx_build_list <- append(med_hx_build_list, list(
-      fps(ftext(paste0("Post-crash history, ", plaintiff$first_name[[x]], " ", plaintiff$last_name[[x]], " (", plaintiff$seat_position[[x]], ")"), prop = fp_text_italic_underline)),
-      block_pour_docx(paste0(med_hx_new_path[[x]])),
-      fps()
-    ))
+    med_hx_build_list <- c(
+      med_hx_build_list, 
+      list(
+        fps(
+          ftext(
+            paste0(
+              "Post-crash history, ", plaintiff$first_name[[x]], " ", plaintiff$last_name[[x]], " (", plaintiff$seat_position[[x]], ")"), prop = fp_text_italic_underline)),
+        block_pour_docx(paste0(med_hx_new_path[[x]])),
+        fps()
+      ))
   }
 } else {
   for (x in 1:length(med_hx_file_name)) {
-    med_hx_build_list <- append(med_hx_build_list, list(
-      fps(),
-      block_pour_docx(paste0(med_hx_new_path[[x]])),
-      fps()
-    ))
+    med_hx_build_list <- c(
+      med_hx_build_list, 
+      list(
+        fps(),
+        block_pour_docx(paste0(med_hx_new_path[[x]])),
+        fps()
+      ))
   }
 }
 
+# Add Documents Reviewed header to end of Med Hx section
+med_hx_build_list <- c(
+  med_hx_build_list,
+  list(
+    fps(
+      ftext(
+        "Documents Reviewed",
+        prop = fp_text_bold_underline
+      )
+    )
+  )
+)
 
+# add all medical history documents under "Documents Reviewed" heading
+for (x in 1:length(med_hx_file_name)) {
+  med_hx_build_list <- c(
+    med_hx_build_list, 
+    list(
+      block_pour_docx(paste0(med_hx_docs_reviewed_new_path[[x]]))
+    ))
+}
+
+# add "Documents Reviewed" from background facts document
+med_hx_build_list <- c(
+  med_hx_build_list, 
+  list(
+    block_pour_docx(paste0(docs_reviewed_new_path))
+  ))
 
 
 background_facts <- list()
@@ -224,12 +321,6 @@ if (doc_info$type == "notes") {
         block_pour_docx(background_facts_new_path),
         fps()
       ),
-      list(
-        fps(
-          ftext(
-            "At the time of the crash, "
-          )
-        )),
       med_hx_build_list
     )
     # short rebuttal
@@ -240,12 +331,6 @@ if (doc_info$type == "notes") {
         block_pour_docx(background_facts_new_path),
         fps()
       ),
-      list(
-        fps(
-          ftext(
-            "At the time of the crash, "
-          )
-        )),
       med_hx_build_list
     )
   }

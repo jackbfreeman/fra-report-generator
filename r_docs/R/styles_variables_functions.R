@@ -14,12 +14,21 @@ fp_text_bold_italic <- fp_text_lite(bold = TRUE, italic = TRUE)
 fp_text_normal <- fp_text_lite()
 
 
+# No need to change these unless the documents have differently named headings
+# Names of document sections
+recon_heading <- "Reconstruction"
+opinions_heading <- "Opinions of"
+analysis_heading <- "Crash Analysis"
+docs_reviewed_heading <- "Documents Reviewed"
+med_hx_docs_reviewed <- "Medical and other"
+
 
 
 # universal variables
 
-background_facts_recon_file_name <- "~/Downloads/Teschendorf,C recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Cory Teschendorf.docx", "~/Downloads/Sarah Teschendorf.docx") # can be multiple
+
+background_facts_recon_file_name <- "~/Downloads/Brown,N recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Norman Brown.docx", "~/Downloads/Norman Brown.docx") # can be multiple
 
 doc_info <- list(
   type = "report", # notes, report
@@ -33,28 +42,28 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "DC-23-17383" # hidden if no case
-court_name <- "District Court of Dallas County, Texas, 14th Judicial District"
-case_defendant_name <- "Eric Watkins et al."
+case_no <- "2:23-cv-02426" # hidden if no case
+court_name <- "United States District Court for the Southern District of Ohio Eastern Division"
+case_defendant_name <- "Keith Rhymer, et al."
 
 lawyer <- list(
-  first_name = "Devon",
-  last_name = "DuPoy" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Todd",
+  last_name = "Schroeder" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "01/23/2023", # MM/DD/YYYY
+  date = "07/19/2021", # MM/DD/YYYY
   pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 
 plaintiff <- list(
-  first_name = c("Cory", "Sarah"),
-  last_name = c("Teschendorf", "Teschendorf"),
+  first_name = c("Norman", "Norman"),
+  last_name = c("Brown", "Norman"),
   et_al = "yes", # check box for yes, default to yes
-  gender = c("m", "f"),
-  dob = c("09/16/1985", "09/11/1986"), # MM/DD/YYYY
+  gender = c("m", "m"),
+  dob = c("04/01/1958", "04/01/1958"), # MM/DD/YYYY
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
@@ -82,20 +91,20 @@ if (doc_info$type == "report") {
   lawyer <- c(
     lawyer,
     gender = "m",
-    firm_name = "Witherite Law Group",
-    address = "901 West Vickery Blvd. Suite 900",
-    city = "Fort Worth",
-    state = "Texas",
-    zip = "76104",
-    phone = "2143786665"
+    firm_name = "McKeen & Associates, P.C.",
+    address = "645 Griswold Street, Suite 4200",
+    city = "Detroit",
+    state = "Michigan",
+    zip = "48226",
+    phone = "3139614400"
   )
   
   plaintiff <- c(
     plaintiff,
-    weight = "219", # pounds
-    car_make = "Chevrolet",
-    car_model = "Silverado 1500",
-    car_year = "2019",
+    weight = "190", # pounds
+    car_make = "Western Star",
+    car_model = "truck tractor",
+    car_year = "2004",
     if (plaintiff$injury_location == "shoulder") {
       dx_dr = c("Dr. Doctor") # doctor who diagnosed SLAP lesion
     }
@@ -107,8 +116,8 @@ if (doc_info$type == "report") {
   #   last_name = "Jacoby"
   # )
   
-  mdf_deltaV <- 3.2 # mph
-  mdf_accel <- 1.9 # g
+  mdf_deltaV <- 11 # mph
+  mdf_accel <- 4.0 # g
   
   # rebuttal report specific vars
   if (doc_info$rebuttal$yes_no == "yes") {

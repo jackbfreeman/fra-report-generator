@@ -1244,20 +1244,35 @@ if (doc_info$type == "report") {
 
 
 if (doc_info$type == "report") {
-  conclusions <- list(
-    fps(),
-    fps(),
-    fps(
-      ftext(
-        "Conclusions", prop = fp_text_bold)),
-    fps(),
-    fps(
-      ftext(
-        paste0(
-          "Given the contiguous chain of causation from the day of the crash through ", Mr_Ms_Lastname(person = plaintiff), "’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject frontal impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in ", Mr_Ms_Lastname(person = plaintiff), "’s medical records and summarized in this report, including ", his_her(person = plaintiff), " symptomatic cervical and lumbar disk derangements, is the subject ", convert_date_format(crash$date), ", ", crash_speed_low_moderate_high, " speed ", crash$pdof_text, " impact crash."
-        ))))
+  if (doc_info$rebuttal$yes_no == "yes") {
+    conclusions <- list(
+      fps(
+        ftext(
+          "Thus, based on the most current evaluation of the totality of the scientific evidence, and given the lack of evidence for an intervening event, ", Mr_Ms_Lastname(person = plaintiff), "’s current persisting symptoms, need for treatment, and disability is solely attributable to the subject ", crash$date, " rear impact crash. The opinions to the contrary by the defendant’s medical expert Dr. Francis are not based in a valid factual, medical or scientific basis."
+        )))
+  } else {
+    conclusions <- list(
+      fps(),
+      fps(
+        ftext(
+          "Conclusions", prop = fp_text_bold_underline
+        )))
+  }
+  conclusions <- c(
+    conclusions,
+    list(
+      fps(
+        ftext(
+          paste0(
+            "Given the contiguous chain of causation from the day of the crash through ", Mr_Ms_Lastname(person = plaintiff), "’s most recent medical records, the lack of any significant pre-crash history of persisting spine pain and need for treatment in the years prior to the crash, as well as the relative risk of significant and persisting spine injury from the subject ", crash$pdof_text, " impact crash, I conclude that the most probable cause of the post-crash acute and chronic neck and low back injuries described in ", Mr_Ms_Lastname(person = plaintiff), "’s medical records and summarized in this report, including ", his_her(person = plaintiff), " symptomatic cervical and lumbar disk derangements, is the subject ", convert_date_format(crash$date), ", ", crash_speed_low_moderate_high, " speed ", crash$pdof_text, " impact crash."
+          ))),
+      fps(),
+      fps(
+        ftext(
+          paste0(
+            "I have ", ifelse(length(plaintiff$first_name) == 1, "not ", ""), "examined ", ifelse(length(plaintiff$first_name) == 1, "", "neither "), Mr_Ms_Lastname(conjunction = "nor"), " and I therefore have no opinions about ", his_her(person = plaintiff), " diagnoses, treatment, or prognoses outside of what is reflected in the medical record."
+          )))))
 }
-
 
 
 
@@ -1268,13 +1283,6 @@ if (doc_info$type == "report") {
 
 if (doc_info$type == "report") {
   signature_block <- list(
-    run_pagebreak(),
-    fps(
-      ftext(
-        paste0(
-          "I have ", ifelse(length(plaintiff$first_name) == 1, "not ", ""), "examined ", ifelse(length(plaintiff$first_name) == 1, "", "neither "), Mr_Ms_Lastname(conjunction = "nor"), " and I therefore have no opinions about ", his_her(person = plaintiff), " diagnoses, treatment, or prognoses outside of what is reflected in the medical record. This is not to say that I am not qualified, licensed, and extensively experienced in performing such evaluations, but that I have not done so in this case."
-        ))),
-    fps(),
     fps(),
     fps(
       ftext(
@@ -1284,7 +1292,7 @@ if (doc_info$type == "report") {
       ftext(
         "Very truly yours,")),
     fps(),
-    fps(ext_img(src = file.path(imgpath, "MDF_signature.png"), width = 4)),
+    fps(ext_img(src = file.path(imgpath, "MDF_signature.png"), width = 2.6)),
     fps(),
     fps(
       ftext(
@@ -1358,7 +1366,7 @@ if (doc_info$type == "report") {
         fps(),
         fps(
           ftext(
-            "3.\t"), ftext("Lack of a more probable alternative explanation", prop = fp_text_underline), ftext(": This final step examines the probability of the injury condition occurring at the same point in time in the plaintiff, given what is known about the plaintiff from the review of medical records and other evidence, but in the absence of the injury event (a.k.a. differential etiology). First, evidence of competing injury events must be evaluated, and compared for injury risk. Then, the likelihood of the condition occurring spontaneously must be assessed. For example, the plaintiff may have evidence of degenerative changes in the spinal disks pre-existing a traffic crash, but no symptoms. The question of interest (after the first 2 steps are satisfied) is what the probability was that the condition would have \"converted\" from asymptomatic to symptomatic in the absence of (\"but-for\") the crash. Since there is no information that can be gleaned from an examination of the plaintiff regarding her or her condition in the hypothetical absence of the crash, epidemiologic data often serves as the basis for the evaluation of the probability of alternative explanations. More probable alternative explanations are often intervening traumatic events that alter the clinical history in a substantive way. As an example, for a plaintiff with neck strain symptoms that lasted for 1 week after a crash, who is then involved in second collision a month later that results in neck and arm pain and is ultimately diagnosed with a cervical disk herniation, the second collision is easily identified as a more probable cause of the disk derangement than the antecedent crash. This is in part due to the abrupt change in the distribution of the symptoms more consistent with a disk derangement, but also the epidemiologically based conclusion that it is rare for a cervical strain that improves rapidly to evolve into a cervical disk herniation, and thus but-for the second crash, the condition would not have manifested."), style = "NumberList"),
+            "3.\t"), ftext("Lack of a more probable alternative explanation", prop = fp_text_underline), ftext(": This final step examines the probability of the injury condition occurring at the same point in time in the plaintiff, given what is known about the plaintiff from the review of medical records and other evidence, but in the absence of the injury event (a.k.a. differential etiology). First, evidence of competing injury events must be evaluated, and compared for injury risk. Then, the likelihood of the condition occurring spontaneously must be assessed. For example, the plaintiff may have evidence of degenerative changes in the spinal disks pre-existing a traffic crash, but no symptoms. The question of interest (after the first 2 steps are satisfied) is what the probability was that the condition would have \"converted\" from asymptomatic to symptomatic in the absence of (\"but-for\") the crash. More probable alternative explanations are often intervening traumatic events that alter the clinical history in a substantive way."), style = "NumberList"),
         fps(),
         fps(
           ftext(

@@ -44,7 +44,7 @@ block_add_fps_fun <- function(x, list) {
 ```{r final doc build}
 if (doc_info$type == "notes") {
   final_build <- list(
-    heading, 
+    heading,
     background_facts
   )
 } else {
