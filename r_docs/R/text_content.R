@@ -1393,63 +1393,48 @@ if (doc_info$type == "report") {
         fps(
           ftext(
             "Dianita Ika Melia P, Zeegers MP, Herkutanto H, Freeman MD. Medicolegal causation investigation of bacterial endocarditis associated with an oral surgery practice using the INFERENCE approach. "), ftext("Int J Environ Res Public Health", prop = fp_text_italic), ftext(" 2021:18,7530. https://doi.org/10.3390/ijerph18147530."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Dianita Ika Melia P, Zeeger MP, Herkutanto H, Freeman MD. Development of the INFERENCE (INtegration of Forensic Epidemiology and the Rigorous EvaluatioN of Causation Elements) approach to causal inference in forensic medicine. "), ftext("Int J Environ Res Public Health", prop = fp_text_italic), ftext(" 2020;17:8353; doi:10.3390/ijerph17228353"), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Dianita Ika Melia P, Freeman MD, Herkutanto H, Zeeger MP. A review of causal inference in forensic medicine. "), ftext("For Sci Med Path", prop = fp_text_italic), ftext(" 2020:doi.org/10.1007/s12024-020-00220-9."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD. A practicable and systematic approach to medicolegal causation. "), ftext("Orthopedics", prop = fp_text_italic), ftext(" 2018;41(2):70-2."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Zeegers M. Principles and applications of forensic epidemiology in the medicolegal setting. "), ftext("Law, Probability, & Risk", prop = fp_text_italic), ftext(" 2015; doi:10.1093/lpr/mgv010."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD. Medicolegal causation analysis of a lumbar spine fracture following a low speed rear impact traffic crash. "), ftext("J Case Rep Prac", prop = fp_text_italic), ftext(" 2015; 3(2): 23-29."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Cahn PJ, Franklin FA. Applied forensic epidemiology. Part 1: medical negligence. "), ftext("OA Epidemiology", prop = fp_text_italic), ftext(" 2014;2(1):2."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Koehler S, Freeman MD. Forensic epidemiology; a methodology for investigating and quantifying specific causation. "), ftext("Forens Sci Med Path", prop = fp_text_italic), ftext(" 2014 Jun;10(2):217-22."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Kohles SS. An examination of the threshold criteria for the evaluation of specific causation of mesothelioma following a history of significant exposure to chrysotile asbestos-containing brake dust, "), ftext("Int J Occ Env Hlth", prop = fp_text_italic), ftext(" 2012;18(4):329-36."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Everson T, Kohles SS. Forensic epidemiologic and biomechanical analysis of a pelvic cavity blowout injury associated with ejection from a personal watercraft (jet-ski). "), ftext("J Forens Sci", prop = fp_text_italic), ftext(" 2012 doi: 10.1111/j.1556-4029.2012.02250.x"), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Kohles SS. Plasma levels of polychlorinated biphenyls, non-Hodgkin lymphoma, and causation. "), ftext("J Environ Public Health", prop = fp_text_italic), ftext(" 2012;2012:258981. doi: 10.1155/2012/258981. Review."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Kohles SS. Application of the Hill Criteria to the Causal Association of Post-Traumatic Headache and Assault. "), ftext("Egypt J Forensic Sci", prop = fp_text_italic), ftext(" 2011;1:35-40."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Kohles SS. Application of the Bradford-Hill Criteria for Assessing Specific Causation in Post-Traumatic Headache. "), ftext("Brain Inj Prof", prop = fp_text_italic), ftext(" 2011;8(1):26-8."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Kohles SS. An Evaluation of Applied Biomechanics as an adjunct to systematic specific causation in forensic medicine. "), ftext("Wien Med Wochenschr", prop = fp_text_italic), ftext(" 2011;161:1-11."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Centeno CJ, Kohles SS. A systematic approach to clinical determinations of causation in symptomatic spinal disc injury following motor vehicle crash trauma. "), ftext("PM R", prop = fp_text_italic), ftext(" 2009;1(10):951-6."), style = "Bibliography"),
-        fps(),
         fps(
           ftext(
             "Freeman MD, Rossignol AC, Hand M. Forensic Epidemiology: A systematic approach to probabilistic determinations in disputed matters. "), ftext("J Forensic Legal Med", prop = fp_text_italic), ftext(" 2008;15(5):281-90."), style = "Bibliography"

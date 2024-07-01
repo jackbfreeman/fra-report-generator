@@ -27,13 +27,13 @@ med_hx_docs_reviewed <- "Medical and other"
 # universal variables
 
 
-background_facts_recon_file_name <- "~/Downloads/Brown,N recon & crash summary.docx"
-med_hx_file_name <- c("~/Downloads/Norman Brown.docx", "~/Downloads/Norman Brown.docx") # can be multiple
+background_facts_recon_file_name <- "~/Downloads/Bornhofen recon & crash summary.docx"
+med_hx_file_name <- c("~/Downloads/Bonnie Bornhofen.docx") # can be multiple
 
 doc_info <- list(
-  type = "report", # notes, report
+  type = "notes", # notes, report
   rebuttal = list(
-    yes_no = "no"
+    yes_no = "yes"
   ),
   short = list(
     yes_no = "no",
@@ -42,28 +42,28 @@ doc_info <- list(
 )
 
 case <- "yes" # yes/no
-case_no <- "2:23-cv-02426" # hidden if no case
-court_name <- "United States District Court for the Southern District of Ohio Eastern Division"
-case_defendant_name <- "Keith Rhymer, et al."
+case_no <- "2020SV0336" # hidden if no case
+court_name <- "State Court of Fayette County, State of Georgia"
+case_defendant_name <- "Jordan Sharpe et al."
 
 lawyer <- list(
-  first_name = "Todd",
-  last_name = "Schroeder" # ignore postnominals (i.e., Jr. or II)
+  first_name = "Robert",
+  last_name = "Edwards" # ignore postnominals (i.e., Jr. or II)
 )
 
 crash <- list(
-  date = "07/19/2021", # MM/DD/YYYY
+  date = "10/10/2018", # MM/DD/YYYY
   pdof = "rear", # frontal, rear, near-side, far-side, rollover
   fatality = "no"
 )
 
 
 plaintiff <- list(
-  first_name = c("Norman", "Norman"),
-  last_name = c("Brown", "Norman"),
+  first_name = c("Bonnie"),
+  last_name = c("Bornhofen"),
   et_al = "yes", # check box for yes, default to yes
-  gender = c("m", "m"),
-  dob = c("04/01/1958", "04/01/1958"), # MM/DD/YYYY
+  gender = c("f"),
+  dob = c("04/02/1958"), # MM/DD/YYYY
   injury_location = "disk" # disk, shoulder, spine (rollover), seatbelt efficacy
 )
 
@@ -78,9 +78,9 @@ if (length(plaintiff$first_name > 1)) {
 # rebuttal notes vars
 if (doc_info$rebuttal$yes_no == "yes") {
   defense_expert <- list(
-    first_name = c("David"),
-    last_name = c("Oliveri"),
-    expert_field = c("medical") # biomechanical, reconstruction, medical, biomechanical and reconstruction
+    first_name = c("Ying"),
+    last_name = c("Lu"),
+    expert_field = c("reconstruction") # biomechanical, reconstruction, medical, biomechanical and reconstruction
   )
 }
 
@@ -214,6 +214,7 @@ if (file.exists(paste0(final_doc_path, ".docx")) == TRUE) {
 
 # pdof near- and far-side change to driver- and passenger-side if >1 plaintiff
 
+
 doc <- read_docx(ifelse(doc_info$type == "notes", file.path(datapath, "fra-template-notes.dotx"),
                         file.path(datapath, "fra-template-caus-rebut.dotx")))
 
@@ -338,6 +339,20 @@ Mr_Ms_Lastname <- function(person = plaintiff, conjunction = "and", number = len
   }
   return(x)
 }
+
+
+# loop fpar add function
+block_add_fps_fun <- function(x, list) {
+  for (i in length(list):1) {
+    for (j in length(list[[i]]):1) {
+      body_add(x, list[[i]][[j]], style = list[[i]][[j]]$style)
+    }
+  }
+  return(x)
+}
+
+
+
 
 
 

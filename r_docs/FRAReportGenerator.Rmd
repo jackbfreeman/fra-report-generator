@@ -20,92 +20,37 @@ library(officer)
 library(officedown)
 library(dplyr)
 library(toOrdinal)
-source("r_docs/R/styles_variables_functions.R")
-source("r_docs/R/footnotes.R")
-source("r_docs/R/header_text.R")
-source("r_docs/R/background_facts_med_hx.R")
-source("r_docs/R/text_content.R")
 # table for reading styles
 styles_tab <- styles_info(doc)
 ```
 
-```{r loop fpar add function}
-block_add_fps_fun <- function(x, list) {
-  for (i in length(list):1) {
-    for (j in length(list[[i]]):1) {
-      body_add(x, list[[i]][[j]], style = list[[i]][[j]]$style)
-    }
-  }
-  return(x)
-}
-```
-
-
-```{r final doc build}
-if (doc_info$type == "notes") {
-  final_build <- list(
-    heading,
-    background_facts
-  )
-} else {
-  if (doc_info$rebuttal$yes_no == "no") {
-    final_build <- list(
-      heading,
-      receipt,
-      purpose,
-      qualifications,
-      background_facts,
-      inj_biomech$intro,
-      inj_biomech$meat,
-      three_steps,
-      conclusions,
-      signature_block
-    )
-    if (plaintiff$injury_location == "disk") {
-      final_build <- c(final_build, list(appendix))
-    }
-  } else {
-    if (doc_info$short$yes_no == "yes") {
-      final_build <- list(
-        heading,
-        receipt,
-        purpose,
-        qualifications,
-        opinions_general_comments,
-        inj_biomech$intro,
-        inj_biomech$meat
-      )
-    } else {
-      final_build <- list(
-        heading,
-        receipt,
-        purpose,
-        summary_opinions,
-        qualifications,
-        background_facts,
-        opinions_general_comments,
-        inj_biomech$intro,
-        inj_biomech$meat,
-        three_steps,
-        conclusions,
-        signature_block
-      )
-    }
-  }
-}
+```{r 
 ```
 
 ```{r function call}
 #fps function call
-doc %>%
-  cursor_begin() %>%
-  body_remove() %>%
-  block_add_fps_fun(final_build) %>%
-  #block_add_fps_fun(heading) %>%
-  print(target = paste0(final_doc_path, ".docx"))
+final_build_fun <- function() {
+  # clear environment variables
+  rm(list = ls())
+  
+  # define and import data
+  source("r_docs/R/styles_variables_functions.R")
+  source("r_docs/R/footnotes.R")
+  source("r_docs/R/header_text.R")
+  source("r_docs/R/background_facts_med_hx_final_build.R")
+  source("r_docs/R/text_content.R")
+  
+  doc %>%
+    cursor_begin() %>%
+    body_remove() %>%
+    block_add_fps_fun(final_build) %>%
+    print(target = paste0(final_doc_path, ".docx"))
+  
+  # open newly created document
+  system(paste0("open \"", as.character(final_doc_path), ".docx", "\""))
+}
 
-# open newly created document
-system(paste0("open \"", as.character(final_doc_path), ".docx", "\""))
+final_build_fun()
 ```
 
 ```{r long dataframe from variables, eval=FALSE}
